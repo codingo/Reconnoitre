@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from argparse import ArgumentParser
 import sys
+from ping_sweeper import ping_sweeper
 
 def print_banner():
     print("  __")
@@ -23,6 +24,7 @@ def main():
     if arguments.quiet is not True:
         print_banner()
 
+    ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
 if __name__ == "__main__":
     main()

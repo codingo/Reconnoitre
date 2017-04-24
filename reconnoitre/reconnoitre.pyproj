@@ -22,10 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ping_sweeper.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="reconnoitre.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="inc\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
