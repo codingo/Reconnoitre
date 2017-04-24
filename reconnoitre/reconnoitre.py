@@ -24,7 +24,7 @@ def main():
     if arguments.quiet is not True:
         print_banner()
 
-    ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+    ping_sweeper(arguments.target_hosts.strip(), arguments.output_directory.strip(), arguments.quiet)
 
 if __name__ == "__main__":
     main()
