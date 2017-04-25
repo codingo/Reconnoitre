@@ -7,6 +7,7 @@ from directory_helper import load_targets
 def find_dns(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     results = 0
+    hostcount = 0
     output_file = open(output_directory + "/DNS-Servers.txt", 'w')
     output_targets = open(output_directory + "/DNS-targets.txt", 'w')
     targets = load_targets(target_hosts, output_directory, quiet)
@@ -14,6 +15,7 @@ def find_dns(target_hosts, output_directory, quiet):
 
     print("[+] Enumerating TCP port 53 over targets to find dns servers")
     for ip_address in targets:
+        hostcount += 1
         ip_address = ip_address.strip()
         print("[+] Testing %s" % ip_address)
         DNSSCAN = "nmap -n -sV -Pn -vv -p53 %s" % (ip_address)
@@ -29,6 +31,6 @@ def find_dns(target_hosts, output_directory, quiet):
                 print("   [>] %s" % (line))
                 output_file.write("   [>] %s\n" % (line))
                 results += 1
-    print("[*] Found %s DNS servers" % (results))
+    print("[*] Found %s DNS servers within %s hosts" % (results, hostcount))
     output_file.close()
     output_targets.close()
