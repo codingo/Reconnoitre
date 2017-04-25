@@ -8,6 +8,7 @@ from directory_helper import load_targets
 
 DNSSRV=''
 
+
 def multProc(targetin, ip_address, port, outputdir):
     jobs = []
     p = multiprocessing.Process(target=targetin, args=(ip_address, port, outputdir))
@@ -57,6 +58,7 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found FTP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found FTP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nmap scripts for further enumeration or hydra for password attack, e.g\n")
                f.write("   [=] nmap -sV -Pn -vv -p%s --script=ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 -oN '%s/%s_ftp.nmap' -oX '%s/%s_ftp_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
                f.write("   [=] hydra -L /usr/share/wordlists/webslayer/others/names.txt -P /usr/share/wordlists/webslayer/others/common_pass.txt -f -o %s/%s_ftphydra.txt -u %s -s %s ftp\n" % (outputdir, ip_address, ip_address, port))	
@@ -64,6 +66,7 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nikto & dirb / dirbuster for service enumeration, e.g\n")
                f.write("   [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] dirb http://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
@@ -72,6 +75,7 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nikto & dirb / dirbuster for service enumeration, e.g\n")
                f.write("   [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] dirb https://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
@@ -80,11 +84,13 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found mysql service on %s:%s\n" % (ip_address, port))
+               print("[*] Found mysql service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Check out the server for web applications with sqli vulnerabilities\n")
        elif "microsoft-ds" in serv:	
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found MS SMB service on %s:%s\n" % (ip_address, port))
+               print("[*] Found MS SMB service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nmap scripts or enum4linux for further enumeration, e.g\n")
                f.write("   [=] nmap -sV -Pn -vv -p%s --script=\"smb-* -oN '%s/%s_smb.nmap' -oX '%s/%s_smb_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
                f.write("   [=] enum4linux %s\n" % (ip_address))
@@ -92,24 +98,28 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found MS SQL service on %s:%s\n" % (ip_address, port))
+               print("[*] Found MS SQL service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nmap scripts for further enumeration, e.g\n")
                f.write("   [=] nmap -vv -sV -Pn -p %s --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=%s,smsql.username-sa,mssql.password-sa -oX %s/%s_mssql_nmap_scan_import.xml %s" % (port, port, outputdir, ip_address, ip_address))
        elif ("msdrdp" in serv) or ("ms-wbt-server" in serv):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found RDP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found RDP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use ncrackpassword cracking, e.g\n")
                f.write("   [=] ncrack -vv --user administrator -P /root/rockyou.txt rdp://%s\n" % (ip_address))
        elif "smtp" in serv:
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found SMTP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found SMTP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use smtp-user-enum to find users, e.g\n")
                f.write("   [=] smtp-user-enum -M VRFY -U /usr/share/wfuzz/wordlist/fuzzdb/wordlists-user-passwd/names/namelist.txt -t %s -p %s\n" % (ip_address, port))
        elif "snmp" in serv:
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found SNMP service on %s:%s\n" % (ip_address, port))
+               print("[*] Found SNMP service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use nmap scripts, onesixtyone or snmwalk for further enumeration, e.g\n")
                f.write("   [=] nmap -sV -Pn -vv -p%s --script=snmp-netstat,snmp-processes -oN '%s/%s_snmp.nmap' -oX '%s/%s_snmp_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
                f.write("   [=] onesixtyone %s\n" % (ip_address))
@@ -118,6 +128,7 @@ def nmapScan(ip_address, outputdir):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found SSH service on %s:%s\n" % (ip_address, port))
+               print("[*] Found SSH service on %s:%s\n" % (ip_address, port))
                f.write("   [>] Use medusa or hydra (unreliable) for password cracking, e.g\n")
                f.write("   [=] medusa -u root -P /root/rockyou.txt -e ns -h %s - %s -M ssh\n" % (ip_address, port))
                f.write("   [=] hydra -f -V -t 1 -l root -P /root/rockyou.txt -s %s %s ssh\n" % (port, ip_address))
@@ -148,24 +159,28 @@ def service_scan(target_hosts, output_directory, quiet):
            os.mkdir(hostdir)
 
        nmapdir = hostdir + "/nmap"
+       print("[>] Creating nmap directory at: %s" % nmapdir)
        try:
            os.stat(nmapdir)
        except:
            os.mkdir(nmapdir)
 
        exploitdir = hostdir + "/exploit"
+       print("[>] Creating exploit directory at: %s" % exploitdir)
        try:
            os.stat(exploitdir)
        except:
            os.mkdir(exploitdir)
 
        lootdir = hostdir + "/loot"
+       print("[>] Creating loot directory at: %s" % lootdir)
        try:
            os.stat(lootdir)
        except:
            os.mkdir(lootdir)
 
        prooffile = hostdir + "/proof.txt"
+       print("[>] Creating proof file at: %s" % prooffile)
        open(prooffile, 'a').close()
 
        namefile = hostdir + "/0-name"
