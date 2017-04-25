@@ -1,5 +1,6 @@
 import subprocess
 import multiprocessing
+import socket
 from multiprocessing import Process, Queue
 import os
 import time 
@@ -137,16 +138,23 @@ def nmapScan(ip_address, outputdir):
    print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
    return
 
-def service_scan(target_hosts, output_directory, quiet):
-    check_directory(output_directory)
+def valid_ip(address):
+    try:
+        socket.inet_aton(addr)
+        return True
+    except socket.error:
+        return False
+
+def target_file(target_hosts, output_directory, quiet):
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
     print("[*] Loaded targets from: %s" % targets)
 
     try:
-        os.stat(output_directory)
+        target_file = open(targets, 'r')
+        print("[*] Loaded targets from: %s" % targets)
     except:
-        os.mkdir(output_directory)
+        print("[*] Unable to load: %s" % targets)
 
     for ip_address in target_file:
        ip_address = ip_address.strip()
@@ -191,3 +199,11 @@ def service_scan(target_hosts, output_directory, quiet):
        jobs.append(p)
        p.start()
     target_file.close() 
+
+def service_scan(target_hosts, output_directory, quiet):
+    check_directory(output_directory)
+
+    if(valid_ip(target_hosts)):
+       print("Using IP Address")
+    else:
+        target_file(target_hosts, output_directory, quiet)
