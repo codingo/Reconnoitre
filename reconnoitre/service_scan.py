@@ -155,7 +155,7 @@ def target_file(target_hosts, output_directory, quiet):
         target_file = open(targets, 'r')
         print("[*] Loaded targets from: %s" % targets)
     except:
-        print("[*] Unable to load: %s" % targets)
+        print("[!] Unable to load: %s" % targets)
 
     for ip_address in target_file:
        ip_address = ip_address.strip()
