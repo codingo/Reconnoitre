@@ -128,6 +128,7 @@ def service_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
+    print("[*] Loaded targets from: %s" % targets)
 
     try:
         os.stat(output_directory)
