@@ -4,10 +4,6 @@ from multiprocessing import Process, Queue
 import os
 import time 
 
-TARGETS='/root/192.168.24.0/targets.txt'
-OUTDIR='/root/192.168.24.0/'			# Can be empty - will use ./mix-recon-OUTPUT
-DNSSRV='192.168.24.149'				# Can be empty - will skip name resolution
-
 def multProc(targetin, scanip, port, outputdir):
     jobs = []
     p = multiprocessing.Process(target=targetin, args=(scanip, port, outputdir))
@@ -126,23 +122,20 @@ def nmapScan(ip_address, outputdir):
    print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
    return
 
-def ping_sweeper(target_hosts, output_directory, quiet):
+def service_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
-    f = open(TARGETS, 'r')
+    f = open(target_hosts, 'r')
     
-    if OUTDIR == '':
-       OUTDIR = "./mix-recon-OUTPUT"
-       
     try:
-        os.stat(OUTDIR)
+        os.stat(output_directory)
     except:
-        os.mkdir(OUTDIR)
+        os.mkdir(output_directory)
 
     for scanip in f:
        scanip = scanip.strip()
        print("[+] Creating directory structure for " + scanip)
 
-       hostdir = OUTDIR + "/" + scanip
+       hostdir = output_directory + "/" + scanip
        try:
            os.stat(hostdir)
        except:
