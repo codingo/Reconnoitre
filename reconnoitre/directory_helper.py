@@ -13,3 +13,40 @@ def load_targets(target_hosts, output_directory, quiet):
         return target_hosts
     else:
         return output_directory + "/targets.txt"
+
+def create_directorys(ip_address, output_directory):
+    print("[+] Creating directory structure for " + ip_address)
+
+    hostdir = output_directory + "/" + ip_address
+    try:
+        os.stat(hostdir)
+    except:
+        os.mkdir(hostdir)
+
+    nmapdir = hostdir + "/nmap"
+    print("[>] Creating nmap directory at: %s" % nmapdir)
+    try:
+        os.stat(nmapdir)
+    except:
+        os.mkdir(nmapdir)
+
+    exploitdir = hostdir + "/exploit"
+    print("[>] Creating exploit directory at: %s" % exploitdir)
+    try:
+        os.stat(exploitdir)
+    except:
+        os.mkdir(exploitdir)
+
+    lootdir = hostdir + "/loot"
+    print("[>] Creating loot directory at: %s" % lootdir)
+    try:
+        os.stat(lootdir)
+    except:
+        os.mkdir(lootdir)
+
+    prooffile = hostdir + "/proof.txt"
+    print("[>] Creating proof file at: %s" % prooffile)
+    open(prooffile, 'a').close()
+
+    namefile = hostdir + "/0-name"
+    open(namefile, 'a').close()
