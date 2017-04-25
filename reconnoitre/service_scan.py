@@ -202,7 +202,7 @@ def target_file(target_hosts, output_directory, quiet):
 
 
 def target_ip(target_hosts, output_directory, quiet):
-    print("[*] Loaded target: %s" % target_hosts)
+    print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()
     print("[+] Creating directory structure for " + target_hosts)
 
