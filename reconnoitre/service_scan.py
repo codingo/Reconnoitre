@@ -126,14 +126,15 @@ def nmapScan(ip_address, outputdir):
 
 def service_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
-    f = open(target_hosts, 'r')
-    
+    targets = load_targets(target_hosts, output_directory, quiet)
+    target_file = open(targets, 'r')
+
     try:
         os.stat(output_directory)
     except:
         os.mkdir(output_directory)
 
-    for scanip in f:
+    for scanip in target_file:
        scanip = scanip.strip()
        print("[+] Creating directory structure for " + scanip)
 
@@ -171,4 +172,4 @@ def service_scan(target_hosts, output_directory, quiet):
        p = multiprocessing.Process(target=nmapScan, args=(scanip, nmapdir))
        jobs.append(p)
        p.start()
-    f.close() 
+    target_file.close() 
