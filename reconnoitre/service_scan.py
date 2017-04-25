@@ -6,7 +6,7 @@ import time
 from directory_helper import check_directory
 from directory_helper import load_targets
 
-DNSSERV=''
+DNSSRV=''
 
 def multProc(targetin, scanip, port, outputdir):
     jobs = []
