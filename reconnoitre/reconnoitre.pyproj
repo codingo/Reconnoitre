@@ -22,6 +22,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="directory_helper.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="find_dns.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ping_sweeper.py">
       <SubType>Code</SubType>
     </Compile>
