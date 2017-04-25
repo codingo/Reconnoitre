@@ -12,9 +12,10 @@ def find_dns(target_hosts, output_directory, quiet):
     output_targets = open(output_directory + "/DNS-targets.txt", 'w')
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
+    
     print("[*] Loaded targets from: %s" % targets)
-
     print("[+] Enumerating TCP port 53 over targets to find dns servers")
+
     for ip_address in target_file:
         hostcount += 1
         ip_address = ip_address.strip()
