@@ -38,6 +38,7 @@ def nmapScan(ip_address, outputdir):
    results = subprocess.check_output(TCPSCAN, shell=True)
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
    lines = results.split("\n")
+
    for line in lines:
        ports = []
        line = line.strip()
@@ -166,7 +167,6 @@ def target_file(target_hosts, output_directory, quiet):
        jobs.append(p)
        p.start()
     target_file.close() 
-
 
 def target_ip(target_hosts, output_directory, quiet):
     print("[*] Loaded single target: %s" % target_hosts)
