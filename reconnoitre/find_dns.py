@@ -12,9 +12,10 @@ def find_dns(target_hosts, output_directory, quiet):
     targets = load_targets(target_hosts, output_directory, quiet)
     print("[*] Loaded targets from: %s" % targets)
 
-    print("[+] Enumerating TCP port 53 to find dns servers")
+    print("[+] Enumerating TCP port 53 over targets to find dns servers")
     for ip_address in targets:
         ip_address = ip_address.strip()
+        print("[+] Testing %s" % ip_address)
         DNSSCAN = "nmap -n -sV -Pn -vv -p53 %s" % (ip_address)
         results = subprocess.check_output(DNSSCAN, shell=True)
         lines = results.split("\n")
