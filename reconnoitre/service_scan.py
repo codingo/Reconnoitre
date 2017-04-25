@@ -200,10 +200,56 @@ def target_file(target_hosts, output_directory, quiet):
        p.start()
     target_file.close() 
 
+
+def target_ip(target_hosts, output_directory, quiet):
+    print("[*] Loaded target: %s" % target_hosts)
+    target_hosts = target_hosts.strip()
+    print("[+] Creating directory structure for " + target_hosts)
+
+    hostdir = output_directory + "/" + target_hosts
+    try:
+        os.stat(hostdir)
+    except:
+        os.mkdir(hostdir)
+
+    nmapdir = hostdir + "/nmap"
+    print("[>] Creating nmap directory at: %s" % nmapdir)
+    try:
+        os.stat(nmapdir)
+    except:
+        os.mkdir(nmapdir)
+
+    exploitdir = hostdir + "/exploit"
+    print("[>] Creating exploit directory at: %s" % exploitdir)
+    try:
+        os.stat(exploitdir)
+    except:
+        os.mkdir(exploitdir)
+
+    lootdir = hostdir + "/loot"
+    print("[>] Creating loot directory at: %s" % lootdir)
+    try:
+        os.stat(lootdir)
+    except:
+        os.mkdir(lootdir)
+
+    prooffile = hostdir + "/proof.txt"
+    print("[>] Creating proof file at: %s" % prooffile)
+    open(prooffile, 'a').close()
+
+    namefile = hostdir + "/0-name"
+    open(namefile, 'a').close()
+
+    jobs = []
+    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmapdir))
+    jobs.append(p)
+    p.start()
+    target_file.close()
+
 def service_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
 
     if(valid_ip(target_hosts)):
-       print("Using IP Address")
+        target_ip(target_hosts, output_directory, quiet)
     else:
         target_file(target_hosts, output_directory, quiet)
