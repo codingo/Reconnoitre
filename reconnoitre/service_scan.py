@@ -8,8 +8,8 @@ from directory_helper import check_directory
 from directory_helper import load_targets
 from directory_helper import create_directorys
 
-DNSSRV=''
 
+DNSSRV=''
 
 #def multProc(targetin, ip_address, port, outputdir):
 #    jobs = []
