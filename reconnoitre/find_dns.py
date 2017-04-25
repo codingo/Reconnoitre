@@ -8,8 +8,8 @@ def find_dns(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     results = 0
     hostcount = 0
-    output_file = open(output_directory + "/DNS-Servers.txt", 'w')
-    output_targets = open(output_directory + "/DNStargets.txt", 'w')
+    output_file = open(output_directory + "/DNS-Detailed.txt", 'w')
+    output_targets = open(output_directory + "/DNS-targets.txt", 'w')
     targets = load_targets(target_hosts, output_directory, quiet)
     print("[*] Loaded targets from: %s" % targets)
 
@@ -24,7 +24,7 @@ def find_dns(target_hosts, output_directory, quiet):
         for line in lines:
             line = line.strip()
             line = line.rstrip()
-            if ("53/tcp" in line) and ("open" in line) and ("open" in line) and not ("Discovered" in line):
+            if ("53/tcp" in line) and ("open" in line):
                 print("[*] Found DNS service running on: %s" % (ip_address))
                 output_file.write("[*] Found DNS service running on: %s\n" % (ip_address))
                 output_file.write("   [>] %s\n" % (line))
