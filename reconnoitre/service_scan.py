@@ -170,9 +170,7 @@ def target_file(target_hosts, output_directory, quiet):
 
 def target_ip(target_hosts, output_directory, quiet):
     print("[*] Loaded single target: %s" % target_hosts)
-    target_hosts = target_hosts.strip()
-    print("[+] Creating directory structure for " + target_hosts)
-    
+    target_hosts = target_hosts.strip()    
     create_directorys(ip_address, target_hosts)
     
     jobs = []
