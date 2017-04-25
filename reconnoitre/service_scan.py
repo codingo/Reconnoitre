@@ -11,12 +11,12 @@ from directory_helper import create_directorys
 DNSSRV=''
 
 
-def multProc(targetin, ip_address, port, outputdir):
-    jobs = []
-    p = multiprocessing.Process(target=targetin, args=(ip_address, port, outputdir))
-    jobs.append(p)
-    p.start()
-    return
+#def multProc(targetin, ip_address, port, outputdir):
+#    jobs = []
+#    p = multiprocessing.Process(target=targetin, args=(ip_address, port, outputdir))
+#    jobs.append(p)
+#    p.start()
+#    return
 
 def nmapScan(ip_address, outputdir):
    ip_address = ip_address.strip()
