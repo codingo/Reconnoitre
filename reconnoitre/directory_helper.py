@@ -14,7 +14,7 @@ def load_targets(target_hosts, output_directory, quiet):
     else:
         return output_directory + "/targets.txt"
 
-def create_directorys(ip_address, output_directory):
+def create_dir_structure(ip_address, output_directory):
     print("[+] Creating directory structure for " + ip_address)
 
     hostdir = output_directory + "/" + ip_address
