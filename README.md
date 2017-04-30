@@ -17,7 +17,7 @@ This tool can be used and copied for personal use freely however attribution and
 | ------------- |:-------------|
 | -h, --help | Display help message and exit |
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
-| -o OUTPUT_DIRECTORY | Set the target directory where results should be written to |
+| -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled command, or executed attacks. |
 | -pS | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
 | -fD | Find DNS servers from the list of target(s). |
