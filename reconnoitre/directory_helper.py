@@ -24,28 +24,28 @@ def create_dir_structure(ip_address, output_directory):
         os.mkdir(hostdir)
 
     nmapdir = hostdir + "/nmap"
-    print("[>] Creating nmap directory at: %s" % nmapdir)
+    print("   [>] Creating nmap directory at: %s" % nmapdir)
     try:
         os.stat(nmapdir)
     except:
         os.mkdir(nmapdir)
 
     exploitdir = hostdir + "/exploit"
-    print("[>] Creating exploit directory at: %s" % exploitdir)
+    print("   [>] Creating exploit directory at: %s" % exploitdir)
     try:
         os.stat(exploitdir)
     except:
         os.mkdir(exploitdir)
 
     lootdir = hostdir + "/loot"
-    print("[>] Creating loot directory at: %s" % lootdir)
+    print("   [>] Creating loot directory at: %s" % lootdir)
     try:
         os.stat(lootdir)
     except:
         os.mkdir(lootdir)
-
+    #todo: check if proof file already exists and don't overwrite if it does
     prooffile = hostdir + "/proof.txt"
-    print("[>] Creating proof file at: %s" % prooffile)
+    print("   [>] Creating proof file at: %s" % prooffile)
     open(prooffile, 'a').close()
 
     namefile = hostdir + "/0-name"
