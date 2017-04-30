@@ -54,6 +54,7 @@ def nmapScan(ip_address, outputdir):
            serv_dict[service] = ports # add service to the dictionary along with the associated port(2)
    
    # go through the service dictionary to give some hints for further enumerations 
+   print("[+] Writing findings for %s" % (ip_address))
    f = open(outfile, 'w')
    for serv in serv_dict: 
        ports = serv_dict[serv]
