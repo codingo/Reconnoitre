@@ -1,5 +1,5 @@
-# reconnoitre
-A reconicense tool made for the OSCP labs to automate information gathering and service enumeration
+# Reconnoitre
+A reconnaissance tool made for the OSCP labs to automate information gathering and service enumeration whilst also creating a directory structure of results for each host, recommended commands to execute and directory structures for storing loot and flags.
 
 [![Python 3.2|3.6](https://img.shields.io/badge/python-3.2|3.6-green.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-Public_domain-red.svg)](https://wiki.creativecommons.org/wiki/Public_domain) [![Build Status](https://travis-ci.org/codingo/reconnoitre.svg?branch=master)](https://travis-ci.org/codingo/reconnoitre)
 
