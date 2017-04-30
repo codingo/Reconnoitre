@@ -142,7 +142,7 @@ def nmapScan(ip_address, outputdir):
 
 def valid_ip(address):
     try:
-        socket.inet_aton(addr)
+        socket.inet_aton(address)
         return True
     except socket.error:
         return False
