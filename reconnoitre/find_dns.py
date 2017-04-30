@@ -26,6 +26,7 @@ def find_dns(target_hosts, output_directory, quiet):
         DNSSCAN = "nmap -n -sV -Pn -vv -p53 %s" % (ip_address)
         results = subprocess.check_output(DNSSCAN, shell=True)
         lines = results.split("\n")
+
         for line in lines:
             line = line.strip()
             line = line.rstrip()
@@ -35,6 +36,6 @@ def find_dns(target_hosts, output_directory, quiet):
                 output_file.write("   [>] %s\n" % (line))
                 output_targets.write("%s" % (ip_address))
                 results += 1
-    print("[*] Found %s DNS servers within %s hosts" % (results, hostcount))
+    print("[*] Found %s DNS servers within %s hosts" % (str(results), str(hostcount)))
     output_file.close()
     output_targets.close()
