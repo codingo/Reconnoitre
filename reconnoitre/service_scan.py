@@ -11,13 +11,6 @@ from directory_helper import create_dir_structure
 
 DNSSRV=''
 
-#def multProc(targetin, ip_address, port, outputdir):
-#    jobs = []
-#    p = multiprocessing.Process(target=targetin, args=(ip_address, port, outputdir))
-#    jobs.append(p)
-#    p.start()
-#    return
-
 def nmapScan(ip_address, outputdir):
    ip_address = ip_address.strip()
    outfile = outputdir + "/" + ip_address + "_findings.txt"
