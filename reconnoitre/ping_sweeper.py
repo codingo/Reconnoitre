@@ -26,7 +26,7 @@ def ping_sweeper(target_hosts, output_directory, quiet):
             if (live_hosts > 0):
                 f.write('\n')
             f.write("%s" % (ip_address))
-            print("[*] Discovered host: %s" % (ip_address))
+            print("   [>] Discovered host: %s" % (ip_address))
             live_hosts += 1
     print("[*] Found %s live hosts" % (live_hosts))
     print("[*] Created target list %s" % (output_file))
