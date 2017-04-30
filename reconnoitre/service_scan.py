@@ -147,10 +147,7 @@ def valid_ip(address):
     except socket.error:
         return False
 
-def target_file(target_hosts, output_directory, quiet):
-    hostdir = OUTDIR + "/" + scanip
-    nmapdir = hostdir + "/nmap"
-    
+def target_file(target_hosts, output_directory, quiet):    
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
     print("[*] Loaded targets from: %s" % targets)
@@ -165,6 +162,9 @@ def target_file(target_hosts, output_directory, quiet):
        ip_address = ip_address.strip()
        create_dir_structure(ip_address, output_directory)
 
+       host_directory = output_directory + "/" + ip_address
+       nmap_directory = hostdir + "/nmap"
+       
        jobs = []
        p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmapdir))
        jobs.append(p)
@@ -172,12 +172,15 @@ def target_file(target_hosts, output_directory, quiet):
     target_file.close() 
 
 def target_ip(target_hosts, output_directory, quiet):
-    hostdir = OUTDIR + "/" + scanip
+
     nmapdir = hostdir + "/nmap"
 
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
     create_dir_structure(target_hosts, output_directory)
+    
+    host_directory = output_directory + "/" + target_hosts
+    nmap_directory = hostdir + "/nmap"
     
     jobs = []
     p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmapdir))
