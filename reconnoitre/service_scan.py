@@ -6,7 +6,7 @@ import os
 import time 
 from directory_helper import check_directory
 from directory_helper import load_targets
-from directory_helper import create_directorys
+from directory_helper import create_dir_structure
 
 
 DNSSRV=''
