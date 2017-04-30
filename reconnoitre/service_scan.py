@@ -148,6 +148,9 @@ def valid_ip(address):
         return False
 
 def target_file(target_hosts, output_directory, quiet):
+    hostdir = OUTDIR + "/" + scanip
+    nmapdir = hostdir + "/nmap"
+    
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
     print("[*] Loaded targets from: %s" % targets)
@@ -169,6 +172,9 @@ def target_file(target_hosts, output_directory, quiet):
     target_file.close() 
 
 def target_ip(target_hosts, output_directory, quiet):
+    hostdir = OUTDIR + "/" + scanip
+    nmapdir = hostdir + "/nmap"
+
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
     create_dir_structure(target_hosts, output_directory)
