@@ -66,7 +66,7 @@ def nmapScan(ip_address, outputdir):
                f.write("   [>] Use nmap scripts for further enumeration or hydra for password attack, e.g\n")
                f.write("   [=] nmap -sV -Pn -vv -p%s --script=ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 -oN '%s/%s_ftp.nmap' -oX '%s/%s_ftp_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
                f.write("   [=] hydra -L /usr/share/wordlists/webslayer/others/names.txt -P /usr/share/wordlists/webslayer/others/common_pass.txt -f -o %s/%s_ftphydra.txt -u %s -s %s ftp\n" % (outputdir, ip_address, ip_address, port))	
-       elif (serv == "http"):
+       elif (serv == "http") or (serv == "ssl/http") or ("https" in serv) or ("http" in serv):
            for port in ports:
                port = port.split("/")[0]
                f.write("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
@@ -74,15 +74,6 @@ def nmapScan(ip_address, outputdir):
                f.write("   [>] Use nikto & dirb / dirbuster for service enumeration, e.g\n")
                f.write("   [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] dirb http://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
-               f.write("   [=] java -jar /usr/share/dirbuster/DirBuster-1.0-RC1.jar -H -l /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -r %s/%s_dirbuster.txt -u http://%s:%s/\n" % (outputdir, ip_address, ip_address, port))
-       elif (serv == "ssl/http") or ("https" in serv) or ("http" in serv):
-           for port in ports:
-               port = port.split("/")[0]
-               f.write("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
-               print("   [>] Found HTTP service on %s:%s" % (ip_address, port))
-               f.write("   [>] Use nikto & dirb / dirbuster for service enumeration, e.g\n")
-               f.write("   [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
-               f.write("   [=] dirb https://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] java -jar /usr/share/dirbuster/DirBuster-1.0-RC1.jar -H -l /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -r %s/%s_dirbuster.txt -u http://%s:%s/\n" % (outputdir, ip_address, ip_address, port))
        elif "mysql" in serv:
            for port in ports:
