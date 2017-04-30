@@ -14,7 +14,7 @@ This also has considerable influence and code taken from Re4son's mix-recon (see
 This tool can be used and copied for personal use freely however attribution and credit should be offered to Mike Czumak who originally started the process of automating this work.
 
 | Argument        | Description |
-| ------------- |:-------------:|
+| ------------- |:-------------|
 | -h, --help | Display help message and exit |
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written to |
