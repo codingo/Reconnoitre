@@ -32,13 +32,13 @@ def main():
     if arguments.quiet is not True:
         print_banner()
     if arguments.ping_sweep is True:
-        print("[+] Performing ping sweep")
+        print("[#] Performing ping sweep")
         ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.find_dns_servers is True:
-        print("[+] Identifying DNS Servers")
+        print("[#] Identifying DNS Servers")
         find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.perform_service_scan is True:
-        print("[+] Performing service scans")
+        print("[#] Performing service scans")
         service_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
 if __name__ == "__main__":
