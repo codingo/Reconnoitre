@@ -166,15 +166,12 @@ def target_file(target_hosts, output_directory, quiet):
        nmap_directory = host_directory + "/nmap"
        
        jobs = []
-       p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmapdir))
+       p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmap_directory))
        jobs.append(p)
        p.start()
     target_file.close() 
 
 def target_ip(target_hosts, output_directory, quiet):
-
-    nmapdir = hostdir + "/nmap"
-
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
     create_dir_structure(target_hosts, output_directory)
@@ -183,7 +180,7 @@ def target_ip(target_hosts, output_directory, quiet):
     nmap_directory = host_directory + "/nmap"
     
     jobs = []
-    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmapdir))
+    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmap_directory))
     jobs.append(p)
     p.start()
 
