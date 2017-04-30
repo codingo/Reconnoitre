@@ -9,8 +9,10 @@ def find_dns(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     results = 0
     hostcount = 0
+    
     output_file = open(output_directory + "/DNS-Detailed.txt", 'w')
     output_targets = open(output_directory + "/DNS-targets.txt", 'w')
+
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
     
