@@ -41,9 +41,10 @@ def main():
         ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.hostname_scan is True:
         print("[#] Identifying hostnames")
+        hostname_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        hostname_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.dns is True:
