@@ -28,21 +28,24 @@ def hostname_scan(target_hosts, output_directory, quiet):
     for line in lines:
         line = line.strip()
         line = line.rstrip()
+        
+        # Final line is blank which causes list index issues if we don't
+        # continue past it.
+        if not " " in line:
+            continue
+        
         while "  " in line: 
             line = line.replace("  ", " ");
 
-        if ("<server>" in line) or ("<unknown>" in line):
-            ip_address = line.split(" ")[0]
-            host = line.split(" ")[1]
+        ip_address = line.split(" ")[0]
+        host = line.split(" ")[1]
         
-            if (hostnames > 0):
-                f.write('\n')
+        if (hostnames > 0):
+            f.write('\n')
 
-            print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
-            f.write("%s - %s" % (host, ip_address))
-            hostnames += 1
-        else:
-            print("DEBUG: %s" % line)
+        print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
+        f.write("%s - %s" % (host, ip_address))
+        hostnames += 1
              
     print("[*] Found %s hostnames." % (hostnames))
     print("[*] Created hostname list %s" % (output_file))
