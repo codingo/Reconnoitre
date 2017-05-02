@@ -70,7 +70,7 @@ def nmapScan(ip_address, outputdir, dns_server):
                f.write("   [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] dirb http://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] java -jar /usr/share/dirbuster/DirBuster-1.0-RC1.jar -H -l /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -r %s/%s_dirbuster.txt -u http://%s:%s/\n" % (outputdir, ip_address, ip_address, port))
-               f.write("   [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/common.txt -u http://%s:%s/\n -s '200,204,301,302,307,403,500' -e" % (ip_address, port))
+               f.write("   [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/common.txt -u http://%s:%s/\n -s '200,204,301,302,307,403,500' -e\n" % (ip_address, port))
        elif "mysql" in serv:
            for port in ports:
                port = port.split("/")[0]
