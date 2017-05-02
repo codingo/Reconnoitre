@@ -1,8 +1,7 @@
 def write_recommendations(results, ip_address, outputdir):
-   lines = results.split("\n")
-   serv_dict = {}
    outfile = outputdir + "/" + ip_address + "_findings.txt"
-
+   serv_dict = {}
+   lines = results.split("\n")
    for line in lines:
        ports = []
        line = line.strip()
@@ -10,6 +9,7 @@ def write_recommendations(results, ip_address, outputdir):
            while "  " in line: 
                line = line.replace("  ", " ");
            service = line.split(" ")[2] # grab the service name
+           print("DEBUG: Added service %s" % service)
            port = line.split(" ")[0] # grab the port/proto
            if service in serv_dict:
                ports = serv_dict[service] # if the service is already in the dict, grab the port list
