@@ -18,8 +18,9 @@ def main():
     parser.add_argument("-w", dest="wordlist", required=False, help="Set the wordlist to use for generated commands. Ex /usr/share/wordlist.txt")
     parser.add_argument("-pS", dest="ping_sweep", action="store_true", help="Write a new target.txt by performing a ping sweep and discovering live hosts.", default=False)
     parser.add_argument("-fD", dest="find_dns_servers", action="store_true", help="Find DNS servers from a list of targets.", default=False)
-    parser.add_argument("-sS", dest="perform_service_scan", action="store_true", help="Perform service scan over targets.", default=False)
+    parser.add_argument("-dns", dest="dns", required=False, help="Optionally specify a DNS server to use with a service scan.")    
     parser.add_argument("--quiet", dest="quiet",  action="store_true", help="Supress banner and headers to limit to comma dilimeted results only.", default=False)
+    
     parser.add_argument("--execute", dest="follow",  action="store_true", help="Execute shell comamnds from recommendations as they are discovered. Likely to lead to very long execute times depending on the wordlist being used.", default=False)
     arguments = parser.parse_args()
 
@@ -39,7 +40,9 @@ def main():
         find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
-        service_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
-
+        if arguments.dns is True:
+            service_scan(arguments.target_hosts, arguments.output_directory, arguments.dns, arguments.quiet)
+        else:
+            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet)
 if __name__ == "__main__":
     main()
