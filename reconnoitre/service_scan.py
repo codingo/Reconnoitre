@@ -48,8 +48,6 @@ def valid_ip(address):
 def target_file(target_hosts, output_directory, dns_server, quiet, quick):    
     targets = load_targets(target_hosts, output_directory, quiet)
     target_file = open(targets, 'r')
-    print("[*] Loaded targets from: %s" % targets)
-
     try:
         target_file = open(targets, 'r')
         print("[*] Loaded targets from: %s" % targets)
