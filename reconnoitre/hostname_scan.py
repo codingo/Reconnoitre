@@ -39,7 +39,7 @@ def hostname_scan(target_hosts, output_directory, quiet):
         
         if (hostnames > 0):
             f.write('\n')
-nb
+
         print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
         f.write("%s - %s" % (host, ip_address))
         hostnames += 1
