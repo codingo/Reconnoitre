@@ -74,7 +74,7 @@ def target_file(target_hosts, output_directory, dns_server, quiet):
     target_file.close() 
 
 
-def target_ip(target_hosts, output_directory, dns_server, quiet):
+def target_ip(target_hosts, output_directory, dns_server, quiet, quick):
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
     create_dir_structure(target_hosts, output_directory)
