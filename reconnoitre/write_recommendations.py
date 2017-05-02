@@ -9,7 +9,6 @@ def write_recommendations(results, ip_address, outputdir):
            while "  " in line: 
                line = line.replace("  ", " ");
            service = line.split(" ")[2]
-           print("DEBUG: Added service %s" % service)
            port = line.split(" ")[0]
 
            if service in serv_dict:
