@@ -41,7 +41,9 @@ def hostname_scan(target_hosts, output_directory, quiet):
             print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
             f.write("%s - %s" % (host, ip_address))
             hostnames += 1
-
+        else:
+            print("DEBUG: %s" % line)
+             
     print("[*] Found %s hostnames." % (hostnames))
     print("[*] Created hostname list %s" % (output_file))
     f.close()
