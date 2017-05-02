@@ -1,9 +1,9 @@
 import subprocess
 import multiprocessing
 import socket
-from multiprocessing import Process, Queue
 import os
 import time 
+from multiprocessing import Process, Queue
 from directory_helper import check_directory
 from directory_helper import load_targets
 from directory_helper import create_dir_structure
@@ -13,7 +13,6 @@ from write_recommendations import write_recommendations
 def nmapScan(ip_address, outputdir, dns_server):
    ip_address = ip_address.strip()
    
-
    print("[+] Starting quick nmap scan for %s" % (ip_address))
    QUICKSCAN = "nmap -n -oN '%s/%s.quick.nmap' %s"  % (outputdir, ip_address, ip_address)
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
