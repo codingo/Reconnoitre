@@ -21,9 +21,9 @@ def hostname_scan(target_hosts, output_directory, quiet):
     SWEEP = ''
 
     if(os.path.isfile(target_hosts)):
-        SWEEP = "nbtscan -q -f " % (target_hosts)
+        SWEEP = "nbtscan -q -f %s" % (target_hosts)
     else:
-        SWEEP = "nbtscan -q " % (target_hosts)
+        SWEEP = "nbtscan -q %s" % (target_hosts)
 
     results = subprocess.check_output(SWEEP, shell=True)
     lines = results.split("\n")
