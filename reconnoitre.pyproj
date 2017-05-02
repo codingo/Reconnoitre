@@ -5,7 +5,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>95b2237b-5174-42ed-90b1-616a70184602</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>reconnoitre.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,22 +23,17 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="directory_helper.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="find_dns.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ping_sweeper.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="reconnoitre.py" />
-    <Compile Include="service_scan.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="reconnoitre\directory_helper.py" />
+    <Compile Include="reconnoitre\find_dns.py" />
+    <Compile Include="reconnoitre\ping_sweeper.py" />
+    <Compile Include="reconnoitre\reconnoitre.py" />
+    <Compile Include="reconnoitre\service_scan.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="reconnoitre\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
