@@ -10,7 +10,7 @@ from directory_helper import create_dir_structure
 from write_recommendations import write_recommendations
 
 
-def nmapScan(ip_address, outputdir, dns_server, quick):
+def nmap_scan(ip_address, outputdir, dns_server, quick):
    ip_address = ip_address.strip()
    
    print("[+] Starting quick nmap scan for %s" % (ip_address))
@@ -22,23 +22,19 @@ def nmapScan(ip_address, outputdir, dns_server, quick):
    if(quick):
        return
 
-   print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
-
    if dns_server:
+       print("[+] Starting detailed TCP/UDP nmap scans for %s using DNS Server %s" % (ip_address, dns_server))
        print("[+] Using DNS server %s" % (dns_server))
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 --dns-servers %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
        UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 --dns-servers %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
    else:
-       print("[+] No DNS server was specified. Continuing with a regular scan.")
+       print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
        UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 -n %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
 
    results = subprocess.check_output(TCPSCAN, shell=True)
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
-
    write_recommendations(quickresults, ip_address, outputdir)
-
-   return
 
 
 def valid_ip(address):
@@ -68,7 +64,7 @@ def target_file(target_hosts, output_directory, dns_server, quiet):
        nmap_directory = host_directory + "/nmap"
        
        jobs = []
-       p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmap_directory, dns_server, quick))
+       p = multiprocessing.Process(target=nmap_scan, args=(ip_address, nmap_directory, dns_server, quick))
        jobs.append(p)
        p.start()
     target_file.close() 
@@ -83,7 +79,7 @@ def target_ip(target_hosts, output_directory, dns_server, quiet, quick):
     nmap_directory = host_directory + "/nmap"
     
     jobs = []
-    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmap_directory, dns_server, quick))
+    p = multiprocessing.Process(target=nmap_scan, args=(target_hosts, nmap_directory, dns_server, quick))
     jobs.append(p)
     p.start()
 
