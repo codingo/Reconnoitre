@@ -27,6 +27,12 @@ This tool can be used and copied for personal use freely however attribution and
 
 
 # Examples
+## Discover all live hosts within a range and then do a quick probe for services
+```
+python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -sS --quick
+```
+This will scan all services within a target range to create a file structure of live hosts as well as write recommendations for other commands to be executed based on the services discovered on these machines. Removing --quick will do a further probe but will greatly lengthen execution times.
+
 ## Scan a single host to create a file structure and discover services
 
 ```
