@@ -44,9 +44,9 @@ def main():
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.dns is True:
-            service_scan(arguments.target_hosts, arguments.output_directory, arguments.dns, arguments.quiet)
+            service_scan(arguments.target_hosts, arguments.output_directory, arguments.dns, arguments.quiet, arguments.quick)
         else:
-            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet)
+            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick)
 
 
 if __name__ == "__main__":
