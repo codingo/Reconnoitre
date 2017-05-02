@@ -21,8 +21,6 @@ def nmapScan(ip_address, outputdir, dns_server):
    write_recommendations(quickresults)
 
    print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
-   serv_dict = {}
-
 
    if dns_server:
        print("[+] Using DNS server %s" % (dns_server))

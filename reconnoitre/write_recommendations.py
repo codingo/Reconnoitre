@@ -1,5 +1,6 @@
 def write_recommendations(results):
    lines = results.split("\n")
+   serv_dict = {}
 
    for line in lines:
        ports = []
