@@ -10,14 +10,14 @@ from file_helper import create_dir_structure
 from file_helper import write_recommendations
 
 
-def nmap_scan(ip_address, outputdir, dns_server, quick):
+def nmap_scan(ip_address, output_directory, dns_server, quick):
    ip_address = ip_address.strip()
    
    print("[+] Starting quick nmap scan for %s" % (ip_address))
-   QUICKSCAN = "nmap -n -oN '%s/%s.quick.nmap' %s"  % (outputdir, ip_address, ip_address)
+   QUICKSCAN = "nmap -n -oN '%s/%s.quick.nmap' %s"  % (output_directory, ip_address, ip_address)
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
    
-   write_recommendations(quickresults, ip_address, outputdir)
+   write_recommendations(quickresults, ip_address, output_directory)
 
    if(quick):
        return
@@ -25,16 +25,16 @@ def nmap_scan(ip_address, outputdir, dns_server, quick):
    if dns_server:
        print("[+] Starting detailed TCP/UDP nmap scans for %s using DNS Server %s" % (ip_address, dns_server))
        print("[+] Using DNS server %s" % (dns_server))
-       TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 --dns-servers %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
-       UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 --dns-servers %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
+       TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 --dns-servers %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
+       UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 --dns-servers %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
    else:
        print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
-       TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
-       UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 -n %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, outputdir, ip_address, outputdir, ip_address, ip_address)
+       TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
+       UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 -n %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
 
    results = subprocess.check_output(TCPSCAN, shell=True)
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
-   write_recommendations(quickresults, ip_address, outputdir)
+   write_recommendations(quickresults, ip_address, output_directory)
 
 
 def valid_ip(address):
