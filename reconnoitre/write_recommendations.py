@@ -1,5 +1,5 @@
 def write_recommendations(results, ip_address, outputdir):
-   outfile = outputdir + "/" + ip_address + "_findings.txt"
+   recommendations_file = outputdir + "/" + ip_address + "_findings.txt"
    serv_dict = {}
    lines = results.split("\n")
    for line in lines:
@@ -12,14 +12,13 @@ def write_recommendations(results, ip_address, outputdir):
            port = line.split(" ")[0]
 
            if service in serv_dict:
-               ports = serv_dict[service] # if the service is already in the dict, grab the port list
+               ports = serv_dict[service] 
 
            ports.append(port) 
-           serv_dict[service] = ports # add service to the dictionary along with the associated port(2)
+           serv_dict[service] = ports
    
-   # go through the service dictionary to give some hints for further enumerations 
    print("[+] Writing findings for %s" % (ip_address))
-   f = open(outfile, 'w')
+   f = open(recommendations_file, 'w')
    for serv in serv_dict: 
        ports = serv_dict[serv]
        if ("ftp" in serv):
