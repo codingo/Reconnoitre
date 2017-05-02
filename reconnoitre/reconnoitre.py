@@ -34,6 +34,9 @@ def main():
         parser.print_usage
         sys.exit()
 
+    if arguments.output_directory.endswith('/' or '\\'):
+        arguments.output_directory = arguments.output_directory[:-1]
+
     if arguments.quiet is not True:
         print_banner()
     if arguments.ping_sweep is True:
