@@ -11,6 +11,7 @@ def print_banner():
     print("|\"\"\"\-=  RECONNOITRE")
     print("(____)      An OSCP scanner\n")
 
+
 def main():
     parser = ArgumentParser()
     parser.add_argument("-t", dest="target_hosts", required=True, help="Set a target range of addresses to target. Ex 10.11.1.1-255" )
@@ -45,5 +46,7 @@ def main():
             service_scan(arguments.target_hosts, arguments.output_directory, arguments.dns, arguments.quiet)
         else:
             service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet)
+
+
 if __name__ == "__main__":
     main()

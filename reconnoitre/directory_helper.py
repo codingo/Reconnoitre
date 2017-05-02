@@ -8,11 +8,13 @@ def check_directory(output_directory):
         os.mkdir(output_directory)
         print("[!] %s didn't exist and has been created." % output_directory)
 
+
 def load_targets(target_hosts, output_directory, quiet):
     if(os.path.isdir(target_hosts) or os.path.isfile(target_hosts)):
         return target_hosts
     else:
         return output_directory + "/targets.txt"
+
 
 def create_dir_structure(ip_address, output_directory):
     print("[+] Creating directory structure for " + ip_address)
@@ -43,7 +45,7 @@ def create_dir_structure(ip_address, output_directory):
         os.stat(lootdir)
     except:
         os.mkdir(lootdir)
-    #todo: check if proof file already exists and don't overwrite if it does
+
     prooffile = hostdir + "/proof.txt"
     print("   [>] Creating proof file at: %s" % prooffile)
     open(prooffile, 'a').close()

@@ -31,4 +31,3 @@ def ping_sweeper(target_hosts, output_directory, quiet):
     print("[*] Found %s live hosts" % (live_hosts))
     print("[*] Created target list %s" % (output_file))
     f.close()
-

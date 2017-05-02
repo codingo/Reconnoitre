@@ -128,12 +128,14 @@ def nmapScan(ip_address, outputdir, dns_server):
    print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
    return
 
+
 def valid_ip(address):
     try:
         socket.inet_aton(address)
         return True
     except socket.error:
         return False
+
 
 def target_file(target_hosts, output_directory, dns_server, quiet):    
     targets = load_targets(target_hosts, output_directory, quiet)
@@ -159,6 +161,7 @@ def target_file(target_hosts, output_directory, dns_server, quiet):
        p.start()
     target_file.close() 
 
+
 def target_ip(target_hosts, output_directory, dns_server, quiet):
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
@@ -171,6 +174,7 @@ def target_ip(target_hosts, output_directory, dns_server, quiet):
     p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmap_directory, dns_server))
     jobs.append(p)
     p.start()
+
 
 def service_scan(target_hosts, output_directory, dns_server, quiet):
     check_directory(output_directory)
