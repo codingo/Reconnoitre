@@ -1,4 +1,4 @@
-def write_recommendations(results):
+def write_recommendations(results, ip_address, outputdir):
    lines = results.split("\n")
    serv_dict = {}
 

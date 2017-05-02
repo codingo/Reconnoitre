@@ -18,7 +18,7 @@ def nmapScan(ip_address, outputdir, dns_server):
    QUICKSCAN = "nmap -n -oN '%s/%s.quick.nmap' %s"  % (outputdir, ip_address, ip_address)
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
    
-   write_recommendations(quickresults)
+   write_recommendations(quickresults, ip_address, outputdir)
 
    print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
 
@@ -34,9 +34,10 @@ def nmapScan(ip_address, outputdir, dns_server):
    results = subprocess.check_output(TCPSCAN, shell=True)
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
 
-   write_recommendations(results)
+   write_recommendations(quickresults, ip_address, outputdir)
 
    return
+
 
 def valid_ip(address):
     try:
