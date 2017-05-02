@@ -26,3 +26,9 @@ This tool can be used and copied for personal use freely however attribution and
 | --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
 
 
+# Examples
+## Scan a single host to create a file structure and discover services
+
+```
+python ./reconnoitre.py -t 192.168.1.252 -o /root/Documents/testing/ -sS --quick
+```
