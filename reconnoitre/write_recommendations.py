@@ -95,4 +95,3 @@ def write_recommendations(results, ip_address, outputdir):
                
    f.close()     
    print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
-   return
