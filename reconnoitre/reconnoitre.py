@@ -21,7 +21,7 @@ def main():
     parser.add_argument("-fD", dest="find_dns_servers", action="store_true", help="Find DNS servers from a list of targets.", default=False)
     parser.add_argument("-sS", dest="perform_service_scan", action="store_true", help="Perform service scan over targets.", default=False)
     parser.add_argument("-dns", dest="dns", required=False, help="Optionally specify a DNS server to use with a service scan.")
-    parser.add_argument("--quick", dest="dns", required=False, help="Move to the next target after performing a quick scan and writing first-round recommendations.")    
+    parser.add_argument("--quick", dest="quick", required=False, help="Move to the next target after performing a quick scan and writing first-round recommendations.")    
     parser.add_argument("--quiet", dest="quiet",  action="store_true", help="Supress banner and headers to limit to comma dilimeted results only.", default=False)
     
     parser.add_argument("--execute", dest="follow",  action="store_true", help="Execute shell comamnds from recommendations as they are discovered. Likely to lead to very long execute times depending on the wordlist being used.", default=False)
