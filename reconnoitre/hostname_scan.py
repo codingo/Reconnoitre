@@ -36,7 +36,7 @@ def hostname_scan(target_hosts, output_directory, quiet):
         print("DEBUG: %s" % line)
 
         ip_address = line.split(" ")[0]
-        host = line.split(" ")[2]
+        host = line.split(" ")[3]
         
         if (hostnames > 0):
             f.write('\n')
