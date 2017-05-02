@@ -20,8 +20,8 @@ This tool can be used and copied for personal use freely however attribution and
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled commands, or executed attacks. |
 | -pS | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
-| -fD | Find DNS servers from the list of target(s). |
 | -sS | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
+| -fD | Find DNS servers from the list of target(s). |
 | -dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
 | --execute | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
