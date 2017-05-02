@@ -10,7 +10,7 @@ from directory_helper import create_dir_structure
 from write_recommendations import write_recommendations
 
 
-def nmapScan(ip_address, outputdir, dns_server):
+def nmapScan(ip_address, outputdir, dns_server, quick):
    ip_address = ip_address.strip()
    
    print("[+] Starting quick nmap scan for %s" % (ip_address))
@@ -18,6 +18,9 @@ def nmapScan(ip_address, outputdir, dns_server):
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
    
    write_recommendations(quickresults, ip_address, outputdir)
+
+   if(quick):
+       return
 
    print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
 
@@ -65,7 +68,7 @@ def target_file(target_hosts, output_directory, dns_server, quiet):
        nmap_directory = host_directory + "/nmap"
        
        jobs = []
-       p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmap_directory, dns_server))
+       p = multiprocessing.Process(target=nmapScan, args=(ip_address, nmap_directory, dns_server, quick))
        jobs.append(p)
        p.start()
     target_file.close() 
@@ -80,15 +83,15 @@ def target_ip(target_hosts, output_directory, dns_server, quiet):
     nmap_directory = host_directory + "/nmap"
     
     jobs = []
-    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmap_directory, dns_server))
+    p = multiprocessing.Process(target=nmapScan, args=(target_hosts, nmap_directory, dns_server, quick))
     jobs.append(p)
     p.start()
 
 
-def service_scan(target_hosts, output_directory, dns_server, quiet):
+def service_scan(target_hosts, output_directory, dns_server, quiet, quick):
     check_directory(output_directory)
 
     if(valid_ip(target_hosts)):
-        target_ip(target_hosts, output_directory, dns_server, quiet)
+        target_ip(target_hosts, output_directory, dns_server, quiet, quick)
     else:
-        target_file(target_hosts, output_directory, dns_server, quiet)
+        target_file(target_hosts, output_directory, dns_server, quiet, quick)
