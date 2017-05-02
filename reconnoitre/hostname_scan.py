@@ -14,10 +14,12 @@ from file_helper import write_recommendations
 def hostname_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     output_file = output_directory + "/hostnames.txt"
+    f = open(output_file, 'w')
     print("[+] Writing hostsnames to: %s" % output_file)
+    
     hostnames = 0
-
     SWEEP = ''
+
     if(os.path.isfile(target_hosts)):
         SWEEP = "nbtscan -q -f " % (target_hosts)
     else:
@@ -29,14 +31,17 @@ def hostname_scan(target_hosts, output_directory, quiet):
     for line in lines:
         line = line.strip()
         line = line.rstrip()
-        if ("Nmap scan report for" in line):
-            ip_address = line.split(" ")[1]
-            host = line.split(" ")[2]
-            if (hostnames > 0):
-                f.write('\n')
-            f.write("%s - %s" % (host, ip_address))
-            print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
-            hostnames += 1
+        
+        ip_address = line.split(" ")[1]
+        host = line.split(" ")[2]
+        
+        if (hostnames > 0):
+            f.write('\n')
+
+        f.write("%s - %s" % (host, ip_address))
+        print("   [>] Discovered hostname: %s (%s)" % (host, ip_address))
+        hostnames += 1
+
     print("[*] Found %s hostnames." % (hostnames))
     print("[*] Created hostname list %s" % (output_file))
     f.close()
