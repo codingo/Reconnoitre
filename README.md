@@ -23,4 +23,6 @@ This tool can be used and copied for personal use freely however attribution and
 | -fD | Find DNS servers from the list of target(s). |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
 | --execute | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
+| --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
+
 
