@@ -1,6 +1,6 @@
 #!/usr/bin/python
-from argparse import ArgumentParser
 import sys
+from argparse import ArgumentParser
 from ping_sweeper import ping_sweeper
 from find_dns import find_dns
 from service_scan import service_scan

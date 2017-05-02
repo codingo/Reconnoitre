@@ -3,12 +3,8 @@ import multiprocessing
 import socket
 import os
 import time 
+import file_helper
 from multiprocessing import Process, Queue
-from directory_helper import check_directory
-from directory_helper import load_targets
-from directory_helper import create_dir_structure
-from write_recommendations import write_recommendations
-
 
 def nmap_scan(ip_address, outputdir, dns_server, quick):
    ip_address = ip_address.strip()
