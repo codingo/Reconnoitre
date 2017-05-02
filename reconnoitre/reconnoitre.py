@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from ping_sweeper import ping_sweeper
 from find_dns import find_dns
 from service_scan import service_scan
-
+from hostname_scan import hostname_scan
 
 def print_banner():
     print("  __")
@@ -20,6 +20,7 @@ def main():
     parser.add_argument("-pS", dest="ping_sweep", action="store_true", help="Write a new target.txt by performing a ping sweep and discovering live hosts.", default=False)
     parser.add_argument("-fD", dest="find_dns_servers", action="store_true", help="Find DNS servers from a list of targets.", default=False)
     parser.add_argument("-sS", dest="perform_service_scan", action="store_true", help="Perform service scan over targets.", default=False)
+    parser.add_argument("-dH", dest="hostname_scan", action="store_true", help="Attempt to discover target hostnames and write to 0-name.txt and hostnames.txt.", default=False)
     parser.add_argument("-dns", dest="dns", required=False, help="Optionally specify a DNS server to use with a service scan.")
     parser.add_argument("--quick", dest="quick", action="store_true", required=False, help="Move to the next target after performing a quick scan and writing first-round recommendations.", default=False)    
     parser.add_argument("--quiet", dest="quiet",  action="store_true", help="Supress banner and headers to limit to comma dilimeted results only.", default=False)
@@ -38,9 +39,11 @@ def main():
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
         ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+    if arguments.hostname_scan is True:
+        print("[#] Identifying hostnames")
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        hostname_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.dns is True:
