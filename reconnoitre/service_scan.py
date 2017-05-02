@@ -12,7 +12,7 @@ from write_recommendations import write_recommendations
 
 def nmapScan(ip_address, outputdir, dns_server):
    ip_address = ip_address.strip()
-   outfile = outputdir + "/" + ip_address + "_findings.txt"
+   
 
    print("[+] Starting quick nmap scan for %s" % (ip_address))
    QUICKSCAN = "nmap -n -oN '%s/%s.quick.nmap' %s"  % (outputdir, ip_address, ip_address)
