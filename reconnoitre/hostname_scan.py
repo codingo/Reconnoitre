@@ -5,9 +5,6 @@ import os
 import time 
 from multiprocessing import Process, Queue
 from file_helper import check_directory
-from file_helper import load_targets
-from file_helper import create_dir_structure
-from file_helper import write_recommendations
 
 
 
