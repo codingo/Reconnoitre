@@ -5,7 +5,7 @@ A reconnaissance tool made for the OSCP labs to automate information gathering a
 
 # Credit
 
-This tool is based heavily upon the work made public in Mike Czumak's (T_v3rn1x) OSCP review ([link](https://www.securitysift.com/offsec-pwb-oscp/)) along with considerable influence and code taken from Re4son's mix-recon ([link](https://whitedome.com.au/re4son/category/re4son/oscpnotes/)) which is also based upon Mike Czumak's original offering. The public repository for mix-recon can be found [here](https://github.com/Re4son/mix-recon). 
+This tool is based heavily upon the work made public in Mike Czumak's (T_v3rn1x) OSCP review ([link](https://www.securitysift.com/offsec-pwb-oscp/)) along with considerable influence and code taken from Re4son's mix-recon ([link](https://whitedome.com.au/re4son/category/re4son/oscpnotes/)).
 
 # Usage
 
