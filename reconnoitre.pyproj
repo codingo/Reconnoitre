@@ -23,7 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="reconnoitre\directory_helper.py" />
+    <Compile Include="reconnoitre\file_helper.py" />
     <Compile Include="reconnoitre\find_dns.py" />
     <Compile Include="reconnoitre\ping_sweeper.py" />
     <Compile Include="reconnoitre\reconnoitre.py" />
