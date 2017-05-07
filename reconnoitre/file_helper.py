@@ -95,6 +95,8 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("   [=] dirb http://%s:%s/ -o %s/%s_dirb.txt -r -S -x ./dirb-extensions/php.ext\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [=] java -jar /usr/share/dirbuster/DirBuster-1.0-RC1.jar -H -l /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -r %s/%s_dirbuster.txt -u http://%s:%s/\n" % (outputdir, ip_address, ip_address, port))
                f.write("   [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/common.txt -u http://%s:%s/\n -s '200,204,301,302,307,403,500' -e > %s/%s_gobuster.txt -t 50 \n" % (ip_address, port, outputdir, ip_address))
+               f.write("   [>] Use curl to retreive web headers and find host information, e.g\n")
+               f.write("   [=] curl -i %s\n" % (ip_address))
        elif "mysql" in serv:
            for port in ports:
                port = port.split("/")[0]
@@ -147,6 +149,8 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("   [>] Use medusa or hydra (unreliable) for password cracking, e.g\n")
                f.write("   [=] medusa -u root -P /root/rockyou.txt -e ns -h %s - %s -M ssh\n" % (ip_address, port))
                f.write("   [=] hydra -f -V -t 1 -l root -P /root/rockyou.txt -s %s %s ssh\n" % (port, ip_address))
+               f.write("   [>] Use nmap to automate banner grabbing and key fingerprints, e.g.\n")
+               f.write("   [=] nmap %s -p %s -sV --script=ssh-hostkey -oN '%s/%s_ssh-hostkey.nmap' " % (ip_address, port, outputdir, ip_address))
                
    f.close()     
    print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
