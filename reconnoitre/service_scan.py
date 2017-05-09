@@ -32,11 +32,12 @@ def nmap_scan(ip_address, output_directory, dns_server, quick):
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
        UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 --max-retries 0 -n %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
 
+   udpresults = subprocess.check_output(UDPSCAN, shell=True)
+   write_recommendations(udpresults, ip_address, output_directory)
+
    results = subprocess.check_output(TCPSCAN, shell=True)
    write_recommendations(results, ip_address, output_directory)
 
-   udpresults = subprocess.check_output(UDPSCAN, shell=True)
-   write_recommendations(udpresults, ip_address + '/udp/', output_directory)
 
 def valid_ip(address):
     try:
