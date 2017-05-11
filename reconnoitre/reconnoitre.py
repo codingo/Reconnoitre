@@ -36,7 +36,6 @@ def main():
 
     if arguments.output_directory.endswith('/' or '\\'):
         arguments.output_directory = arguments.output_directory[:-1]
-
     if arguments.target_hosts.endswith('/' or '\\'):
         arguments.target_hosts = arguments.target_hosts[:-1]
 
