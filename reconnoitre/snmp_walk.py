@@ -44,7 +44,7 @@ def target_ip(target_hosts, output_directory, quiet):
     check_directory(snmp_directory)
 
     jobs = []
-    p = multiprocessing.Process(target=snmp_scans, args=(ip_address, snmp_directory))
+    p = multiprocessing.Process(target=snmp_scans, args=(target_hosts, snmp_directory))
     jobs.append(p)
     p.start()
 
