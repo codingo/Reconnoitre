@@ -66,6 +66,7 @@ root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 
    [>] Creating proof file at: /root/Documents/labs/192.168.1.5/proof.txt
 [+] Starting quick nmap scan for 192.168.1.5
 [+] Writing findings for 192.168.1.5
+   [>] Found HTTP service on 192.168.1.5:80
    [>] Found MS SMB service on 192.168.1.5:445
    [>] Found RDP service on 192.168.1.5:3389
 [*] TCP/UDP Nmap scans completed for 192.168.1.5
@@ -75,11 +76,21 @@ root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 
 [+] Writing findings for 192.168.1.5
    [>] Found MS SMB service on 192.168.1.5:445
    [>] Found RDP service on 192.168.1.5:3389
+   [>] Found HTTP service on 192.168.1.5:80
 [*] TCP/UDP Nmap scans completed for 192.168.1.5
 ```
-Which would also write the following recommendations file:
-
+Which would also write the following recommendations file in the folder for the scanned target:
 ```
+[*] Found HTTP service on 192.168.1.50:80
+   [>] Use nikto & dirb / dirbuster for service enumeration, e.g
+      [=] nikto -h 192.168.1.50 -p 80 > /root/Documents/labs/192.168.1.50/nmap/192.168.1.50_nikto.txt
+      [=] dirb http://192.168.1.50:80/ -o /root/Documents/labs/192.168.1.50/nmap/192.168.1.50_dirb.txt -r -S -x ./dirb-extensions/php.ext
+      [=] java -jar /usr/share/dirbuster/DirBuster-1.0-RC1.jar -H -l /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -r /root/Documents/labs/192.168.1.50/nmap/192.168.1.50_dirbuster.txt -u http://192.168.1.50:80/
+      [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/common.txt -u http://192.168.1.50:80/ -s '200,204,301,302,307,403,500' -e > /root/Documents/labs/192.168.1.50/nmap/192.168.1.50_gobuster_common.txt -t 50 
+      [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/cgis.txt -u http://192.168.1.50:80/ -s '200,204,301,307,403,500' -e > /root/Documents/labs/192.168.1.50/nmap/192.168.1.50_gobuster_cgis.txt -t 50 
+   [>] Use curl to retreive web headers and find host information, e.g
+      [=] curl -i 192.168.1.50
+      [=] curl -i 192.168.1.50/robots.txt -s | html2text
 [*] Found MS SMB service on 192.168.1.5:445
    [>] Use nmap scripts or enum4linux for further enumeration, e.g
       [=] nmap -sV -Pn -vv -p445 --script="smb-* -oN '/root/Documents/labs/192.168.1.5/nmap/192.168.1.5_smb.nmap' -oX '/root/Documents/labs/192.168.1.5/nmap/192.168.1.5_smb_nmap_scan_import.xml' 192.168.1.5
