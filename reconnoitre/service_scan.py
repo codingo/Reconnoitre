@@ -61,7 +61,7 @@ def target_file(target_hosts, output_directory, dns_server, quiet, quick):
        create_dir_structure(ip_address, output_directory)
 
        host_directory = output_directory + "/" + ip_address
-       nmap_directory = host_directory + "/nmap"
+       nmap_directory = host_directory + "/scans"
        
        jobs = []
        p = multiprocessing.Process(target=nmap_scan, args=(ip_address, nmap_directory, dns_server, quick))
@@ -76,7 +76,7 @@ def target_ip(target_hosts, output_directory, dns_server, quiet, quick):
     create_dir_structure(target_hosts, output_directory)
     
     host_directory = output_directory + "/" + target_hosts
-    nmap_directory = host_directory + "/nmap"
+    nmap_directory = host_directory + "/scans"
     
     jobs = []
     p = multiprocessing.Process(target=nmap_scan, args=(target_hosts, nmap_directory, dns_server, quick))

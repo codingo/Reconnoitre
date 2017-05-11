@@ -25,8 +25,8 @@ def create_dir_structure(ip_address, output_directory):
     except:
         os.mkdir(hostdir)
 
-    nmapdir = hostdir + "/nmap"
-    print("   [>] Creating nmap directory at: %s" % nmapdir)
+    nmapdir = hostdir + "/scans"
+    print("   [>] Creating scans directory at: %s" % nmapdir)
     try:
         os.stat(nmapdir)
     except:
