@@ -5,7 +5,6 @@ import os
 import time 
 from multiprocessing import Process, Queue
 from file_helper import check_directory
-from file_helper import create_dir_structure
 
 def valid_ip(address):
     try:
@@ -26,7 +25,7 @@ def target_file(target_hosts, output_directory, quiet):
 
     for ip_address in target_file:
        ip_address = ip_address.strip()
-       create_dir_structure(ip_address, output_directory)
+       check_directory(ip_address, output_directory)
 
        host_directory = output_directory + "/" + ip_address
        snamp_directory = host_directory + "/scans/snmp/"
@@ -41,7 +40,7 @@ def target_file(target_hosts, output_directory, quiet):
 def target_ip(target_hosts, output_directory, quiet):
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
-    create_dir_structure(target_hosts, output_directory)
+    check_directory(target_hosts, output_directory)
 
     host_directory = output_directory + "/" + ip_address
     snamp_directory = host_directory + "/scans/snmp/"
