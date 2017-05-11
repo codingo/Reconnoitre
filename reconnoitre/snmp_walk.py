@@ -25,13 +25,12 @@ def target_file(target_hosts, output_directory, quiet):
 
     for ip_address in target_file:
        ip_address = ip_address.strip()
-       check_directory(ip_address, output_directory)
 
-       host_directory = output_directory + "/" + ip_address
-       snamp_directory = host_directory + "/scans/snmp/"
+       snmp_directory = output_directory + '/' + ip_address+ '/scans/snmp/' 
+       check_directory(snmp_directory)
        
        jobs = []
-       p = multiprocessing.Process(target=snmp_scans, args=(ip_address, snamp_directory))
+       p = multiprocessing.Process(target=snmp_scans, args=(ip_address, snmp_directory))
        jobs.append(p)
        p.start()
     target_file.close() 
@@ -40,13 +39,12 @@ def target_file(target_hosts, output_directory, quiet):
 def target_ip(target_hosts, output_directory, quiet):
     print("[*] Loaded single target: %s" % target_hosts)
     target_hosts = target_hosts.strip()    
-    check_directory(target_hosts, output_directory)
-
-    host_directory = output_directory + "/" + ip_address
-    snamp_directory = host_directory + "/scans/snmp/"
     
+    snmp_directory = output_directory + '/' + target_hosts+ '/scans/snmp/' 
+    check_directory(snmp_directory)
+
     jobs = []
-    p = multiprocessing.Process(target=snmp_scans, args=(ip_address, snamp_directory))
+    p = multiprocessing.Process(target=snmp_scans, args=(ip_address, snmp_directory))
     jobs.append(p)
     p.start()
 
@@ -62,6 +60,6 @@ def snmp_walk(target_hosts, output_directory, quiet):
 def snmp_scans(ip, output_directory):
     print("[+] Performing SNMP scans for %s to %s" % (ip_address, output_directory))	
     print("   [>] Performing snmpwalk on public tree for: %s - Checking for System Processes" % (ip_address))
-    SCAN = "snmpwalk -c public -v1 %s 1.3.6.1.2.1.25.1.6.0 > %s/%s/%s-systemprocesses.txt"  % (ip_address, output_directory, ip_address, ip_address)
+    SCAN = "snmpwalk -c public -v1 %s 1.3.6.1.2.1.25.1.6.0 > %s%s-systemprocesses.txt"  % (output_directory, ip_address, ip_address)
     subprocess.check_output(SCAN, shell=True)
     print("[+] Completed SNMP scans for %s" % (ip_address))
