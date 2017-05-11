@@ -17,13 +17,14 @@ This tool can be used and copied for personal use freely however attribution and
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled commands, or executed attacks. |
-| -dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
-| -pS | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
-| -sS | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
-| -fD | Find DNS servers from the list of target(s). |
-| -dH | Attempt to discover target hostnames and write to 0-name.txt and hostnames.txt. |
+| --dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
+| --pingsweep | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
+| --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
+| --dnssweep | Find DNS servers from the list of target(s). |
+| --hostnames | Attempt to discover target hostnames and write to 0-name.txt and hostnames.txt. |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
 | --execute | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
+| --simple_exec | Execute non-brute forcing shell comamnds only commands as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
 
 ## Usage Examples
@@ -31,13 +32,13 @@ _Note that these are some examples to give you insight into potential use cases 
 
 ### Scan a single host, create a file structure and discover services
 ```
-python ./reconnoitre.py -t 192.168.1.5 -sS -o /root/Documents/labs/
+python ./reconnoitre.py -t 192.168.1.5 -o /root/Documents/labs/ --services
 ```
 
 An example output would look like:
 
 ```
-root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 192.168.1.5 -sS -o /root/Documents/labs/
+root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 192.168.1.5 --services -o /root/Documents/labs/
   __
 |"""\-=  RECONNOITRE
 (____)      An OSCP scanner
@@ -84,16 +85,16 @@ Which would also write the following recommendations file in the scans folder fo
 ```
 ### Discover live hosts and hostnames within a range
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -hD
+python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --hostnames
 ```
 
 ### Discover live hosts within a range and then do a quick probe for services
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -sS --quick
+python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services --quick
 ```
 This will scan all services within a target range to create a file structure of live hosts as well as write recommendations for other commands to be executed based on the services discovered on these machines. Removing --quick will do a further probe but will greatly lengthen execution times.
 
 ### Discover live hosts within a range and then do probe all ports (UDP and TCP) for services
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -sS
+python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services
 ```
