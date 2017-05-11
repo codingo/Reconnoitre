@@ -33,9 +33,9 @@ def nmap_scan(ip_address, output_directory, dns_server, quick):
        UDPSCAN = "nmap -vv -Pn -A -sC -sU -T 4 --top-ports 200 --max-retries 0 -n %s -oN '%s/%sU.nmap' -oX '%s/%sU_nmap_scan_import.xml' %s" % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
 
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
-   results = subprocess.check_output(TCPSCAN, shell=True)
+   tcpresults = subprocess.check_output(TCPSCAN, shell=True)
 
-   write_recommendations(results + udpresults, ip_address, output_directory)
+   write_recommendations(tcpresults + udpresults, ip_address, output_directory)
 
 
 def valid_ip(address):
