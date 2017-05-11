@@ -48,3 +48,43 @@ python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -sS
 ```
 python ./reconnoitre.py -t 192.168.1.252 -o /root/Documents/testing/ -sS --quick
 ```
+
+An example output would look like:
+
+```
+root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 192.168.1.5 -sS -o /root/Documents/labs/
+  __
+|"""\-=  RECONNOITRE
+(____)      An OSCP scanner
+
+[#] Performing service scans
+[*] Loaded single target: 192.168.1.5
+[+] Creating directory structure for 192.168.1.5
+   [>] Creating nmap directory at: /root/Documents/labs/192.168.1.5/nmap
+   [>] Creating exploit directory at: /root/Documents/labs/192.168.1.5/exploit
+   [>] Creating loot directory at: /root/Documents/labs/192.168.1.5/loot
+   [>] Creating proof file at: /root/Documents/labs/192.168.1.5/proof.txt
+[+] Starting quick nmap scan for 192.168.1.5
+[+] Writing findings for 192.168.1.5
+   [>] Found MS SMB service on 192.168.1.5:445
+   [>] Found RDP service on 192.168.1.5:3389
+[*] TCP/UDP Nmap scans completed for 192.168.1.5
+[+] Starting detailed TCP/UDP nmap scans for 192.168.1.5
+[+] Writing findings for 192.168.1.5
+[*] TCP/UDP Nmap scans completed for 192.168.1.5
+[+] Writing findings for 192.168.1.5
+   [>] Found MS SMB service on 192.168.1.5:445
+   [>] Found RDP service on 192.168.1.5:3389
+[*] TCP/UDP Nmap scans completed for 192.168.1.5
+```
+Which would also write the following recommendations file:
+
+```
+[*] Found MS SMB service on 192.168.1.5:445
+   [>] Use nmap scripts or enum4linux for further enumeration, e.g
+      [=] nmap -sV -Pn -vv -p445 --script="smb-* -oN '/root/Documents/labs/192.168.1.5/nmap/192.168.1.5_smb.nmap' -oX '/root/Documents/labs/192.168.1.5/nmap/192.168.1.5_smb_nmap_scan_import.xml' 192.168.1.5
+      [=] enum4linux 192.168.1.5
+[*] Found RDP service on 192.168.1.5:3389
+   [>] Use ncrackpassword cracking, e.g
+      [=] ncrack -vv --user administrator -P /root/rockyou.txt rdp://192.168.1.5
+```
