@@ -62,6 +62,14 @@ def snmp_scans(ip_address, output_directory):
 
     print("   [>] Performing snmpwalk on public tree for: %s - Checking for System Processes" % (ip_address))
     SCAN = "snmpwalk -c public -v1 %s 1.3.6.1.2.1.25.1.6.0 > %s%s-systemprocesses.txt"  % (ip_address, output_directory, ip_address)
-    subprocess.run(SCAN)
+    results = subprocess.check_output(SCAN, shell=True)
+    check_results(results, ip_address)
 
     print("[+] Completed SNMP scans for %s" % (ip_address))
+
+def check_results(results, ip_address):
+    lines = results.split("\n")
+    for line in lines:
+       line = line.strip()
+       if ("No Response" in line):
+            print("No response from %s" % ip_address)
