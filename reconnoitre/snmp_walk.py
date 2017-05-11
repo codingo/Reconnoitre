@@ -5,7 +5,7 @@ import os
 import time 
 from multiprocessing import Process, Queue
 from file_helper import check_directory
-
+from file_helper import create_dir_structure
 
 def valid_ip(address):
     try:
