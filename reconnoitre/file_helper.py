@@ -50,9 +50,6 @@ def create_dir_structure(ip_address, output_directory):
     print("   [>] Creating proof file at: %s" % prooffile)
     open(prooffile, 'a').close()
 
-    namefile = hostdir + "/0-name"
-    open(namefile, 'a').close()
-
 
 def write_recommendations(results, ip_address, outputdir):
    recommendations_file = outputdir + "/" + ip_address + "_findings.txt"
