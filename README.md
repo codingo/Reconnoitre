@@ -46,7 +46,7 @@ python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ -pS -sS
 
 ### Scan a single host, create a file structure and discover services
 ```
-python ./reconnoitre.py -t 192.168.1.252 -o /root/Documents/testing/ -sS --quick
+python ./reconnoitre.py -t 192.168.1.5 -sS -o /root/Documents/labs/
 ```
 
 An example output would look like:
