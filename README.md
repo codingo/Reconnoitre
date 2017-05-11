@@ -69,10 +69,8 @@ root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 
    [>] Found HTTP service on 192.168.1.5:80
    [>] Found MS SMB service on 192.168.1.5:445
    [>] Found RDP service on 192.168.1.5:3389
-[*] TCP/UDP Nmap scans completed for 192.168.1.5
+[*] TCP quick scan completed for 192.168.1.5
 [+] Starting detailed TCP/UDP nmap scans for 192.168.1.5
-[+] Writing findings for 192.168.1.5
-[*] TCP/UDP Nmap scans completed for 192.168.1.5
 [+] Writing findings for 192.168.1.5
    [>] Found MS SMB service on 192.168.1.5:445
    [>] Found RDP service on 192.168.1.5:3389
