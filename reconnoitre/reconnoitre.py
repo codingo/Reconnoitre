@@ -53,8 +53,8 @@ def main():
         find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
-        if arguments.dns is True:
-            service_scan(arguments.target_hosts, arguments.output_directory, arguments.dns, arguments.quiet, arguments.quick)
+        if arguments.find_dns_servers is True:
+            service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick)
         else:
             service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick)
     if arguments.perform_snmp_walk is True:
