@@ -155,4 +155,3 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("      [=] nmap %s -p %s -sV --script=ssh-hostkey -oN '%s/%s_ssh-hostkey.nmap' \n" % (ip_address, port, outputdir, ip_address))
                
    f.close()     
-   print("[*] TCP/UDP Nmap scans completed for %s" % ip_address)
