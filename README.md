@@ -22,6 +22,7 @@ This tool can be used and copied for personal use freely however attribution and
 | --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
 | --dnssweep | Find DNS servers from the list of target(s). |
 | --hostnames | Attempt to discover target hostnames and write to 0-name.txt and hostnames.txt. |
+| --snmp | SNMP walk target hosts and save results. |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
 | --execute | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --simple_exec | Execute non-brute forcing shell comamnds only commands as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
