@@ -7,7 +7,6 @@ from multiprocessing import Process, Queue
 from file_helper import check_directory
 
 
-
 def hostname_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     output_file = output_directory + "/hostnames.txt"
