@@ -111,7 +111,7 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("[*] Found MS SMB service on %s:%s\n" % (ip_address, port))
                print("   [>] Found MS SMB service on %s:%s" % (ip_address, port))
                f.write("   [>] Use nmap scripts or enum4linux for further enumeration, e.g\n")
-               f.write("      [=] nmap -sV -Pn -vv -p%s --script=\"smb-* -oN '%s/%s_smb.nmap' -oX '%s/%s_smb_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
+               f.write("      [=] nmap -sV -Pn -vv -p%s --script=\"smb-*\" -oN '%s/%s_smb.nmap' -oX '%s/%s_smb_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
                f.write("      [=] enum4linux %s\n" % (ip_address))
        elif "ms-sql" in serv:
            for port in ports:
