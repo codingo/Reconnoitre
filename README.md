@@ -100,3 +100,7 @@ This will scan all services within a target range to create a file structure of 
 ```
 python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services
 ```
+
+# Requirements
+
+This bare requirement for host and service scanning for this tool is to have both `nbtscan` and `nmap` installed. If you are not using host scanning and only wish to perform a ping sweep and service scan you can get away with only installing `nmap`. The outputted _findings.txt_ will often recommend additional tools which you may not have available in your distribution if not using Kali Linux. All requirements and recommendations are native to Kali Linux which is the recommended (although not required) distribution for using this tool.
