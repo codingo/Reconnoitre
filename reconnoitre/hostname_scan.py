@@ -11,7 +11,7 @@ def hostname_scan(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     output_file = output_directory + "/hostnames.txt"
     f = open(output_file, 'w')
-    print("[+] Writing hostsnames to: %s" % output_file)
+    print("[+] Writing hostnames to: %s" % output_file)
     
     hostnames = 0
     SWEEP = ''
