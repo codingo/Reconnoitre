@@ -102,6 +102,13 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("[*] Found mysql service on %s:%s\n" % (ip_address, port))
                print("   [>] Found mysql service on %s:%s" % (ip_address, port))
                f.write("   [>] Check out the server for web applications with sqli vulnerabilities\n")
+       elif "telnet" in serv:
+           for port in ports:
+               port = port.split("/")[0]
+               f.write("[*] Found telnet service on %s:%s\n" % (ip_address, port))
+               print("   [>] Found telnet service on %s:%s" % (ip_address, port))
+               f.write("   [>] Check out the server headers to enumerate further\n")
+               f.write("      [=] nc -nv %s %s\n" % (ip_address, port))
        elif "microsoft-ds" in serv:	
            for port in ports:
                port = port.split("/")[0]
