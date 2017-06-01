@@ -6,6 +6,7 @@ import time
 from multiprocessing import Process, Queue
 from file_helper import check_directory
 
+
 def valid_ip(address):
     try:
         socket.inet_aton(address)
