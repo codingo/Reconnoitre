@@ -7,6 +7,7 @@ from service_scan import service_scan
 from hostname_scan import hostname_scan
 from snmp_walk import snmp_walk
 
+
 def print_banner():
     print("  __")
     print("|\"\"\"\-=  RECONNOITRE")
@@ -61,5 +62,6 @@ def main():
         print("[#] Performing SNMP walks")
         snmp_walk(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
+        
 if __name__ == "__main__":
     main()
