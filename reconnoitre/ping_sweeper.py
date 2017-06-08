@@ -8,7 +8,7 @@ def ping_sweeper(target_hosts, output_directory, quiet):
     check_directory(output_directory)
     output_file = output_directory + "/targets.txt"
 
-    print("[+] Writing targets to: %s" % output_file)
+    print("[+] Writing discovered targets to: %s" % output_file)
     live_hosts = 0
     f = open(output_file, 'w')
 
