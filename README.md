@@ -20,7 +20,7 @@ This tool can be used and copied for personal use freely however attribution and
 | --dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
 | --pingsweep | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
 | --dnssweep | Find DNS servers from the list of target(s). |
-| --snmpsweep | Find hosts responding to SNMP requests from the list of target(s). |
+| --snmp | Find hosts responding to SNMP requests from the list of target(s). |
 | --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
 | --snmpwalk | SNMP walk target hosts and save results. |
 | --hostnames | Attempt to discover target hostnames and write to hostnames.txt. |
