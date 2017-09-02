@@ -14,7 +14,7 @@ def nmap_scan(ip_address, output_directory, dns_server, quick):
    ip_address = ip_address.strip()
    
    print("[+] Starting quick nmap scan for %s" % (ip_address))
-   QUICKSCAN = "nmap -Pn -n -oN '%s/%s.quick.nmap' %s"  % (output_directory, ip_address, ip_address)
+   QUICKSCAN = "nmap -sC sV %s -oA '%s/%s.quick'"  % (ip_address, output_directory, ip_address)
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
    
    write_recommendations(quickresults, ip_address, output_directory)
@@ -31,7 +31,7 @@ def nmap_scan(ip_address, output_directory, dns_server, quick):
    else:
        print("[+] Starting detailed TCP/UDP nmap scans for %s" % (ip_address))
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
-       UDPSCAN = "unicornscan -mU %s -l %s/%s_unicornscan.txt" % (ip_address, output_directory, ip_address)
+       UDPSCAN = "nmap -sC -sV -sU %s -l %s/%s-udp" % (ip_address, output_directory, ip_address)
 
    udpresults = subprocess.check_output(UDPSCAN, shell=True)
    tcpresults = subprocess.check_output(TCPSCAN, shell=True)
