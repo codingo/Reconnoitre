@@ -14,7 +14,7 @@ def nmap_scan(ip_address, output_directory, dns_server, quick):
    ip_address = ip_address.strip()
    
    print("[+] Starting quick nmap scan for %s" % (ip_address))
-   QUICKSCAN = "nmap -sC sV %s -oA '%s/%s.quick'"  % (ip_address, output_directory, ip_address)
+   QUICKSCAN = "nmap -sC -sV %s -oA '%s/%s.quick'"  % (ip_address, output_directory, ip_address)
    quickresults = subprocess.check_output(QUICKSCAN, shell=True)
    
    write_recommendations(quickresults, ip_address, output_directory)
