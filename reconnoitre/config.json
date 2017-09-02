@@ -1,0 +1,28 @@
+{
+  "services": {
+    "http": {
+      "description": "[*] Found HTTP service on $ip:$port",
+      "nmap-service-names": [
+        "http",
+        "ssl/http",
+        "https"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use nikto & dirb / dirbuster for service enumeration, e.g",
+          "commands": [
+            "nikto -h $ip -p $port > $outputdir/$ip_nikto.txt",
+            "dirb http://$ip:$port/ -o $outputdir/$ip_dirb.txt"
+          ]
+        },
+        {
+          "description": "   [>] Use curl and W3M (apt install w3m) to retreive web headers and find host information, e.g",
+          "commands": [
+            "curl -i $ip:$port",
+            "w3m -dump $ip/robots.txt > $outputdir/$ip_robots.txt"
+          ]
+        }
+      ]
+    }
+  }
+}
