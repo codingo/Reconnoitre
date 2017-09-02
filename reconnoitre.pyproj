@@ -28,14 +28,17 @@
     <Compile Include="reconnoitre\ping_sweeper.py" />
     <Compile Include="reconnoitre\reconnoitre.py" />
     <Compile Include="reconnoitre\service_scan.py" />
+    <Compile Include="tests\validate_config.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="reconnoitre\config.json">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="tests\" />
     <Folder Include="reconnoitre\" />
   </ItemGroup>
   <PropertyGroup>
