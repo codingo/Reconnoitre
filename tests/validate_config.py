@@ -40,7 +40,8 @@ def main():
 # return true is json is valid or false if unable to load
 def is_json(json_file):
   try:
-    json_object = json.loads(str(open(json_file, 'r')))
+      with open(json_file, "r") as f: 
+          json_object = json.load(f)
   except ValueError:
     return False
   return True        
