@@ -251,5 +251,3 @@ paket-files/
 .idea/
 *.sln.iml
 *.pyc
-*.pyproj
-*.sln

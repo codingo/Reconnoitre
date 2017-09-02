@@ -1,0 +1,171 @@
+{
+  "services": {
+    "http": {
+      "description": "[*] Found HTTP service on $ip:$port",
+      "nmap-service-names": [
+        "http",
+        "ssl/http",
+        "https"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use nikto & dirb / dirbuster for service enumeration, e.g",
+          "commands": [
+            "nikto -h $ip -p $port > $outputdir/$ip_nikto.txt",
+            "dirb http://$ip:$port/ -o $outputdir/$ip_dirb.txt"
+          ]
+        },
+        {
+          "description": "   [>] Use curl and W3M (apt install w3m) to retreive web headers and find host information, e.g",
+          "commands": [
+            "curl -i $ip:$port",
+            "w3m -dump $ip/robots.txt > $outputdir/$ip_robots.txt"
+          ]
+        }
+      ]
+    },
+    "ftp": {
+      "description": "[*] Found FTP service on $ip:$port",
+      "nmap-service-names": [
+        "ftp"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use nmap scripts for further enumeration or hydra for password attack, e.g",
+          "commands": [
+            "      [=] nmap -sV -Pn -vv -p$port --script=ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 -oA '$ouptutdir/$ip_ftp' $ip",
+            "      [=] hydra -L User List -P Pass List -f -o $outputdir/$ip_ftphydra.txt -u $ip -s $port ftp"
+          ]
+        }
+      ]
+    },
+    "mysql": {
+      "description": "[*] Found mysql service on $ip:$port",
+      "nmap-service-names": [
+        "mysql"
+      ],
+      "output": [
+        {
+          "description": "   [>] Check out the server for web applications with sqli vulnerabilities",
+          "commands": [
+          ]
+        }
+      ]
+    },
+    "microsoftsql": {
+      "description": "[*] Found MS SQL service on $ip:$port",
+      "nmap-service-names": [
+        "ms-sql"
+      ],
+      "output": [
+        {
+          "description": "   [>] Check out the server for web applications with sqli vulnerabilities",
+          "commands": [
+          ]
+        },
+        {
+          "description": "   [>] Use nmap scripts for further enumeration, e.g",
+          "commands": [
+            "      [=] nmap -vv -sV -Pn -p $port --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=%s,smsql.username-sa,mssql.password-sa -oA $outputdir/$ip_mssql_nmap_scan $ip"
+          ]
+        }
+      ]
+    },
+
+    "telnet": {
+      "description": "[*] Found telnet service on $ip:$port",
+      "nmap-service-names": [
+        "telnet"
+      ],
+      "output": [
+        {
+          "description": "   [>] Check out the server headers to enumerate further",
+          "commands": [
+            "      [=] nc -nv $ip $port"
+          ]
+        }
+      ]
+    },
+    "smb": {
+      "description": "[*] Found MS SMB service on $ip:$port",
+      "nmap-service-names": [
+        "microsoft-ds"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use nmap scripts or enum4linux for further enumeration, e.g",
+          "commands": [
+            "      [=] nmap -sV -Pn -vv -p 139,$port --script=smb-vuln* --script-args=unsafe=1 -oA '$outputdir/$ip_smb.nmap' $ip",
+            "      [=] enum4linux $ip > $outputdir/$ip_enum4linux.txt",
+            "      [=] nmap -sV -Pn -vv -p $port --script=smb-enum-users -oA '$outputdir/$ip_smb_smb-enum-users.nmap' $ip"
+          ]
+        }
+      ]
+    },
+    "remotedesktop": {
+      "description": "[*] Found RDP service on $ip:$port",
+      "nmap-service-names": [
+        "msrdp"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use ncrackpassword cracking, e.g",
+          "commands": [
+            "      [=] ncrack -vv --user administrator -P rockyou.txt rdp://$ip"
+          ]
+        }
+      ]
+    },
+    "smtp": {
+      "description": "[*] Found SMTP service on $ip:$port",
+      "nmap-service-names": [
+        "smtp"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use smtp-user-enum to find users, e.g",
+          "commands": [
+            "      [=] smtp-user-enum -M VRFY -U SecLists/Usernames/Names/top_shortlist.txt -t $ip -p $port"
+          ]
+        }
+      ]
+    },
+    "snmp": {
+      "description": "[*] Found SNMP service on $ip:$port",
+      "nmap-service-names": [
+        "snmp"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use nmap scripts, onesixtyone or snmwalk for further enumeration, e.g",
+          "commands": [
+            "      [=] nmap -sV -Pn -vv -p$port --script=snmp-netstat,snmp-processes -oA '$outputdir/$ip_snmp' $ip",
+            "      [=] onesixtyone $ip",
+            "      [=] snmpwalk -c public -v1 $ip > $outputdir/$ip_snmpwalk.txt"
+          ]
+        }
+      ]
+    },
+    "ssh": {
+      "description": "[*] Found SSH service on $ip:$port",
+      "nmap-service-names": [
+        "ssh"
+      ],
+      "output": [
+        {
+          "description": "   [>] Use medusa or hydra (unreliable) for password cracking, e.g",
+          "commands": [
+            "      [=] medusa -u root -P rockyou.txt -e ns -h $ip - $port -M ssh",
+            "      [=] hydra -f -V -t 1 -l root -P rockyou.txt -s $port $ip ssh"
+          ]
+        },
+        {
+          "description": "   [>] Use nmap to automate banner grabbing and key fingerprints, e.g.",
+          "commands": [
+            "      [=] nmap $ip -p $port -sV --script=ssh-hostkey -oA '$outputdir/$ip_ssh-hostkey'"
+          ]
+        }
+      ]
+    }
+  }
+}
