@@ -45,25 +45,36 @@ def main():
 
     if arguments.quiet is not True:
         print_banner()
+
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
         ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        
     if arguments.hostname_scan is True:
         print("[#] Identifying hostnames")
         hostname_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
         find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.find_dns_servers is True:
             service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick)
         else:
             service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick)
+
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
         snmp_walk(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
-        
+    if arguments.virtualhosts is True:
+        print("[#] Performing Virtual host scans")
+        if arguments.wordlist is False:
+            print("[!] No wordlist was provided, skipping virtual host scanning.")
+        else:
+            print("DEBUG: performing virtual host scan")
+
 if __name__ == "__main__":
     main()
