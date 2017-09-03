@@ -1,3 +1,9 @@
+#!/usr/bin/python
+
+import os
+import requests
+
+
 class virtual_host_scanner(object):
     """Virtual host scanning class for Reconnoitre
     
@@ -22,8 +28,40 @@ class virtual_host_scanner(object):
         self.wordlist = wordlist
 
     def scan(self):
-        print("DEBUG: entered scan routine")
-        print("[+] Starting virtual host scan for %s using port %s and wordlist %s" % (self.target, self.port, self.wordlist))
+        print("[+] Starting virtual host scan for %s using port %s and wordlist %s" % (self.target, str(self.port), self.wordlist))
         print("[>] Ignoring HTTP codes: %s" % (self.ignore_http_codes))
         if(self.ignore_content_length > 0):
             print("[>] Ignoring Content length: %s" % (self.ignore_content_length))
+
+        if not os.path.exists(self.wordlist):
+            print("[!] Wordlist %s doesn't exist, exiting virtual host scanner." % self.wordlist)
+            return
+        
+        virtual_host_list = open(self.wordlist).read().splitlines()
+        results = ''
+
+        for virtual_host in virtual_host_list:
+            hostname = virtual_host.replace('%s', self.target)
+
+            headers = {
+                'Host': hostname if self.port == 80 else '{}:{}'.format(hostname, self.port),
+                'Accept': '*/*'
+            }
+            
+            dest_url = '{}://{}:{}/'.format('https' if int(self.port) == 443 else 'http', self.target, self.port)
+            print(dest_url)
+
+            try:
+                res = requests.get(dest_url, headers=headers, verify=False)
+            except requests.exceptions.RequestException:
+                continue
+
+            if res.status_code in ignore_http_codes:
+                continue
+
+            if args.ignore_content_length > 0 and args.ignore_content_length == int(res.headers['content-length']):
+                continue
+
+            output = 'Found: {} ({})'.format(hostname, res.status_code)
+            results += output + '\n'
+            print(output)
