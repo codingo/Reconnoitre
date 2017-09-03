@@ -80,7 +80,7 @@ def main():
             print("[!] No wordlist was provided, skipping virtual host scanning.")
         else:
             print("DEBUG: performing virtual host scan")
-            scanner = virtual_host_scanner(arguments.target_hosts, arguments.port, arguments.ignore_http_codes, arguments.ignore_content_length, arguments.wordlist)
+            scanner = virtual_host_scanner(arguments.target_hosts, arguments.output_directory, arguments.port, arguments.ignore_http_codes, arguments.ignore_content_length, arguments.wordlist)
             scanner.scan()
 
 if __name__ == "__main__":
