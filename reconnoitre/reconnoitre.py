@@ -18,7 +18,7 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-t",               dest="target_hosts", required=True, help="Set a target range of addresses to target. Ex 10.11.1.1-255" )
     parser.add_argument("-o",               dest="output_directory", required=True, help="Set the output directory. Ex /root/Documents/labs/")
-    parser.add_argument("-w",               dest="wordlist", required=False, help="Set the wordlist to use for generated commands. Ex /usr/share/wordlist.txt")
+    parser.add_argument("-w",               dest="wordlist", required=False, help="Set the wordlist to use for generated commands. Ex /usr/share/wordlist.txt", default=False)
     parser.add_argument("-p",               dest="port", required=False, help="Set the port to use. Leave blank to use discovered ports. Useful to force virtual host scanning on non-standard webserver ports.")
     parser.add_argument("--pingsweep",      dest="ping_sweep", action="store_true", help="Write a new target.txt by performing a ping sweep and discovering live hosts.", default=False)
     parser.add_argument("--dns",            dest="find_dns_servers", action="store_true", help="Find DNS servers from a list of targets.", default=False)
