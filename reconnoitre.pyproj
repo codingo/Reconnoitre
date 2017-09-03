@@ -28,6 +28,9 @@
     <Compile Include="reconnoitre\ping_sweeper.py" />
     <Compile Include="reconnoitre\reconnoitre.py" />
     <Compile Include="reconnoitre\service_scan.py" />
+    <Compile Include="reconnoitre\virtual_host_scanner.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\validate_config.py">
       <SubType>Code</SubType>
     </Compile>
