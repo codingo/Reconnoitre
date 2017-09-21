@@ -95,8 +95,6 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("   [>] Use curl and W3M (apt install w3m) to retreive web headers and find host information, e.g\n")
                f.write("      [=] curl -i %s\n" % (ip_address))
                f.write("      [=] w3m -dump %s/robots.txt  > %s/%s_robots.txt\n" % (ip_address, outputdir, ip_address))
-               f.write("   [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/common.txt -u http://%s:%s/\n -s '200,204,301,302,307,403,500' -e > %s/%s_gobuster_common.txt -t 50 \n" % (ip_address, port, outputdir, ip_address))
-f.write("   [=] gobuster -w /usr/share/seclists/Discovery/Web_Content/cgis.txt -u http://%s:%s/\n -s '200,204,301,307,403,500' -e > %s/%s_gobuster_cgis.txt -t 50 \n" % (ip_address, port, outputdir, ip_address))
        elif "mysql" in serv:
            for port in ports:
                port = port.split("/")[0]
