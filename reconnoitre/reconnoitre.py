@@ -14,7 +14,7 @@ from virtual_host_scanner import virtual_host_scanner
 def print_banner():
     print("  __")
     print("|\"\"\"\-=  RECONNOITRE")
-    print("(____)      An OSCP scanner\n")
+    print("(____)      An OSCP scanner by @codingo_\n")
 
 
 def main():
