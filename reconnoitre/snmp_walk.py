@@ -4,7 +4,7 @@ import socket
 import os
 import time
 from multiprocessing import Process, Queue
-from file_helper import check_directory
+from file_helper import check_directory, load_targets
 
 
 def valid_ip(address):
@@ -57,20 +57,15 @@ def snmp_walk(target_hosts, output_directory, quiet):
         target_ip(target_hosts, output_directory, quiet)
     else:
         target_file(target_hosts, output_directory, quiet)
-
+        
 def snmp_scans(ip_address, output_directory):
     print("[+] Performing SNMP scans for %s to %s" % (ip_address, output_directory))
-
     print("   [>] Performing snmpwalk on public tree for: %s - Checking for System Processes" % (ip_address))
     SCAN = "snmpwalk -c public -v1 %s 1.3.6.1.2.1.25.1.6.0 > '%s%s-systemprocesses.txt'"  % (ip_address, output_directory, ip_address)
-    results = subprocess.check_output(SCAN, shell=True)
-    check_results(results, ip_address)
+
+    try:
+        results = subprocess.check_output(SCAN, stderr=subprocess.STDOUT, shell=True).decode('utf-8')
+    except Exception as e:
+        print("[+] No Response from %s" % ip_address)
 
     print("[+] Completed SNMP scans for %s" % (ip_address))
-
-def check_results(results, ip_address):
-    lines = results.split("\n")
-    for line in lines:
-       line = line.strip()
-       if ("No Response" in line):
-            print("No response from %s" % ip_address)
