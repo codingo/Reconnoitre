@@ -24,7 +24,6 @@ This tool can be used and copied for personal use freely however attribution and
 | --dnssweep | Find DNS servers from the list of target(s). |
 | --snmp | Find hosts responding to SNMP requests from the list of target(s). |
 | --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
-| --snmpwalk | SNMP walk target hosts and save results. |
 | --hostnames | Attempt to discover target hostnames and write to hostnames.txt. |
 | --virtualhosts | Attempt to discover virtual hosts using the specified wordlist. This can be expended via discovered hostnames. |
 | --ignore-http-codes | Comma separated list of http codes to ignore with virtual host scans. |
