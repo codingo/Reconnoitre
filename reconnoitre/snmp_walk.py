@@ -67,5 +67,7 @@ def snmp_scans(ip_address, output_directory):
         results = subprocess.check_output(SCAN, stderr=subprocess.STDOUT, shell=True).decode('utf-8')
     except Exception as e:
         print("[+] No Response from %s" % ip_address)
+    except subprocess.CalledProcessError as cpe:
+        print("[+] Subprocess failure during scan of %s" % ip_address)
 
     print("[+] Completed SNMP scans for %s" % (ip_address))
