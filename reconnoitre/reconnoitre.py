@@ -16,6 +16,35 @@ def print_banner():
     print("|\"\"\"\-=  RECONNOITRE")
     print("(____)      An OSCP scanner by @codingo_\n")
 
+def util_checks(util = None):
+    if util is None:
+        print("[!] Error hit in chktool: None encountered for util.")
+        sys.exit(1)
+
+    pyvers = sys.version_info
+
+    if (pyvers[0] >= 3) and (pyvers[1] >= 3): # python3.3+
+        import shutil
+        if shutil.which(util) is None:
+            if util is "nmap":
+                print("   [!] nmap was not found on your system. Exiting since we wont be able to scan anything. Please install nmap and try again.")
+                sys.exit(1)
+            else:
+                print("   [-] %s was not found in your system. Scan types using this will fail." % util)
+                return "Not Found"
+        else:
+            return "Found"
+    else: # less-than python 3.3
+        from distutils import spawn
+        if spawn.find_executable(util) is None:
+            if util is "nmap":
+                print("   [!] nmap was not found on your system. Exiting since we wont be able to scan anything. Please install nmap and try again.")
+                sys.exit(1)
+            else:
+                print("   [-] %s was not found in your system. Scan types using this will fail." % util)
+                return "Not Found"
+        else:
+            return "Found"
 
 def main():
     parser = ArgumentParser()
@@ -52,6 +81,11 @@ def main():
 
     if arguments.quiet is not True:
         print_banner()
+        print("[+] Testing for required utilities on your system.")
+
+    utils = ['nmap', 'snmpwalk', 'nbtscan'] # list of utils to check on local system.
+    for util in utils:
+        util_checks(util)
 
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
