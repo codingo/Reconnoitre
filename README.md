@@ -7,7 +7,7 @@ Contributions are more than welcome!
 
 # Credit
 
-This tool is based heavily upon the work made public in Mike Czumak's (T_v3rn1x) OSCP review ([link](https://www.securitysift.com/offsec-pwb-oscp/)) along with considerable influence and code taken from Re4son's mix-recon ([link](https://whitedome.com.au/re4son/category/re4son/oscpnotes/)). Virtual host scanning is originally adapted from teknogeek's work which is heavily influenced by jobertabma's virtual host discovery script ([link](https://github.com/jobertabma/virtual-host-discovery)).
+This tool is based heavily upon the work made public in Mike Czumak's (T_v3rn1x) OSCP review ([link](https://www.securitysift.com/offsec-pwb-oscp/)) along with considerable influence and code taken from Re4son's mix-recon ([link](https://whitedome.com.au/re4son/category/re4son/oscpnotes/)). Virtual host scanning is originally adapted from teknogeek's work which is heavily influenced by jobertabma's virtual host discovery script ([link](https://github.com/jobertabma/virtual-host-discovery)). Further Virtual Host scanning code has been adapted from a project by Tim Kent and I, available here ([link](https://github.com/codingo/VHostScan)).
 
 # Usage
 

@@ -95,6 +95,8 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("   [>] Use curl and W3M (apt install w3m) to retreive web headers and find host information, e.g\n")
                f.write("      [=] curl -i %s\n" % (ip_address))
                f.write("      [=] w3m -dump %s/robots.txt  > '%s/%s_robots.txt'\n" % (ip_address, outputdir, ip_address))
+               f.write("   [>] Use VHostScan to check for Virtual Hosts, e.g\n")
+               f.write("      [=] vhostscan -t %s -o %s/%s_vhosts.txt\n" % (ip_address, outputdir, ip_address))
        elif "mysql" in serv:
            for port in ports:
                port = port.split("/")[0]
