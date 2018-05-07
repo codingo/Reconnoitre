@@ -88,7 +88,7 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("[*] Found HTTP service on %s:%s\n" % (ip_address, port))
                print("   [>] Found HTTP service on %s:%s" % (ip_address, port))
                f.write("   [>] Use nikto & dirb / dirbuster for service enumeration, e.g\n")
-               f.write("      [=] nikto -h %s -p %s > %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
+               f.write("      [=] nikto -h %s -p %s -output %s/%s_nikto.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("      [=] dirb http://%s:%s/ -o %s/%s_dirb.txt\n" % (ip_address, port, outputdir, ip_address))
                f.write("      [=] gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u http://%s:%s/ -s '200,204,301,302,307,403,500' -e > '%s/%s_gobuster_common.txt' -t 50 \n" % (ip_address, port, outputdir, ip_address))
                f.write("      [=] gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/CGIs.txt -u http://%s:%s/ -s '200,204,301,307,403,500' -e > '%s/%s_gobuster_cgis.txt' -t 50 \n" % (ip_address, port, outputdir, ip_address))
