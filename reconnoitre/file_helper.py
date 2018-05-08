@@ -132,7 +132,7 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("[*] Found RDP service on %s:%s\n" % (ip_address, port))
                print("   [>] Found RDP service on %s:%s" % (ip_address, port))
                f.write("   [>] Use ncrackpassword cracking, e.g\n")
-               f.write("      [=] ncrack -vv --user administrator -P rockyou.txt rdp://%s\n" % (ip_address))
+               f.write("      [=] ncrack -vv --user administrator -P /usr/share/wordlists/rockyou.txt rdp://%s\n" % (ip_address))
        elif "smtp" in serv:
            for port in ports:
                port = port.split("/")[0]
