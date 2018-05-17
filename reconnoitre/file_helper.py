@@ -94,7 +94,7 @@ def write_recommendations(results, ip_address, outputdir):
                f.write("      [=] gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/CGIs.txt -u http://%s:%s/ -s '200,204,301,307,403,500' -e | tee '%s/%s_gobuster_cgis.txt'\n" % (ip_address, port, outputdir, ip_address))
                f.write("   [>] Use curl and W3M (apt install w3m) to retreive web headers and find host information, e.g\n")
                f.write("      [=] curl -i %s\n" % (ip_address))
-               f.write("      [=] w3m -dump %s/robots.txt  > '%s/%s_robots.txt'\n" % (ip_address, outputdir, ip_address))
+               f.write("      [=] w3m -dump %s/robots.txt  | tee '%s/%s_robots.txt'\n" % (ip_address, outputdir, ip_address))
                f.write("   [>] Use VHostScan to check for Virtual Hosts, e.g\n")
                f.write("      [=] vhostscan -t %s -o %s/%s_vhosts.txt\n" % (ip_address, outputdir, ip_address))
        elif "mysql" in serv:
@@ -117,7 +117,7 @@ def write_recommendations(results, ip_address, outputdir):
                print("   [>] Found MS SMB service on %s:%s" % (ip_address, port))
                f.write("   [>] Use nmap scripts or enum4linux for further enumeration, e.g\n")
                f.write("      [=] nmap -sV -Pn -vv -p 139,%s --script=smb-vuln* --script-args=unsafe=1 -oN '%s/%s_smb.nmap' -oX '%s/%s_smb_nmap_scan_import.xml' %s\n" % (port, outputdir, ip_address, outputdir, ip_address, ip_address))
-               f.write("      [=] enum4linux %s > '%s/%s_enum4linux.txt'\n" % (ip_address, outputdir, ip_address))
+               f.write("      [=] enum4linux %s | tee '%s/%s_enum4linux.txt'\n" % (ip_address, outputdir, ip_address))
                f.write("      [=] nmap -sV -Pn -vv -p %s --script=smb-enum-users -oN '%s/%s_smb_smb-enum-users.nmap' %s\n" % (port, outputdir, ip_address, ip_address))
        elif "ms-sql" in serv:
            for port in ports:
