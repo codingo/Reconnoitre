@@ -33,10 +33,7 @@ def nmap_scan(ip_address, output_directory, dns_server, quick, no_udp_service_sc
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
        UDPSCAN = "nmap -sC -sV -sU %s -oA '%s/%s-udp'" % (ip_address, output_directory, ip_address)
 
-   if no_udp_service_scan is True:
-       udpresults = ""
-   else:
-       udpresults = subprocess.check_output(UDPSCAN, shell=True)
+   udpresults = "" if no_udp_service_scan is True else subprocess.check_output(UDPSCAN, shell=True)
    tcpresults = subprocess.check_output(TCPSCAN, shell=True)
 
    write_recommendations(tcpresults + udpresults, ip_address, output_directory)
