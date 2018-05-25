@@ -66,6 +66,7 @@ def main():
     parser.add_argument("--quiet",          dest="quiet",   action="store_true", help="Supress banner and headers to limit to comma dilimeted results only.", default=False)
     parser.add_argument("--exec",           dest="follow",  action="store_true", help="Execute shell comamnds from recommendations as they are discovered. Likely to lead to very long execute times depending on the wordlist being used.", default=False)
     parser.add_argument("--simple_exec",    dest="quickfollow",  action="store_true", help="Execute non-brute forcing shell comamnds only as they are discovered.", default=False)
+    parser.add_argument("--no-udp",    dest="no_udp_service_scan",  action="store_true", help="Disable UDP services scan over targets.", default=False)
     arguments = parser.parse_args()
 
     if len(sys.argv) == 1:
@@ -102,9 +103,9 @@ def main():
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.find_dns_servers is True:
-            service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick)
+            service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
         else:
-            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick)
+            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
 
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
