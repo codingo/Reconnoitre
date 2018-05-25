@@ -32,6 +32,7 @@ This tool can be used and copied for personal use freely however attribution and
 | --execute | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --simple_exec | Execute non-brute forcing shell comamnds only commands as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
+| --no-udp | Disable UDP service scanning, which is ON by default. |
 
 ## Usage Examples
 _Note that these are some examples to give you insight into potential use cases for this tool. Command lines can be added or removed based on what you wish to acomplish with your scan._
