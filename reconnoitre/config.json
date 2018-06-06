@@ -15,8 +15,8 @@
             "nikto -h $ip -p $port -output $outputdir/$ip_nikto.txt",
             "dirb http://$ip:$port/ -o $outputdir/$ip_dirb.txt",
             "dirbuster -H -u http://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_dirbuster_medium.txt",
-            "gobuster -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_gobuster_common.txt'",
-            "gobuster -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u http://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_gobuster_cgis.txt'",
+            "gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u http://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_gobuster_common.txt'",
+            "gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/CGIs.txt -u http://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_gobuster_cgis.txt'",
             "curl -i $ip:$port",
             "w3m -dump $ip/robots.txt | tee $outputdir/$ip_robots.txt",
             "vhostscan -t $ip -o $outputdir/$ip_vhosts.txt"
