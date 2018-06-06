@@ -19,7 +19,7 @@
             "gobuster -w /usr/share/wordlists/SecLists/Discovery/Web-Content/CGIs.txt -u http://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_gobuster_cgis.txt'",
             "curl -i $ip:$port",
             "w3m -dump $ip/robots.txt | tee $outputdir/$ip_robots.txt",
-            "VHostScan -t $ip -o $outputdir/$ip_vhosts.txt"
+            "VHostScan -t $ip -oN $outputdir/$ip_vhosts.txt"
           ]
         }
       ]
