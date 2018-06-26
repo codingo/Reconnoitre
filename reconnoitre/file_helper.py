@@ -74,7 +74,7 @@ def write_recommendations(results, ip_address, outputdir):
    print("[+] Writing findings for %s" % (ip_address))
 
    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-   with open(os.path.join(__location__, "config.json", "r")) as config:
+   with open(os.path.join(__location__, "config.json"), "r") as config:
        c = config.read()
        j = json.loads(c.replace("$ip", "%(ip)s").replace("$port", "%(port)s").replace("$outputdir", "%(outputdir)s"))
 
