@@ -15,7 +15,7 @@
             "nikto -h $ip -p $port -output $outputdir/$ip_$port_nikto.txt",
             "curl -i $ip:$port",
             "w3m -dump $ip/robots.txt | tee $outputdir/$ip_$port_robots.txt",
-            "vhostscan -t $ip -o $outputdir/$ip_$port_vhosts.txt"
+            "VHostScan -t $ip -oN $outputdir/$ip_$port_vhosts.txt"
           ]
         }
       ]

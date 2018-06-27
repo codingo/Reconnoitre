@@ -35,7 +35,7 @@ This tool can be used and copied for personal use freely however attribution and
 | --no-udp | Disable UDP service scanning, which is ON by default. |
 
 ## Usage Examples
-_Note that these are some examples to give you insight into potential use cases for this tool. Command lines can be added or removed based on what you wish to acomplish with your scan._
+_Note that these are some examples to give you insight into potential use cases for this tool. Command lines can be added or removed based on what you wish to accomplish with your scan._
 
 ### Scan a single host, create a file structure and discover services
 ```
