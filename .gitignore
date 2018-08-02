@@ -253,3 +253,9 @@ paket-files/
 
 # Python working files
 *.pyc
+*.swp
+
+# Test files
+funcproto.py
+featurelist
+testname/

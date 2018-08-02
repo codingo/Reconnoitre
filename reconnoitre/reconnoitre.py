@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from ping_sweeper import ping_sweeper
 from find_dns import find_dns
 from service_scan import service_scan
+from htb_scan import htb_scan
 from hostname_scan import hostname_scan
 from snmp_walk import snmp_walk
 from virtual_host_scanner import virtual_host_scanner
@@ -50,11 +51,13 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-t",               dest="target_hosts", required=True, help="Set a target range of addresses to target. Ex 10.11.1.1-255" )
     parser.add_argument("-o",               dest="output_directory", required=True, help="Set the output directory. Ex /root/Documents/labs/")
+    parser.add_argument("-n",               dest="named_hosts", required=False, help="Set a target address and name in directory structure and reporting. Ex 10.11.1.15 -n examplebox. Does not work with target file", default=False)
     parser.add_argument("-w",               dest="wordlist", required=False, help="Set the wordlist to use for generated commands. Ex /usr/share/wordlist.txt", default=False)
     parser.add_argument("-p",               dest="port", required=False, help="Set the port to use. Leave blank to use discovered ports. Useful to force virtual host scanning on non-standard webserver ports.", default=80)
     parser.add_argument("--pingsweep",      dest="ping_sweep", action="store_true", help="Write a new target.txt by performing a ping sweep and discovering live hosts.", default=False)
     parser.add_argument("--dns",            dest="find_dns_servers", action="store_true", help="Find DNS servers from a list of targets.", default=False)
     parser.add_argument("--services",       dest="perform_service_scan", action="store_true", help="Perform service scan over targets.", default=False)
+#    parser.add_argument("--htb",            dest="perform_htb_scan", action="store_true", help="Perform hackthebox optimized scan over targets. Requires -n.", default=False)
     parser.add_argument("--hostnames",      dest="hostname_scan", action="store_true", help="Attempt to discover target hostnames and write to 0-name.txt and hostnames.txt.", default=False)
     parser.add_argument("--snmp",           dest="perform_snmp_walk", action="store_true", help="Perform service scan over targets.", default=False)
     parser.add_argument("--quick",          dest="quick",   action="store_true", required=False, help="Move to the next target after performing a quick scan and writing first-round recommendations.", default=False)    
@@ -101,16 +104,25 @@ def main():
         find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
     if arguments.perform_service_scan is True:
+        ident = arguments.named_hosts if arguments.named_hosts else arguments.target_hosts
         print("[#] Performing service scans")
         if arguments.find_dns_servers is True:
-            service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
+            service_scan(arguments.target_hosts, ident, arguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
         else:
-            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
-
+            service_scan(arguments.target_hosts, ident, arguments.output_directory, '', arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
+     
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
         snmp_walk(arguments.target_hosts, arguments.output_directory, arguments.quiet)
 
+#    if arguments.perform_htb_scan is True:
+#        ident = arguments.named_hosts if arguments.named_hosts else arguments.target_hosts
+#        print("[#] Performing htb service scans")
+#        if arguments.find_dns_servers is True:                                                                                                                               
+#            htb_scan(arguments.target_hosts, ident, sarguments.output_directory, arguments.find_dns_servers, arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
+#        else:
+#            htb_scan(arguments.target_hosts, ident, arguments.output_directory, '', arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
+#    
     if arguments.virtualhosts is True:
         print("[#] Performing Virtual host scans")
         if arguments.wordlist is False:
