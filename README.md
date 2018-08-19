@@ -18,6 +18,7 @@ This tool can be used and copied for personal use freely however attribution and
 | -h, --help | Display help message and exit |
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
+| -n NAMED_HOST | Set a target address and name for directory structure output and reporting. Ex 10.11.1.15 -n examplebox creates /examplebox. Does not work with target file or IP address ranges. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled commands, or executed attacks. |
 | --dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
 | --pingsweep | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
