@@ -15,7 +15,7 @@ def nmap_scan(ip_address, output_directory, dns_server, quick, no_udp_service_sc
 
    print("[+] Starting quick nmap scan for %s" % (ip_address))
    QUICKSCAN = "nmap -sC -sV %s -oA '%s/%s.quick'"  % (ip_address, output_directory, ip_address)
-   quickresults = subprocess.check_output(QUICKSCAN, shell=True)
+   quickresults = subprocess.check_output(QUICKSCAN, shell=True).decode("utf-8")
 
    write_recommendations(quickresults, ip_address, output_directory)
    print("[*] TCP quick scans completed for %s" % ip_address)
@@ -33,8 +33,8 @@ def nmap_scan(ip_address, output_directory, dns_server, quick, no_udp_service_sc
        TCPSCAN = "nmap -vv -Pn -sS -A -sC -p- -T 3 -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' -oX '%s/%s_nmap_scan_import.xml' %s"  % (dns_server, output_directory, ip_address, output_directory, ip_address, ip_address)
        UDPSCAN = "nmap -sC -sV -sU %s -oA '%s/%s-udp'" % (ip_address, output_directory, ip_address)
 
-   udpresults = "" if no_udp_service_scan is True else subprocess.check_output(UDPSCAN, shell=True)
-   tcpresults = subprocess.check_output(TCPSCAN, shell=True)
+   udpresults = "" if no_udp_service_scan is True else subprocess.check_output(UDPSCAN, shell=True).decode("utf-8")
+   tcpresults = subprocess.check_output(TCPSCAN, shell=True).decode("utf-8")
 
    write_recommendations(tcpresults + udpresults, ip_address, output_directory)
    print("[*] TCP%s scans completed for %s" % (("" if no_udp_service_scan is True else "/UDP"), ip_address))
