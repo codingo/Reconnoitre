@@ -9,7 +9,6 @@ def ping_sweeper(target_hosts, output_directory, quiet):
     output_file = output_directory + "/targets.txt"
 
     print("[+] Writing discovered targets to: %s" % output_file)
-    live_hosts = 0
     f = open(output_file, 'w')
 
     print("[+] Performing ping sweep over %s" % target_hosts)
@@ -18,16 +17,22 @@ def ping_sweeper(target_hosts, output_directory, quiet):
     results = subprocess.check_output(SWEEP, shell=True)
     lines = str(results, "utf-8").split("\n")
     
-    for line in lines:
-        line = line.strip()
-        line = line.rstrip()
-        if ("Nmap scan report for" in line):
-            ip_address = line.split(" ")[4]
-            if (live_hosts > 0):
-                f.write('\n')
-            f.write("%s" % (ip_address))
-            print("   [>] Discovered host: %s" % (ip_address))
-            live_hosts += 1
-    print("[*] Found %s live hosts" % (live_hosts))
+    live_hosts = parse_nmap_output_for_live_hosts(lines)
+    f.write("\n".join(live_hosts))
+    for ip_address in live_hosts:
+        print("   [>] Discovered host: %s" % (ip_address))
+    print("[*] Found %s live hosts" % (len(live_hosts)))
     print("[*] Created target list %s" % (output_file))
     f.close()
+
+
+def parse_nmap_output_for_live_hosts(lines):
+    def get_ip_from_nmap_line(line):
+        return line.split()[4]
+
+    live_hosts = [get_ip_from_nmap_line(line)
+                  for line in lines
+                  if "Nmap scan report for" in line]
+
+    return live_hosts
+
