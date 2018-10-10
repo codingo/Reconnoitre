@@ -28,8 +28,6 @@ This tool can be used and copied for personal use freely however attribution and
 | --ignore-http-codes | Comma separated list of http codes to ignore with virtual host scans. |
 | --ignore-content-length | Ignore content lengths of specificed amount. This may become useful when a server returns a static page on every virtual host guess. |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
-| --exec | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
-| --simple_exec | Execute non-brute forcing shell comamnds only commands as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
 | --no-udp | Disable UDP service scanning, which is ON by default. |
 
