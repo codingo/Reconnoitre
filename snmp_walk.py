@@ -64,7 +64,7 @@ def snmp_scans(ip_address, output_directory):
     SCAN = "snmpwalk -c public -v1 %s 1.3.6.1.2.1.25.1.6.0 > '%s%s-systemprocesses.txt'"  % (ip_address, output_directory, ip_address)
 
     try:
-        results = subprocess.check_output(SCAN, stderr=subprocess.STDOUT, shell=True).decode('utf-8')
+        results = subprocess.check_output(SCAN, stderr=subprocess.STDOUT, shell=True).decode("utf-8").decode('utf-8')
     except Exception as e:
         print("[+] No Response from %s" % ip_address)
     except subprocess.CalledProcessError as cpe:

@@ -21,7 +21,7 @@ def hostname_scan(target_hosts, output_directory, quiet):
     else:
         SWEEP = "nbtscan -q %s" % (target_hosts)
 
-    results = subprocess.check_output(SWEEP, shell=True)
+    results = subprocess.check_output(SWEEP, shell=True).decode("utf-8")
     lines = results.split("\n")
     
     for line in lines:

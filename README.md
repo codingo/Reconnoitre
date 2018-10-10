@@ -19,9 +19,8 @@ This tool can be used and copied for personal use freely however attribution and
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled commands, or executed attacks. |
-| --dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
 | --pingsweep | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
-| --dnssweep | Find DNS servers from the list of target(s). |
+| --dns, --dnssweep | Find DNS servers from the list of target(s). |
 | --snmp | Find hosts responding to SNMP requests from the list of target(s). |
 | --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
 | --hostnames | Attempt to discover target hostnames and write to hostnames.txt. |
@@ -29,8 +28,6 @@ This tool can be used and copied for personal use freely however attribution and
 | --ignore-http-codes | Comma separated list of http codes to ignore with virtual host scans. |
 | --ignore-content-length | Ignore content lengths of specificed amount. This may become useful when a server returns a static page on every virtual host guess. |
 | --quiet | Supress banner and headers and limit feedback to grepable results. |
-| --exec | Execute shell commands from recommendations as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
-| --simple_exec | Execute non-brute forcing shell comamnds only commands as they are discovered. Likely to lead to very long execution times depending on the wordlist being used and discovered vectors. |
 | --quick | Move to the next target after performing a quick scan and writing first-round recommendations. |
 | --no-udp | Disable UDP service scanning, which is ON by default. |
 
