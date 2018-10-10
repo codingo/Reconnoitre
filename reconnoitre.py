@@ -64,7 +64,6 @@ def main():
     parser.add_argument('--ignore-content-length',  dest='ignore_content_length', type=int, help='Ignore content lengths of specificed amount. This may become useful when a server returns a static page on every virtual host guess.', default=0)
 
     parser.add_argument("--quiet",                  dest="quiet",   action="store_true", help="Supress banner and headers to limit to comma dilimeted results only.", default=False)
-    parser.add_argument("--simple_exec",            dest="quickfollow",  action="store_true", help="Execute non-brute forcing shell comamnds only as they are discovered.", default=False)
     parser.add_argument("--no-udp",                 dest="no_udp_service_scan",  action="store_true", help="Disable UDP services scan over targets.", default=False)
     arguments = parser.parse_args()
 
