@@ -6,6 +6,7 @@ from file_helper import check_directory
 
 def ping_sweeper(target_hosts, output_directory, quiet):
     check_directory(output_directory)
+    
     output_file = output_directory + "/targets.txt"
 
     print("[+] Writing discovered targets to: %s" % output_file)
@@ -14,7 +15,10 @@ def ping_sweeper(target_hosts, output_directory, quiet):
 
     print("[+] Performing ping sweep over %s" % target_hosts)
 
-    SWEEP = "nmap -n -sP %s" % (target_hosts)
+    if (os.path.isfile(target_hosts)):
+        SWEEP = "nmap -n -sP -iL %s" % (target_hosts)
+    else:
+        SWEEP = "nmap -n -sP %s" % (target_hosts)
     results = subprocess.check_output(SWEEP, shell=True)
     lines = results.split("\n")
     
