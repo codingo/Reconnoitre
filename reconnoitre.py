@@ -24,8 +24,8 @@ if sys.platform.startswith('win'):
 else:
     R, B, Y, C, W = '\033[1;31m', '\033[1;37m', '\033[93m', '\033[1;30m', '\033[0m'
 def print_banner():
-    print("%s  __"%(R))
-    print("%s|\"\"\"\-=  RECONNOITRE"%(R))
+    print("%s  __"%(Y))
+    print("%s|\"\"\"\-=  RECONNOITRE"%(Y))
     print("%s(____)      An OSCP scanner by @codingo_\n"%(W))
 
 def util_checks(util = None):
