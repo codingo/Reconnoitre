@@ -19,9 +19,8 @@ This tool can be used and copied for personal use freely however attribution and
 | -t TARGET_HOSTS | Set either a target range of addresses or a single host to target. May also be a file containing hosts. |
 | -o OUTPUT_DIRECTORY | Set the target directory where results should be written. |
 | -w WORDLIST | Optionally specify your own wordlist to use for pre-compiled commands, or executed attacks. |
-| --dns DNS_SERVER | Optionally specify a DNS server to use with a service scan. |
 | --pingsweep | Write a new target.txt file in the OUTPUT_DIRECTORY by performing a ping sweep and discovering live hosts. |
-| --dnssweep | Find DNS servers from the list of target(s). |
+| --dns, --dnssweep | Find DNS servers from the list of target(s). |
 | --snmp | Find hosts responding to SNMP requests from the list of target(s). |
 | --services | Perform a service scan over the target(s) and write recommendations for further commands to execute. |
 | --hostnames | Attempt to discover target hostnames and write to hostnames.txt. |
