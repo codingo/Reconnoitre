@@ -6,7 +6,6 @@ from file_helper import check_directory
 
 def ping_sweeper(target_hosts, output_directory, quiet):
     check_directory(output_directory)
-    
     output_file = output_directory + "/targets.txt"
 
     print("[+] Writing discovered targets to: %s" % output_file)
