@@ -4,11 +4,11 @@ import os
 import requests
 
 
-class virtual_host_scanner(object):
+class VirtualHostScanner(object):
     """Virtual host scanning class for Reconnoitre
-    
+
     Virtual host scanner has the following properties:
-    
+
     Attributes:
         wordlist: location to a wordlist file to use with scans
         target: the target for scanning
@@ -18,8 +18,9 @@ class virtual_host_scanner(object):
         output: folder to write output file to
 
     """
-     
-    def __init__(self, target, output, port=80, ignore_http_codes='404', ignore_content_length=0, wordlist="./wordlist/virtual-host-scanning.txt"):
+
+    def __init__(self, target, output, port=80, ignore_http_codes='404', ignore_content_length=0,
+                 wordlist="./wordlist/virtual-host-scanning.txt"):
         self.target = target
         self.output = output + '/' + target + '_virtualhosts.txt'
         self.port = port
@@ -28,15 +29,16 @@ class virtual_host_scanner(object):
         self.wordlist = wordlist
 
     def scan(self):
-        print("[+] Starting virtual host scan for %s using port %s and wordlist %s" % (self.target, str(self.port), self.wordlist))
+        print("[+] Starting virtual host scan for %s using port %s and wordlist %s" % (
+            self.target, str(self.port), self.wordlist))
         print("[>] Ignoring HTTP codes: %s" % (self.ignore_http_codes))
-        if(self.ignore_content_length > 0):
+        if (self.ignore_content_length > 0):
             print("[>] Ignoring Content length: %s" % (self.ignore_content_length))
 
         if not os.path.exists(self.wordlist):
             print("[!] Wordlist %s doesn't exist, exiting virtual host scanner." % self.wordlist)
             return
-        
+
         virtual_host_list = open(self.wordlist).read().splitlines()
         results = ''
 
@@ -47,7 +49,7 @@ class virtual_host_scanner(object):
                 'Host': hostname if self.port == 80 else '{}:{}'.format(hostname, self.port),
                 'Accept': '*/*'
             }
-            
+
             dest_url = '{}://{}:{}/'.format('https' if int(self.port) == 443 else 'http', self.target, self.port)
 
             try:
@@ -61,9 +63,10 @@ class virtual_host_scanner(object):
             if self.ignore_content_length > 0 and self.ignore_content_length == int(res.headers.get('content-length')):
                 continue
 
-            output = 'Found: {} (code: {}, length: {})'.format(hostname, res.status_code, res.headers.get('content-length'))
+            output = 'Found: {} (code: {}, length: {})'.format(hostname, res.status_code,
+                                                               res.headers.get('content-length'))
             results += output + '\n'
-            
+
             print(output)
             for key, val in res.headers.items():
                 output = '  {}: {}'.format(key, val)

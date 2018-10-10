@@ -1,6 +1,5 @@
 import subprocess
-import sys
-import os
+
 from file_helper import check_directory
 from file_helper import load_targets
 
@@ -10,7 +9,7 @@ def find_dns(target_hosts, output_directory, quiet):
     results = 0
     hostcount = 0
     dnscount = 0
-    
+
     output_file = open(output_directory + "/DNS-Detailed.txt", 'w')
     output_targets = open(output_directory + "/DNS-targets.txt", 'w')
 
