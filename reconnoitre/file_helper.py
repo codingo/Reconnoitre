@@ -22,14 +22,11 @@ def load_targets(target_hosts, output_directory, quiet):
 def expand_targets(target_hosts, output_directory):
     parts = target_hosts.split(".")
     target_list= []
-    print(parts)
     for part in parts:
         if "-" in part:
             iprange = part.split("-")
-            print(iprange)
     for i in range(int(iprange[0]), int(iprange[1])):
         target_list.append(parts[0]+"."+parts[1]+"."+parts[2]+"."+str(i))
-    print(target_list)
     with open(output_directory + "/targets.txt", "w") as targets:
         for target in target_list:
             targets.write("%s\n" % target)
