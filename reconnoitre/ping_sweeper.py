@@ -23,6 +23,7 @@ def ping_sweeper(target_hosts, output_directory, quiet):
 
 def call_nmap_sweep(target_hosts):
     SWEEP = "nmap -n -sP %s" % (target_hosts)
+
     results = subprocess.check_output(SWEEP, shell=True)
     lines = str(results, "utf-8").split("\n")
     return lines
@@ -43,4 +44,3 @@ def write_live_hosts_list_to_file(output_file, live_hosts):
     print("[+] Writing discovered targets to: %s" % output_file)
     with open(output_file, 'w') as f:
         f.write("\n".join(live_hosts))
-
