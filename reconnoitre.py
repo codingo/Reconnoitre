@@ -3,12 +3,12 @@
 
 import sys
 from argparse import ArgumentParser
-from ping_sweeper import ping_sweeper
-from find_dns import find_dns
-from service_scan import service_scan
-from hostname_scan import hostname_scan
-from snmp_walk import snmp_walk
-from virtual_host_scanner import virtual_host_scanner
+from lib.ping_sweeper import ping_sweeper
+from lib.find_dns import find_dns
+from lib.service_scan import service_scan
+from lib.hostname_scan import hostname_scan
+from lib.snmp_walk import snmp_walk
+from lib.virtual_host_scanner import virtual_host_scanner
 from lib.core.input import cli_argument_parser, cli_helper
 
 
