@@ -15,7 +15,7 @@ def load_targets(target_hosts, output_directory, quiet):
         return target_hosts
     elif "-" in target_hosts:
         expand_targets(target_hosts, output_directory)
-        return "targets.txt"
+        return output_directory + "/targets.txt"
     else:
         return output_directory + "/targets.txt"
 
