@@ -19,6 +19,7 @@ def load_targets(target_hosts, output_directory, quiet):
     else:
         return output_directory + "/targets.txt"
 
+    
 def expand_targets(target_hosts, output_directory):
     parts = target_hosts.split(".")
     target_list= []
