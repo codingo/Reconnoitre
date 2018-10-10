@@ -11,11 +11,22 @@ from lib.snmp_walk import snmp_walk
 from lib.virtual_host_scanner import virtual_host_scanner
 from lib.core.input import cli_argument_parser, cli_helper
 
-
+# OS Compatibility : Coloring
+if sys.platform.startswith('win'):
+    R, B, Y, C, W = '\033[1;31m', '\033[1;37m', '\033[93m', '\033[1;30m', '\033[0m'
+    try:
+        import win_unicode_console, colorama
+        win_unicode_console.enable()
+        colorama.init()
+    except:
+        print('[+] Error: Coloring libraries not installed')
+        R, B, Y, C, W = '', '', '', '', ''
+else:
+    R, B, Y, C, W = '\033[1;31m', '\033[1;37m', '\033[93m', '\033[1;30m', '\033[0m'
 def print_banner():
-    print("  __")
-    print("|\"\"\"\-=  RECONNOITRE")
-    print("(____)      An OSCP scanner by @codingo_\n")
+    print("%s  __"%(R))
+    print("%s|\"\"\"\-=  RECONNOITRE"%(R))
+    print("%s(____)      An OSCP scanner by @codingo_\n"%(W))
 
 def util_checks(util = None):
     if util is None:
