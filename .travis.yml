@@ -2,7 +2,10 @@ language: python
 python: 3.6
 
 install:
+  - pip install flake8
 #  - pip install -r ./requirements.txt
 
 # command to run tests
-script: nosetests
+script:
+  - nosetests
+  - flake8
