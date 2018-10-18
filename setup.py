@@ -23,10 +23,10 @@ with open("README.md") as file:
         author_email="codingo@protonmail.com",
         url="https://github.com/codingo/Reconnoitre",
         packages=find_packages(exclude=('tests')),
-        package_data={'Reconnoitre': ['*.txt']},
+        package_data={'Reconnoitre': ['*.txt', '*.json']},
         entry_points={
             'console_scripts': [
-                'Reconnoitre = Reconnoitre.Reconnoitre:main'
+                'reconnoitre = Reconnoitre.reconnoitre:main'
             ]
         },
         include_package_data=True)
