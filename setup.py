@@ -21,7 +21,7 @@ with open("README.md") as file:
         author="codingo",
         version=__version__,
         author_email="codingo@protonmail.com",
-        url="http://github.com/codingo/Reconnoitre",
+        url="https://github.com/codingo/Reconnoitre",
         packages=find_packages(exclude=('tests')),
         package_data={'Reconnoitre': ['*.txt']},
         entry_points={
