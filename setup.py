@@ -1,6 +1,6 @@
 """ __Doc__ File handle class """
 from setuptools import find_packages, setup
-from lib.core.__version__ import __version__
+from Reconnoitre.lib.core.__version__ import __version__
 
 
 def dependencies(imported_file):
