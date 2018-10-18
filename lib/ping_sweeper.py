@@ -24,7 +24,7 @@ def call_nmap_sweep(target_hosts):
     SWEEP = "nmap -n -sP %s" % (target_hosts)
 
     results = subprocess.check_output(SWEEP, shell=True)
-    lines = str(results, "utf-8").split("\n")
+    lines = str(results).encode("utf-8").split("\n")
     return lines
 
 
