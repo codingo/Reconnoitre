@@ -329,9 +329,9 @@
       ],
       "output": [
         {
-          "description": "Find public exploits",
+          "description": "Enumeration",
           "commands": [
-            "searchsploit kerberos"
+            "nmap -p$port --script=krb5-enum-users --script-args krb5-enum-users.realm='CHANGEME.local',userdb=/usr/share/seclists/Usernames/Names/names.txt -oA '$outputdir/$ip_$port_kerberos' $ip"
           ]
         }
       ]
