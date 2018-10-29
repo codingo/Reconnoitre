@@ -14,7 +14,7 @@ from lib.virtual_host_scanner import VirtualHostScanner
 
 def print_banner():
     print("  __")
-    print("|\"\"\"\-=  RECONNOITRE")
+    print(r"|\"\"\"\-=  RECONNOITRE")
     print("(____)      An OSCP scanner by @codingo_\n")
 
 
@@ -30,11 +30,15 @@ def util_checks(util=None):
         if shutil.which(util) is None:
             if util is "nmap":
                 print(
-                    "   [!] nmap was not found on your system. Exiting since we wont be able to scan anything. "
+                    "   [!] nmap was not found on your system."
+                    " Exiting since we wont be able to scan anything. "
                     "Please install nmap and try again.")
                 sys.exit(1)
             else:
-                print("   [-] %s was not found in your system. Scan types using this will fail." % util)
+                print(
+                    "   [-] %s was not found in your system."
+                    " Scan types using this will fail." %
+                    util)
                 return "Not Found"
         else:
             return "Found"
@@ -43,11 +47,15 @@ def util_checks(util=None):
         if spawn.find_executable(util) is None:
             if util is "nmap":
                 print(
-                    "   [!] nmap was not found on your system. Exiting since we wont be able to scan anything. "
+                    "   [!] nmap was not found on your system."
+                    " Exiting since we wont be able to scan anything. "
                     "Please install nmap and try again.")
                 sys.exit(1)
             else:
-                print("   [-] %s was not found in your system. Scan types using this will fail." % util)
+                print(
+                    "   [-] %s was not found in your system."
+                    " Scan types using this will fail." %
+                    util)
                 return "Not Found"
         else:
             return "Found"
@@ -66,43 +74,71 @@ def main():
         print_banner()
         print("[+] Testing for required utilities on your system.")
 
-    utils = ['nmap', 'snmpwalk', 'nbtscan']  # list of utils to check on local system.
+    # list of utils to check on local system.
+    utils = ['nmap', 'snmpwalk', 'nbtscan']
     for util in utils:
         util_checks(util)
 
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
-        ping_sweeper(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        ping_sweeper(
+            arguments.target_hosts,
+            arguments.output_directory,
+            arguments.quiet)
 
     if arguments.hostname_scan is True:
         print("[#] Identifying hostnames")
-        hostname_scan(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        hostname_scan(
+            arguments.target_hosts,
+            arguments.output_directory,
+            arguments.quiet)
 
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        find_dns(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        find_dns(
+            arguments.target_hosts,
+            arguments.output_directory,
+            arguments.quiet)
 
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
         if arguments.find_dns_servers is True:
-            service_scan(arguments.target_hosts, arguments.output_directory, arguments.find_dns_servers,
-                         arguments.quiet, arguments.quick, arguments.no_udp_service_scan)
+            service_scan(
+                arguments.target_hosts,
+                arguments.output_directory,
+                arguments.find_dns_servers,
+                arguments.quiet,
+                arguments.quick,
+                arguments.no_udp_service_scan)
         else:
-            service_scan(arguments.target_hosts, arguments.output_directory, '', arguments.quiet, arguments.quick,
-                         arguments.no_udp_service_scan)
+            service_scan(
+                arguments.target_hosts,
+                arguments.output_directory,
+                '',
+                arguments.quiet,
+                arguments.quick,
+                arguments.no_udp_service_scan)
 
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
-        snmp_walk(arguments.target_hosts, arguments.output_directory, arguments.quiet)
+        snmp_walk(
+            arguments.target_hosts,
+            arguments.output_directory,
+            arguments.quiet)
 
     if arguments.virtualhosts is True:
         print("[#] Performing Virtual host scans")
         if arguments.wordlist is False:
-            print("[!] No wordlist was provided, skipping virtual host scanning.")
+            print("[!] No wordlist was provided,"
+                  " skipping virtual host scanning.")
         else:
-            scanner = VirtualHostScanner(arguments.target_hosts, arguments.output_directory, arguments.port,
-                                         arguments.ignore_http_codes, arguments.ignore_content_length,
-                                         arguments.wordlist)
+            scanner = VirtualHostScanner(
+                arguments.target_hosts,
+                arguments.output_directory,
+                arguments.port,
+                arguments.ignore_http_codes,
+                arguments.ignore_content_length,
+                arguments.wordlist)
             scanner.scan()
 
 

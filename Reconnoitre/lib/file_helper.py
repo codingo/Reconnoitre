@@ -27,7 +27,14 @@ def expand_targets(target_hosts, output_directory):
         if "-" in part:
             iprange = part.split("-")
     for i in range(int(iprange[0]), int(iprange[1])):
-        target_list.append(parts[0] + "." + parts[1] + "." + parts[2] + "." + str(i))
+        target_list.append(
+            parts[0] +
+            "." +
+            parts[1] +
+            "." +
+            parts[2] +
+            "." +
+            str(i))
     with open(output_directory + "/targets.txt", "w") as targets:
         for target in target_list:
             targets.write("%s\n" % target)
@@ -89,32 +96,49 @@ def write_recommendations(results, ip_address, outputdir):
 
     print("[+] Writing findings for %s" % (ip_address))
 
-    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    __location__ = os.path.realpath(
+        os.path.join(
+            os.getcwd(),
+            os.path.dirname(__file__)))
     with open(os.path.join(__location__, "config.json"), "r") as config:
         c = config.read()
-        j = json.loads(c.replace("$ip", "%(ip)s").replace("$port", "%(port)s").replace("$outputdir", "%(outputdir)s"))
+        j = json.loads(
+            c.replace(
+                "$ip",
+                "%(ip)s").replace(
+                "$port",
+                "%(port)s").replace(
+                "$outputdir",
+                "%(outputdir)s"))
 
     f = open(recommendations_file, 'w')
     for serv in serv_dict:
         ports = serv_dict[serv]
 
         for service in j["services"]:
-            if (serv in j["services"][service]["nmap-service-names"]) or (service in serv):
+            if (serv in j["services"][service]
+                    ["nmap-service-names"]) or (service in serv):
                 for port in ports:
                     port = port.split("/")[0]
 
-                    description = "[*] " + j["services"][service]["description"]
+                    description = "[*] "
+                    + j["services"][service]["description"]
                     print(description % {"ip": ip_address, "port": port})
-                    f.write((description + "\n") % {"ip": ip_address, "port": port})
+                    f.write((description + "\n") %
+                            {"ip": ip_address, "port": port})
 
                     for entry in j["services"][service]["output"]:
                         f.write("   [*] " + entry["description"] + "\n")
 
                         for cmd in entry["commands"]:
-                            f.write(
-                                ("      [=] " + cmd + "\n") % {"ip": ip_address, "port": port, "outputdir": outputdir})
+                            f.write(("      [=] " + cmd + "\n") %
+                                    {"ip": ip_address,
+                                     "port": port,
+                                     "outputdir": outputdir})
 
                     f.write("\n")
 
-    f.write("\n\n[*] Always remember to manually go over the portscan report and carefully read between the lines ;)")
+    f.write(
+        "\n\n[*] Always remember to manually go over the"
+        " portscan report and carefully read between the lines ;)")
     f.close()

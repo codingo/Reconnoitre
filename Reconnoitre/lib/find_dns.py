@@ -32,12 +32,18 @@ def find_dns(target_hosts, output_directory, quiet):
         for line in lines:
             line = line.strip()
             line = line.rstrip()
-            if ("53/tcp" in line) and ("open" in line) and ("Discovered" not in line):
-                print("      [=] Found DNS service running on: %s" % (ip_address))
-                output_file.write("[*] Found DNS service running on: %s\n" % (ip_address))
+            if (("53/tcp" in line) and ("open" in line)
+                    and ("Discovered" not in line)):
+                print(
+                    "      [=] Found DNS service running on: %s" %
+                    (ip_address))
+                output_file.write(
+                    "[*] Found DNS service running on: %s\n" %
+                    (ip_address))
                 output_file.write("   [>] %s\n" % (line))
                 output_targets.write("%s" % (ip_address))
                 dnscount += 1
-    print("[*] Found %s DNS servers within %s hosts" % (str(dnscount), str(hostcount)))
+    print("[*] Found %s DNS servers within %s hosts" %
+          (str(dnscount), str(hostcount)))
     output_file.close()
     output_targets.close()
