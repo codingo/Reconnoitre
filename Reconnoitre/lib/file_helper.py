@@ -121,8 +121,8 @@ def write_recommendations(results, ip_address, outputdir):
                 for port in ports:
                     port = port.split("/")[0]
 
-                    description = ("[*] "
-                    + j["services"][service]["description"])
+                    description = ("[*] " 
+                                   + j["services"][service]["description"])
                     print(description % {"ip": ip_address, "port": port})
                     f.write((description + "\n") %
                             {"ip": ip_address, "port": port})
