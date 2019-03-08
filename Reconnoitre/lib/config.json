@@ -115,7 +115,7 @@
             {  
                "description":"Use nmap scripts for further enumeration, e.g",
                "commands":[  
-                  "nmap -vv -sV -Pn -p $port --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=$port,smsql.username-sa,mssql.password-sa -oA $outputdir/$ip_$port_mssql_nmap_scan $ip"
+                  "nmap -vv -sV -Pn -p $port --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=$port,mssql.username=sa,mssql.password=sa -oA $outputdir/$ip_$port_mssql_nmap_scan $ip"
                ]
             }
          ]
