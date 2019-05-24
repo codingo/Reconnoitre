@@ -1,7 +1,7 @@
 import subprocess
 
-from file_helper import check_directory
-from file_helper import load_targets
+from lib.file_helper import check_directory
+from lib.file_helper import load_targets
 
 
 def find_dns(target_hosts, output_directory, quiet):

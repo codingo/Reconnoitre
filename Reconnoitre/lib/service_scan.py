@@ -2,10 +2,10 @@ import multiprocessing
 import socket
 import subprocess
 
-from file_helper import check_directory
-from file_helper import create_dir_structure
-from file_helper import load_targets
-from file_helper import write_recommendations
+from lib.file_helper import check_directory
+from lib.file_helper import create_dir_structure
+from lib.file_helper import load_targets
+from lib.file_helper import write_recommendations
 
 
 def nmap_scan(
