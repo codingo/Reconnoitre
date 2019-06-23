@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-
+import os
+import signal
 import sys
 
 from lib.core.input import CliArgumentParser
@@ -140,6 +141,14 @@ def main():
                 arguments.ignore_content_length,
                 arguments.wordlist)
             scanner.scan()
+
+
+# Declare signal handler to immediately exit on KeyboardInterrupt
+def signal_handler(signal, frame):
+    os._exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
 
 
 if __name__ == "__main__":
