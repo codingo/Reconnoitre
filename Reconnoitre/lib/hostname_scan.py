@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from lib.file_helper import check_directory
+from Reconnoitre.lib.file_helper import check_directory
 
 
 def hostname_scan(target_hosts, output_directory, quiet):

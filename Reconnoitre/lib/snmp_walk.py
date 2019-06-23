@@ -2,7 +2,7 @@ import multiprocessing
 import socket
 import subprocess
 
-from lib.file_helper import check_directory, load_targets
+from Reconnoitre.lib.file_helper import check_directory, load_targets
 
 
 def valid_ip(address):
