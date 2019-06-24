@@ -17,7 +17,7 @@ git clone https://github.com/codingo/Reconnoitre.git
 ```
 After you have done this run setup.py with the following:
 ```
-python setup.py install
+python3 setup.py install
 ```
 
 After setup has run Reconnoitre will now be in your path (as reconnoitre) and you can launch it anywhere using:
