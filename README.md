@@ -52,13 +52,13 @@ _Note that these are some examples to give you insight into potential use cases 
 
 ### Scan a single host, create a file structure and discover services
 ```
-python ./reconnoitre.py -t 192.168.1.5 -o /root/Documents/labs/ --services
+reconnoitre -t 192.168.1.5 -o /root/Documents/labs/ --services
 ```
 
 An example output would look like:
 
 ```
-root@kali:~/Documents/tools/reconnoitre/reconnoitre# python ./reconnoitre.py -t 192.168.1.5 --services -o /root/Documents/labs/
+root@kali:~/# reconnoitre -t 192.168.1.5 --services -o /root/Documents/labs/
   __
 |"""\-=  RECONNOITRE
 (____)      An OSCP scanner
@@ -105,18 +105,18 @@ Which would also write the following recommendations file in the scans folder fo
 ```
 ### Discover live hosts and hostnames within a range
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --hostnames
+reconnoitre -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --hostnames
 ```
 
 ### Discover live hosts within a range and then do a quick probe for services
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services --quick
+reconnoitre -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services --quick
 ```
 This will scan all services within a target range to create a file structure of live hosts as well as write recommendations for other commands to be executed based on the services discovered on these machines. Removing --quick will do a further probe but will greatly lengthen execution times.
 
 ### Discover live hosts within a range and then do probe all ports (UDP and TCP) for services
 ```
-python ./reconnoitre.py -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services
+reconnoitre -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --services
 ```
 
 # Requirements
