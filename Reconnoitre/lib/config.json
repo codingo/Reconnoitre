@@ -50,8 +50,8 @@
                "commands":[  
                   "dirb https://$ip:$port/ -o $outputdir/$ip_$port_dirb.txt",
                   "dirbuster -H -u https://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_$port_dirbuster_medium.txt",
-                  "gobuster -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
-                  "gobuster -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u https://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
+                  "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
+                  "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u https://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
                ]
             }
          ]
