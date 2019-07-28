@@ -6,6 +6,7 @@ from Reconnoitre.lib.file_helper import load_targets
 
 def find_dns(target_hosts, output_directory, quiet):
     check_directory(output_directory)
+    dns_server_list = []
     results = 0
     hostcount = 0
     dnscount = 0
@@ -42,8 +43,10 @@ def find_dns(target_hosts, output_directory, quiet):
                     (ip_address))
                 output_file.write("   [>] %s\n" % (line))
                 output_targets.write("%s\n" % (ip_address))
+                dns_server_list.append(ip_address)
                 dnscount += 1
     print("[*] Found %s DNS servers within %s hosts" %
           (str(dnscount), str(hostcount)))
     output_file.close()
     output_targets.close()
+    return '' if len(dns_server_list) == 0 else ','.join(dns_server_list)
