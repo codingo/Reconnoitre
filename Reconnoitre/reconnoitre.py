@@ -65,6 +65,8 @@ def util_checks(util=None):
 def main():
     parser = CliArgumentParser()
     arguments = parser.parse(sys.argv[1:])
+    dns_servers = ''
+
 
     if arguments.output_directory.endswith('/' or '\\'):
         arguments.output_directory = arguments.output_directory[:-1]
@@ -96,29 +98,20 @@ def main():
 
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        find_dns(
+        dns_servers = find_dns(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
 
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
-        if arguments.find_dns_servers is True:
-            service_scan(
-                arguments.target_hosts,
-                arguments.output_directory,
-                arguments.find_dns_servers,
-                arguments.quiet,
-                arguments.quick,
-                arguments.no_udp_service_scan)
-        else:
-            service_scan(
-                arguments.target_hosts,
-                arguments.output_directory,
-                '',
-                arguments.quiet,
-                arguments.quick,
-                arguments.no_udp_service_scan)
+        service_scan(
+            arguments.target_hosts,
+            arguments.output_directory,
+            arguments.find_dns_servers,
+            arguments.quiet,
+            arguments.quick,
+            arguments.no_udp_service_scan)
 
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
