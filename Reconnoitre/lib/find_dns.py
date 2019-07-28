@@ -41,7 +41,7 @@ def find_dns(target_hosts, output_directory, quiet):
                     "[*] Found DNS service running on: %s\n" %
                     (ip_address))
                 output_file.write("   [>] %s\n" % (line))
-                output_targets.write("%s" % (ip_address))
+                output_targets.write("%s\n" % (ip_address))
                 dnscount += 1
     print("[*] Found %s DNS servers within %s hosts" %
           (str(dnscount), str(hostcount)))
