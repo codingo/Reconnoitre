@@ -108,7 +108,7 @@ def main():
         service_scan(
             arguments.target_hosts,
             arguments.output_directory,
-            arguments.find_dns_servers,
+            dns_servers,
             arguments.quiet,
             arguments.quick,
             arguments.no_udp_service_scan)
