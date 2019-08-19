@@ -27,7 +27,7 @@ def find_dns(target_hosts, output_directory, quiet):
 
         print("   [>] Testing %s for DNS" % ip_address)
         DNSSCAN = "nmap -n -sV -Pn -vv -p53 %s" % (ip_address)
-        results = subprocess.check_output(DNSSCAN, shell=True).decode("utf-8")
+        results = subprocess.check_output(DNSSCAN, shell=True, text=True)
         lines = results.split("\n")
 
         for line in lines:

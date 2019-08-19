@@ -23,8 +23,7 @@ def ping_sweeper(target_hosts, output_directory, quiet):
 def call_nmap_sweep(target_hosts):
     SWEEP = "nmap -n -sP %s" % (target_hosts)
 
-    results = subprocess.check_output(SWEEP, shell=True)
-    lines = str(results).encode("utf-8").split("\n")
+    results = subprocess.check_output(SWEEP, shell=True, text=True)
     return lines
 
 
