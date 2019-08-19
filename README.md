@@ -3,7 +3,11 @@ A reconnaissance tool made for the OSCP labs to automate information gathering a
 
 Contributions are more than welcome!
 
+
 [![Python 3.2|3.6](https://img.shields.io/badge/python-3.2|3.6-green.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPL3-_red.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Build Status](https://travis-ci.org/codingo/Reconnoitre.svg?branch=master)](https://travis-ci.org/codingo/Reconnoitre) [![Twitter](https://img.shields.io/badge/twitter-@codingo__-blue.svg)](https://twitter.com/codingo_)
+
+# Important
+Reconnoitre although a well loved tool I've maintained for a few years now, in my opinion, pales in functionality to building your own enumeration approach within [Interlace](https://github.com/codingo/Interlace). I strongly recommend anybody looking to take Infosec beyond the OSCP to spend some time looking into this project.
 
 # Credit
 
