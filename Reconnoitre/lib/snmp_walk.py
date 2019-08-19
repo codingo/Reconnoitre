@@ -76,7 +76,8 @@ def snmp_scans(ip_address, output_directory):
         subprocess.check_output(
             SCAN,
             stderr=subprocess.STDOUT,
-            shell=True).decode("utf-8").decode('utf-8')
+            shell=True,
+            text=True)
     except Exception:
         print("[+] No Response from %s" % ip_address)
     except subprocess.CalledProcessError:

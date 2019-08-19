@@ -20,7 +20,7 @@ def nmap_scan(
     QUICKSCAN = "nmap -sC -sV -Pn --disable-arp-ping %s -oA '%s/%s.quick'" % (
         ip_address, output_directory, ip_address)
     quickresults = subprocess.check_output(
-        QUICKSCAN, shell=True).decode("utf-8")
+        QUICKSCAN, shell=True,text=True)
 
     write_recommendations(quickresults, ip_address, output_directory)
     print("[*] TCP quick scans completed for %s" % ip_address)
@@ -70,8 +70,8 @@ def nmap_scan(
             ip_address, output_directory, ip_address)
 
     udpresult = "" if no_udp_service_scan is True else subprocess.check_output(
-        UDPSCAN, shell=True).decode("utf-8")
-    tcpresults = subprocess.check_output(TCPSCAN, shell=True).decode("utf-8")
+        UDPSCAN, shell=True, text=True)
+    tcpresults = subprocess.check_output(TCPSCAN, shell=True, text=True)
 
     write_recommendations(tcpresults + udpresult, ip_address, output_directory)
     print("[*] TCP%s scans completed for %s" %
