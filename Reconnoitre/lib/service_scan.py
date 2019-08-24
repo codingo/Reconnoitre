@@ -1,11 +1,11 @@
 import multiprocessing
 import socket
-import subprocess
 
 from Reconnoitre.lib.file_helper import check_directory
 from Reconnoitre.lib.file_helper import create_dir_structure
 from Reconnoitre.lib.file_helper import load_targets
 from Reconnoitre.lib.file_helper import write_recommendations
+from Reconnoitre.lib.subprocess_helper import run_scan
 
 
 def nmap_scan(
@@ -19,8 +19,7 @@ def nmap_scan(
     print("[+] Starting quick nmap scan for %s" % (ip_address))
     QUICKSCAN = "nmap -sC -sV -Pn --disable-arp-ping %s -oA '%s/%s.quick'" % (
         ip_address, output_directory, ip_address)
-    quickresults = subprocess.check_output(
-        QUICKSCAN, shell=True,text=True)
+    quickresults = run_scan(QUICKSCAN)
 
     write_recommendations(quickresults, ip_address, output_directory)
     print("[*] TCP quick scans completed for %s" % ip_address)
@@ -69,9 +68,8 @@ def nmap_scan(
         UDPSCAN = "nmap -sC -sV -sU -Pn --disable-arp-ping %s -oA '%s/%s-udp'" % (
             ip_address, output_directory, ip_address)
 
-    udpresult = "" if no_udp_service_scan is True else subprocess.check_output(
-        UDPSCAN, shell=True, text=True)
-    tcpresults = subprocess.check_output(TCPSCAN, shell=True, text=True)
+    udpresult = "" if no_udp_service_scan is True else run_scan(UDPSCAN)
+    tcpresults = run_scan(TCPSCAN)
 
     write_recommendations(tcpresults + udpresult, ip_address, output_directory)
     print("[*] TCP%s scans completed for %s" %
