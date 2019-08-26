@@ -1,7 +1,7 @@
 import os
-import subprocess
 
 from Reconnoitre.lib.file_helper import check_directory
+from Reconnoitre.lib.subprocess_helper import run_scan
 
 
 def hostname_scan(target_hosts, output_directory, quiet):
@@ -18,7 +18,7 @@ def hostname_scan(target_hosts, output_directory, quiet):
     else:
         SWEEP = "nbtscan -q %s" % (target_hosts)
 
-    results = subprocess.check_output(SWEEP, shell=True,text=True)
+    results = run_scan(SWEEP)
     lines = results.split("\n")
 
     for line in lines:

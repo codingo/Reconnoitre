@@ -3,6 +3,7 @@ import socket
 import subprocess
 
 from Reconnoitre.lib.file_helper import check_directory, load_targets
+from Reconnoitre.lib.subprocess_helper import run_scan
 
 
 def valid_ip(address):
@@ -73,11 +74,7 @@ def snmp_scans(ip_address, output_directory):
         ip_address, output_directory, ip_address))
 
     try:
-        subprocess.check_output(
-            SCAN,
-            stderr=subprocess.STDOUT,
-            shell=True,
-            text=True)
+        run_scan(SCAN, stderr=subprocess.STDOUT)
     except Exception:
         print("[+] No Response from %s" % ip_address)
     except subprocess.CalledProcessError:

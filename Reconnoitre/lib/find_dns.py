@@ -1,7 +1,6 @@
-import subprocess
-
 from Reconnoitre.lib.file_helper import check_directory
 from Reconnoitre.lib.file_helper import load_targets
+from Reconnoitre.lib.subprocess_helper import run_scan
 
 
 def find_dns(target_hosts, output_directory, quiet):
@@ -27,7 +26,7 @@ def find_dns(target_hosts, output_directory, quiet):
 
         print("   [>] Testing %s for DNS" % ip_address)
         DNSSCAN = "nmap -n -sV -Pn -vv -p53 %s" % (ip_address)
-        results = subprocess.check_output(DNSSCAN, shell=True, text=True)
+        results = run_scan(DNSSCAN)
         lines = results.split("\n")
 
         for line in lines:
