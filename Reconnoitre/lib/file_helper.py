@@ -121,7 +121,7 @@ def write_recommendations(results, ip_address, outputdir):
                 for port in ports:
                     port = port.split("/")[0]
 
-                    description = ("[*] " 
+                    description = ("[*] "
                                    + j["services"][service]["description"])
                     print(description % {"ip": ip_address, "port": port})
                     f.write((description + "\n") %
@@ -142,6 +142,7 @@ def write_recommendations(results, ip_address, outputdir):
         "\n\n[*] Always remember to manually go over the"
         " portscan report and carefully read between the lines ;)")
     f.close()
+
 
 def get_config_options(key, option):
     __location__ = os.path.realpath(

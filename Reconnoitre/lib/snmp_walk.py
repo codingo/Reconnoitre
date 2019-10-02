@@ -70,8 +70,8 @@ def snmp_scans(ip_address, output_directory):
         " %s - Checking for System Processes" %
         (ip_address))
     SCAN = ("snmpwalk -c public -v1 %s "
-    "1.3.6.1.2.1.25.1.6.0 > '%s%s-systemprocesses.txt'" % (
-        ip_address, output_directory, ip_address))
+            "1.3.6.1.2.1.25.1.6.0 > '%s%s-systemprocesses.txt'" % (
+                ip_address, output_directory, ip_address))
 
     try:
         run_scan(SCAN, stderr=subprocess.STDOUT)

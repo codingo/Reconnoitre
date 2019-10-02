@@ -23,7 +23,7 @@ def call_nmap_sweep(target_hosts):
     SWEEP = "nmap -n -sP %s" % (target_hosts)
 
     results = run_scan(SWEEP)
-    lines = str(results).encode("utf-8").split("\n")
+    lines = str(results).split("\n")
     return lines
 
 

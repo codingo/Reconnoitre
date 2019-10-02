@@ -1,359 +1,359 @@
-{  
-   "nmap": {
+{
+    "nmap": {
         "tcpscan": "-vv -Pn --disable-arp-ping -sS -A -sC -p- -T 3 -script-args=unsafe=1",
-        "quickscan":"-sC -sV -Pn --disable-arp-ping",
-        "dnsudpscan" : "-vv -Pn --disable-arp-ping -A -sC -sU -T 4 --top-ports 200 --max-retries 0",
+        "quickscan": "-sC -sV -Pn --disable-arp-ping",
+        "dnsudpscan": "-vv -Pn --disable-arp-ping -A -sC -sU -T 4 --top-ports 200 --max-retries 0",
         "udpscan": "-sC -sV -sU -Pn --disable-arp-ping"
-   },
-   "services":{  
-      "http/s":{  
-         "description":"Found HTTP/S service on $ip:$port",
-         "nmap-service-names":[  
-            "http",
-            "ssl/http",
-            "https",
-            "ssl/http-alt"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nikto -h $ip -p $port -output $outputdir/$ip_$port_nikto.txt",
-                  "curl -i $ip:$port",
-                  "w3m -dump $ip/robots.txt | tee $outputdir/$ip_$port_robots.txt",
-                  "VHostScan -t $ip -oN $outputdir/$ip_$port_vhosts.txt"
-               ]
-            }
-         ]
-      },
-      "http":{  
-         "description":"Found HTTP service on $ip:$port",
-         "nmap-service-names":[  
-            "http"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "dirb http://$ip:$port/ -o $outputdir/$ip_$port_dirb.txt",
-                  "dirbuster -H -u http://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_$port_dirbuster_medium.txt",
-                  "gobuster -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
-                  "gobuster -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u http://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
-               ]
-            }
-         ]
-      },
-      "https":{  
-         "description":"Found HTTPS service on $ip:$port",
-         "nmap-service-names":[  
-            "https",
-            "ssl/http",
-            "ssl/http-alt"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "dirb https://$ip:$port/ -o $outputdir/$ip_$port_dirb.txt",
-                  "dirbuster -H -u https://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_$port_dirbuster_medium.txt",
-                  "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
-                  "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u https://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
-               ]
-            }
-         ]
-      },
-      "ftp":{  
-         "description":"Found FTP service on $ip:$port",
-         "nmap-service-names":[  
-            "ftp"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nmap -sV -Pn -vv -p$port --script=ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 -oA '$outputdir/$ip_$port_ftp' $ip",
-                  "hydra -L USER_LIST -P PASS_LIST -f -o $outputdir/$ip_$port_ftphydra.txt -u $ip -s $port ftp"
-               ]
-            }
-         ]
-      },
-      "mysql":{  
-         "description":"Found MySql service on $ip:$port",
-         "nmap-service-names":[  
-            "mysql"
-         ],
-         "output":[  
-            {  
-               "description":"Check out the server for web applications with sqli vulnerabilities",
-               "commands":[  
-                  "searchsploit mysql"
-               ]
-            }
-         ]
-      },
-      "dns":{  
-         "description":"Found DNS service on $ip:$port",
-         "nmap-service-names":[  
-            "dns"
-         ],
-         "output":[  
-            {  
-               "description":"Check out the server for zone transfers",
-               "commands":[  
-                  "dnsrecon -t axfr -d $ip"
-               ]
-            }
-         ]
-      },
-      "microsoftsql":{  
-         "description":"Found MS SQL service on $ip:$port",
-         "nmap-service-names":[  
-            "ms-sql",
-            "ms-sql-s"
-         ],
-         "output":[  
-            {  
-               "description":"Check out the server for web applications with sqli vulnerabilities",
-               "commands":[  
-                  "searchsploit mssql"
-               ]
-            },
-            {  
-               "description":"Use nmap scripts for further enumeration, e.g",
-               "commands":[  
-                  "nmap -vv -sV -Pn -p $port --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=$port,mssql.username=sa,mssql.password=sa -oA $outputdir/$ip_$port_mssql_nmap_scan $ip"
-               ]
-            }
-         ]
-      },
-      "telnet":{  
-         "description":"Found telnet service on $ip:$port",
-         "nmap-service-names":[  
-            "telnet"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "ncat -nv $ip $port"
-               ]
-            }
-         ]
-      },
-      "smb":{  
-         "description":"Found MS SMB service on $ip:$port",
-         "nmap-service-names":[  
-            "microsoft-ds"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nmap -sV -Pn -vv -p 139,$port --script=smb-vuln* --script-args=unsafe=1 -oA '$outputdir/$ip_$port_smb.nmap' $ip",
-                  "enum4linux -a $ip | tee $outputdir/$ip_$port_enum4linux.txt",
-                  "nmap -sV -Pn -vv -p $port --script=smb-enum-users -oA '$outputdir/$ip_$port_smb_smb-enum-users.nmap' $ip"
-               ]
-            }
-         ]
-      },
-      "remotedesktop":{  
-         "description":"Found RDP service on $ip:$port",
-         "nmap-service-names":[  
-            "msrdp",
-            "ms-wbt-server"
-         ],
-         "output":[  
-            {  
-               "description":"Bruteforcing",
-               "commands":[  
-                  "ncrack -vv --user administrator -P PASS_LIST rdp://$ip",
-                  "crowbar -b rdp -s $ip/32 -U USER_LIST -C PASS_LIST",
-                  "for username in $(cat USER_LIST); do for password in $(cat PASS_LIST) do; rdesktop -u $username -p $password $ip; done; done;"
-               ]
-            }
-         ]
-      },
-      "smtp":{  
-         "description":"Found SMTP service on $ip:$port",
-         "nmap-service-names":[  
-            "smtp"
-         ],
-         "output":[  
-            {  
-               "description":"Find users",
-               "commands":[  
-                  "smtp-user-enum -M VRFY -U /usr/share/seclists/Usernames/top_shortlist.txt -t $ip -p $port"
-               ]
-            }
-         ]
-      },
-      "snmp":{  
-         "description":"Found SNMP service on $ip:$port",
-         "nmap-service-names":[  
-            "snmp"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nmap -sV -Pn -vv -p$port --script=snmp-netstat,snmp-processes -oA '$outputdir/$ip_$port_snmp' $ip",
-                  "onesixtyone $ip > $outputdir/$ip_$port_snmp_onesixtyone.txt",
-                  "snmpwalk -c public -v1 $ip > $outputdir/$ip_$port_snmpwalk.txt"
-               ]
-            }
-         ]
-      },
-      "ssh":{  
-         "description":"Found SSH service on $ip:$port",
-         "nmap-service-names":[  
-            "ssh"
-         ],
-         "output":[  
-            {  
-               "description":"Bruteforcing",
-               "commands":[  
-                  "medusa -u root -P /usr/share/wordlists/rockyou.txt -e ns -h $ip - $port -M ssh",
-                  "hydra -f -V -t 1 -l root -P /usr/share/wordlists/rockyou.txt -s $port $ip ssh",
-                  "ncrack -vv -p $port --user root -P PASS_LIST $ip"
-               ]
-            },
-            {  
-               "description":"Use nmap to automate banner grabbing and key fingerprints, e.g.",
-               "commands":[  
-                  "nmap $ip -p $port -sV --script=ssh-hostkey -oA '$outputdir/$ip_$port_ssh-hostkey'"
-               ]
-            }
-         ]
-      },
-      "msrpc":{  
-         "description":"Found MSRPC service on $ip:$port",
-         "nmap-service-names":[  
-            "msrpc",
-            "rpcbind"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "rpcclient -U \"\" $ip"
-               ]
-            },
-            {  
-               "description":"Bruteforce",
-               "commands":[  
-                  "rpcclient -U \"\" $ip"
-               ]
-            }
-         ]
-      },
-      "netbios-ssn":{  
-         "description":"Found NetBIOS service on $ip:$port",
-         "nmap-service-names":[  
-            "netbios-ssn"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nmblookup -A $ip",
-                  "smbclient //MOUNT/share -I $ip N",
-                  "smbclient -L //$ip",
-                  "enum4linux -a $ip",
-                  "rpcclient -U \"\" $ip"
-               ]
-            }
-         ]
-      },
-      "CUPS":{  
-         "description":"Found CUPS service on $ip:$port",
-         "nmap-service-names":[  
-            "ipp"
-         ],
-         "output":[  
-            {  
-               "description":"Find public exploits",
-               "commands":[  
-                  "searchsploit cups"
-               ]
-            }
-         ]
-      },
-      "java-rmi":{  
-         "description":"Found CUPS service on $ip:$port",
-         "nmap-service-names":[  
-            "java-rmi"
-         ],
-         "output":[  
-            {  
-               "description":"Find public exploits",
-               "commands":[  
-                  "searchsploit java rmi"
-               ]
-            }
-         ]
-      },
-      "vnc":{  
-         "description":"Found VNC service on $ip:$port",
-         "nmap-service-names":[  
-            "vnc",
-            "vnc-http"
-         ],
-         "output":[  
-            {  
-               "description":"Find public exploits",
-               "commands":[  
-                  "searchsploit vnc"
-               ]
-            },
-            {  
-               "description":"Bruteforcing",
-               "commands":[  
-                  "crowbar -b vnckey -s $ip/32 -p IP -k PASS_FILE"
-               ]
-            }
-         ]
-      },
-      "oracle":{  
-         "description":"Found Oracle service on $ip:$port",
-         "nmap-service-names":[  
-            "oracle-tns"
-         ],
-         "output":[  
-            {  
-               "description":"Find public exploits",
-               "commands":[  
-                  "searchsploit Oracle TNS"
-               ]
-            }
-         ]
-      },
-      "kerberos":{  
-         "description":"Found Kerberos service on $ip:$port",
-         "nmap-service-names":[  
-            "kerberos-sec"
-         ],
-         "output":[  
-            {  
-               "description":"Enumeration",
-               "commands":[  
-                  "nmap -p$port --script=krb5-enum-users --script-args krb5-enum-users.realm='CHANGEME.local',userdb=/usr/share/seclists/Usernames/Names/names.txt -oA '$outputdir/$ip_$port_kerberos' $ip"
-               ]
-            }
-         ]
-      },
-      "ldap":{  
-         "description":"Found LDAP service on $ip:$port",
-         "nmap-service-names":[  
-            "ldap"
-         ],
-         "output":[  
-            {  
-               "description":"Find public exploits",
-               "commands":[  
-                  "searchsploit ldap"
-               ]
-            }
-         ]
-      }
-   }
+    },
+    "services": {
+        "http/s": {
+            "description": "Found HTTP/S service on $ip:$port",
+            "nmap-service-names": [
+                "http",
+                "ssl/http",
+                "https",
+                "ssl/http-alt"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nikto -h $ip -p $port -output $outputdir/$ip_$port_nikto.txt",
+                        "curl -i $ip:$port",
+                        "w3m -dump $ip/robots.txt | tee $outputdir/$ip_$port_robots.txt",
+                        "VHostScan -t $ip -oN $outputdir/$ip_$port_vhosts.txt"
+                    ]
+                }
+            ]
+        },
+        "http": {
+            "description": "Found HTTP service on $ip:$port",
+            "nmap-service-names": [
+                "http"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "dirb http://$ip:$port/ -o $outputdir/$ip_$port_dirb.txt",
+                        "dirbuster -H -u http://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_$port_dirbuster_medium.txt",
+                        "gobuster -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
+                        "gobuster -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u http://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
+                    ]
+                }
+            ]
+        },
+        "https": {
+            "description": "Found HTTPS service on $ip:$port",
+            "nmap-service-names": [
+                "https",
+                "ssl/http",
+                "ssl/http-alt"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "dirb https://$ip:$port/ -o $outputdir/$ip_$port_dirb.txt",
+                        "dirbuster -H -u https://$ip:$port/ -l /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 20 -s / -v -r $outputdir/$ip_$port_dirbuster_medium.txt",
+                        "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://$ip:$port/ -s '200,204,301,302,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_common.txt'",
+                        "gobuster dir -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u https://$ip:$port/ -s '200,204,301,307,403,500' -e | tee '$outputdir/$ip_$port_gobuster_cgis.txt'"
+                    ]
+                }
+            ]
+        },
+        "ftp": {
+            "description": "Found FTP service on $ip:$port",
+            "nmap-service-names": [
+                "ftp"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nmap -sV -Pn -vv -p$port --script=ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 -oA '$outputdir/$ip_$port_ftp' $ip",
+                        "hydra -L USER_LIST -P PASS_LIST -f -o $outputdir/$ip_$port_ftphydra.txt -u $ip -s $port ftp"
+                    ]
+                }
+            ]
+        },
+        "mysql": {
+            "description": "Found MySql service on $ip:$port",
+            "nmap-service-names": [
+                "mysql"
+            ],
+            "output": [
+                {
+                    "description": "Check out the server for web applications with sqli vulnerabilities",
+                    "commands": [
+                        "searchsploit mysql"
+                    ]
+                }
+            ]
+        },
+        "dns": {
+            "description": "Found DNS service on $ip:$port",
+            "nmap-service-names": [
+                "dns"
+            ],
+            "output": [
+                {
+                    "description": "Check out the server for zone transfers",
+                    "commands": [
+                        "dnsrecon -t axfr -d $ip"
+                    ]
+                }
+            ]
+        },
+        "microsoftsql": {
+            "description": "Found MS SQL service on $ip:$port",
+            "nmap-service-names": [
+                "ms-sql",
+                "ms-sql-s"
+            ],
+            "output": [
+                {
+                    "description": "Check out the server for web applications with sqli vulnerabilities",
+                    "commands": [
+                        "searchsploit mssql"
+                    ]
+                },
+                {
+                    "description": "Use nmap scripts for further enumeration, e.g",
+                    "commands": [
+                        "nmap -vv -sV -Pn -p $port --script=ms-sql-info,ms-sql-config,ms-sql-dump-hashes --script-args=mssql.instance-port=$port,mssql.username=sa,mssql.password=sa -oA $outputdir/$ip_$port_mssql_nmap_scan $ip"
+                    ]
+                }
+            ]
+        },
+        "telnet": {
+            "description": "Found telnet service on $ip:$port",
+            "nmap-service-names": [
+                "telnet"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "ncat -nv $ip $port"
+                    ]
+                }
+            ]
+        },
+        "smb": {
+            "description": "Found MS SMB service on $ip:$port",
+            "nmap-service-names": [
+                "microsoft-ds"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nmap -sV -Pn -vv -p 139,$port --script=smb-vuln* --script-args=unsafe=1 -oA '$outputdir/$ip_$port_smb.nmap' $ip",
+                        "enum4linux -a $ip | tee $outputdir/$ip_$port_enum4linux.txt",
+                        "nmap -sV -Pn -vv -p $port --script=smb-enum-users -oA '$outputdir/$ip_$port_smb_smb-enum-users.nmap' $ip"
+                    ]
+                }
+            ]
+        },
+        "remotedesktop": {
+            "description": "Found RDP service on $ip:$port",
+            "nmap-service-names": [
+                "msrdp",
+                "ms-wbt-server"
+            ],
+            "output": [
+                {
+                    "description": "Bruteforcing",
+                    "commands": [
+                        "ncrack -vv --user administrator -P PASS_LIST rdp://$ip",
+                        "crowbar -b rdp -s $ip/32 -U USER_LIST -C PASS_LIST",
+                        "for username in $(cat USER_LIST); do for password in $(cat PASS_LIST) do; rdesktop -u $username -p $password $ip; done; done;"
+                    ]
+                }
+            ]
+        },
+        "smtp": {
+            "description": "Found SMTP service on $ip:$port",
+            "nmap-service-names": [
+                "smtp"
+            ],
+            "output": [
+                {
+                    "description": "Find users",
+                    "commands": [
+                        "smtp-user-enum -M VRFY -U /usr/share/seclists/Usernames/top_shortlist.txt -t $ip -p $port"
+                    ]
+                }
+            ]
+        },
+        "snmp": {
+            "description": "Found SNMP service on $ip:$port",
+            "nmap-service-names": [
+                "snmp"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nmap -sV -Pn -vv -p$port --script=snmp-netstat,snmp-processes -oA '$outputdir/$ip_$port_snmp' $ip",
+                        "onesixtyone $ip > $outputdir/$ip_$port_snmp_onesixtyone.txt",
+                        "snmpwalk -c public -v1 $ip > $outputdir/$ip_$port_snmpwalk.txt"
+                    ]
+                }
+            ]
+        },
+        "ssh": {
+            "description": "Found SSH service on $ip:$port",
+            "nmap-service-names": [
+                "ssh"
+            ],
+            "output": [
+                {
+                    "description": "Bruteforcing",
+                    "commands": [
+                        "medusa -u root -P /usr/share/wordlists/rockyou.txt -e ns -h $ip - $port -M ssh",
+                        "hydra -f -V -t 1 -l root -P /usr/share/wordlists/rockyou.txt -s $port $ip ssh",
+                        "ncrack -vv -p $port --user root -P PASS_LIST $ip"
+                    ]
+                },
+                {
+                    "description": "Use nmap to automate banner grabbing and key fingerprints, e.g.",
+                    "commands": [
+                        "nmap $ip -p $port -sV --script=ssh-hostkey -oA '$outputdir/$ip_$port_ssh-hostkey'"
+                    ]
+                }
+            ]
+        },
+        "msrpc": {
+            "description": "Found MSRPC service on $ip:$port",
+            "nmap-service-names": [
+                "msrpc",
+                "rpcbind"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "rpcclient -U \"\" $ip"
+                    ]
+                },
+                {
+                    "description": "Bruteforce",
+                    "commands": [
+                        "rpcclient -U \"\" $ip"
+                    ]
+                }
+            ]
+        },
+        "netbios-ssn": {
+            "description": "Found NetBIOS service on $ip:$port",
+            "nmap-service-names": [
+                "netbios-ssn"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nmblookup -A $ip",
+                        "smbclient //MOUNT/share -I $ip N",
+                        "smbclient -L //$ip",
+                        "enum4linux -a $ip",
+                        "rpcclient -U \"\" $ip"
+                    ]
+                }
+            ]
+        },
+        "CUPS": {
+            "description": "Found CUPS service on $ip:$port",
+            "nmap-service-names": [
+                "ipp"
+            ],
+            "output": [
+                {
+                    "description": "Find public exploits",
+                    "commands": [
+                        "searchsploit cups"
+                    ]
+                }
+            ]
+        },
+        "java-rmi": {
+            "description": "Found CUPS service on $ip:$port",
+            "nmap-service-names": [
+                "java-rmi"
+            ],
+            "output": [
+                {
+                    "description": "Find public exploits",
+                    "commands": [
+                        "searchsploit java rmi"
+                    ]
+                }
+            ]
+        },
+        "vnc": {
+            "description": "Found VNC service on $ip:$port",
+            "nmap-service-names": [
+                "vnc",
+                "vnc-http"
+            ],
+            "output": [
+                {
+                    "description": "Find public exploits",
+                    "commands": [
+                        "searchsploit vnc"
+                    ]
+                },
+                {
+                    "description": "Bruteforcing",
+                    "commands": [
+                        "crowbar -b vnckey -s $ip/32 -p IP -k PASS_FILE"
+                    ]
+                }
+            ]
+        },
+        "oracle": {
+            "description": "Found Oracle service on $ip:$port",
+            "nmap-service-names": [
+                "oracle-tns"
+            ],
+            "output": [
+                {
+                    "description": "Find public exploits",
+                    "commands": [
+                        "searchsploit Oracle TNS"
+                    ]
+                }
+            ]
+        },
+        "kerberos": {
+            "description": "Found Kerberos service on $ip:$port",
+            "nmap-service-names": [
+                "kerberos-sec"
+            ],
+            "output": [
+                {
+                    "description": "Enumeration",
+                    "commands": [
+                        "nmap -p$port --script=krb5-enum-users --script-args krb5-enum-users.realm='CHANGEME.local',userdb=/usr/share/seclists/Usernames/Names/names.txt -oA '$outputdir/$ip_$port_kerberos' $ip"
+                    ]
+                }
+            ]
+        },
+        "ldap": {
+            "description": "Found LDAP service on $ip:$port",
+            "nmap-service-names": [
+                "ldap"
+            ],
+            "output": [
+                {
+                    "description": "Find public exploits",
+                    "commands": [
+                        "searchsploit ldap"
+                    ]
+                }
+            ]
+        }
+    }
 }

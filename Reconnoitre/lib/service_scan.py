@@ -3,7 +3,7 @@ import socket
 
 from Reconnoitre.lib.file_helper import check_directory
 from Reconnoitre.lib.file_helper import create_dir_structure
-from Reconnoitre.lib.file_helper import get_config_options 
+from Reconnoitre.lib.file_helper import get_config_options
 from Reconnoitre.lib.file_helper import load_targets
 from Reconnoitre.lib.file_helper import write_recommendations
 from Reconnoitre.lib.subprocess_helper import run_scan
