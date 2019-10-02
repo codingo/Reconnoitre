@@ -8,7 +8,6 @@ RUN git clone https://github.com/CrimsonK1ng/Reconnoitre.git recon
 
 WORKDIR /recon
 
-RUN pip install requirements && python setup.py install
+RUN pip install -r requirements.txt && python setup.py install
 
-ENTRYPOINT ["reconnoiter"]
-
+ENTRYPOINT reconnoitre
