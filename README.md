@@ -128,3 +128,25 @@ reconnoitre -t 192.168.1.1-252 -o /root/Documents/testing/ --pingsweep --service
 This bare requirement for host and service scanning for this tool is to have both `nbtscan` and `nmap` installed. If you are not using host scanning and only wish to perform a ping sweep and service scan you can get away with only installing `nmap`. The outputted _findings.txt_ will often recommend additional tools which you may not have available in your distribution if not using Kali Linux. All requirements and recommendations are native to Kali Linux which is the recommended (although not required) distribution for using this tool.
 
 In addition to these requirements outputs will often refer to Wordlists that you may need to find. If you are undertaking OSCP these can be found in the "List of Recommended Tools" thread by g0tmilk. If not then you can find the majority of these online or already within a Kali Linux installation.
+
+# Dockerfile
+First step is to install docker if you do not have it installed already. [Docker Installation](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+
+Basic Usage: 
+
+```
+cd <Reconnoitre Directory>
+docker build -t reconnoitre .
+
+docker run reconnoitre -o outputdir -t 127.0.0.1
+```
+
+If you want files to exist locally you can mount a directory to the Docker container
+
+```
+cd <Reconnoitre Directory>
+docker build -t reconnoitre .
+mkdir /path/to/dir
+
+docker run -v /path/to/dir:/outputdir --services -o outputdir -t 127.0.0.1
+```
