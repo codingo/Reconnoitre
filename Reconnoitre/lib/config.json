@@ -1,4 +1,10 @@
 {  
+   "nmap": {
+        "tcpscan": "-vv -Pn --disable-arp-ping -sS -A -sC -p- -T 3 -script-args=unsafe=1",
+        "quickscan":"-sC -sV -Pn --disable-arp-ping",
+        "dnsudpscan" : "-vv -Pn --disable-arp-ping -A -sC -sU -T 4 --top-ports 200 --max-retries 0",
+        "udpscan": "-sC -sV -sU -Pn --disable-arp-ping"
+   },
    "services":{  
       "http/s":{  
          "description":"Found HTTP/S service on $ip:$port",

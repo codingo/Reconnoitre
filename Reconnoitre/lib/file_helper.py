@@ -142,3 +142,31 @@ def write_recommendations(results, ip_address, outputdir):
         "\n\n[*] Always remember to manually go over the"
         " portscan report and carefully read between the lines ;)")
     f.close()
+
+def get_config_options(key, option):
+    __location__ = os.path.realpath(
+        os.path.join(
+            os.getcwd(),
+            os.path.dirname(__file__)))
+    with open(os.path.join(__location__, "config.json"), "r") as config:
+        c = config.read()
+        j = json.loads(
+            c.replace(
+                "$ip",
+                "%(ip)s").replace(
+                "$port",
+                "%(port)s").replace(
+                "$outputdir",
+                "%(outputdir)s"))
+
+        res = j.get(key, None)
+
+        if res is None:
+            raise KeyError
+
+        res2 = res.get(option, None)
+
+        if res2 is None:
+            raise KeyError
+
+        return res2

@@ -3,6 +3,7 @@ import socket
 
 from Reconnoitre.lib.file_helper import check_directory
 from Reconnoitre.lib.file_helper import create_dir_structure
+from Reconnoitre.lib.file_helper import get_config_options 
 from Reconnoitre.lib.file_helper import load_targets
 from Reconnoitre.lib.file_helper import write_recommendations
 from Reconnoitre.lib.subprocess_helper import run_scan
@@ -17,8 +18,8 @@ def nmap_scan(
     ip_address = ip_address.strip()
 
     print("[+] Starting quick nmap scan for %s" % (ip_address))
-    QUICKSCAN = "nmap -sC -sV -Pn --disable-arp-ping %s -oA '%s/%s.quick'" % (
-        ip_address, output_directory, ip_address)
+    flags = get_config_options('nmap', 'quickscan')
+    QUICKSCAN = f"nmap {flags} {ip_address} -oA '{output_directory}/{ip_address}.quick'"
     quickresults = run_scan(QUICKSCAN)
 
     write_recommendations(quickresults, ip_address, output_directory)
@@ -35,38 +36,26 @@ def nmap_scan(
              ip_address,
              dns_server))
         print("[+] Using DNS server %s" % (dns_server))
-        TCPSCAN = "nmap -vv -Pn --disable-arp-ping -sS -A -sC -p- -T 3 -script-args=unsafe=1 \
-        --dns-servers %s -oN '%s/%s.nmap' -oX \
-        '%s/%s_nmap_scan_import.xml' %s" % (
-            dns_server,
-            output_directory,
-            ip_address,
-            output_directory,
-            ip_address,
-            ip_address)
-        UDPSCAN = "nmap -vv -Pn --disable-arp-ping -A -sC -sU -T 4 --top-ports 200 \
-        --max-retries 0 --dns-servers %s -oN '%s/%sU.nmap' \
-        -oX '%s/%sU_nmap_scan_import.xml' %s" % (
-            dns_server,
-            output_directory,
-            ip_address,
-            output_directory,
-            ip_address,
-            ip_address)
+        flags = get_config_options("nmap", "tcpscan")
+        TCPSCAN = f"nmap {flags} --dns-servers {dns_server} -oN\
+        '{output_directory}/{ip_address}.nmap' -oX\
+        '{output_directory}/{ip_address}_nmap_scan_import.xml' {ip_address}"
+
+        flags = get_config_options("nmap", "dnsudpscan")
+        UDPSCAN = f"nmap {flags} \
+        --dns-servers {dns_server} -oN '{output_directory}/{ip_address}U.nmap' \
+        -oX '{output_directory}/{ip_address}U_nmap_scan_import.xml' {ip_address}"
+
     else:
         print("[+] Starting detailed TCP%s nmap scans for %s" % (
             ("" if no_udp_service_scan is True else "/UDP"), ip_address))
-        TCPSCAN = "nmap -vv -Pn --disable-arp-ping -sS -A -sC -p- -T 3 \
-        -script-args=unsafe=1 -n %s -oN '%s/%s.nmap' \
-        -oX '%s/%s_nmap_scan_import.xml' %s" % (
-            dns_server,
-            output_directory,
-            ip_address,
-            output_directory,
-            ip_address,
-            ip_address)
-        UDPSCAN = "nmap -sC -sV -sU -Pn --disable-arp-ping %s -oA '%s/%s-udp'" % (
-            ip_address, output_directory, ip_address)
+        flags = get_config_options("nmap", "tcpscan")
+        TCPSCAN = f"nmap {flags} --dns-servers {dns_server} -oN\
+        '{output_directory}/{ip_address}.nmap' -oX\
+        '{output_directory}/{ip_address}_nmap_scan_import.xml' {ip_address}"
+
+        flags = get_config_options("nmap", "udpscan")
+        UDPSCAN = f"nmap {flags} {ip_address} -oA '{output_directory}/{ip_address}-udp'"
 
     udpresult = "" if no_udp_service_scan is True else run_scan(UDPSCAN)
     tcpresults = run_scan(TCPSCAN)
