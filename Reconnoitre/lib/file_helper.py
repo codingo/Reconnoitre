@@ -144,7 +144,7 @@ def write_recommendations(results, ip_address, outputdir):
     f.close()
 
 
-def get_config_options(key, option):
+def get_config_options(key, *args):
     __location__ = os.path.realpath(
         os.path.join(
             os.getcwd(),
@@ -161,13 +161,9 @@ def get_config_options(key, option):
                 "%(outputdir)s"))
 
         res = j.get(key, None)
+        for arg in args:
+            res = res.get(arg, None)
+            if res is None:
+                raise KeyError
 
-        if res is None:
-            raise KeyError
-
-        res2 = res.get(option, None)
-
-        if res2 is None:
-            raise KeyError
-
-        return res2
+        return res
