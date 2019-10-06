@@ -150,3 +150,38 @@ mkdir /path/to/dir
 
 docker run -v /path/to/dir:/outputdir --services -o outputdir -t 127.0.0.1
 ```
+
+# Custom Scans
+
+You can specify custom scans that are not for specific services in the ```lib/config.json```. 
+
+Example Default:
+```
+    "scans":{
+        "default": {
+            "description": "Default scan",
+            "commands" : [
+            ]
+        }
+    },
+```
+The above is the default scan type to be ran when executing ```reconnoitre --scantype -t 192.168.1.1 -o output```
+
+Example Custom:
+```
+    "scans":{
+        "default": {
+            "description": "Default scan",
+            "commands" : [
+            ]
+        },
+        "custom": {
+            "description": "New custom scan",
+            "commands" : [
+                 "custom command 1",
+                 "custom command 2"
+            ]
+        }
+    },
+```
+The above configuration will allow you to run the custom commands listed when executing ```reconnoitre --scantype custom -t 192.168.1.1 -o output```
