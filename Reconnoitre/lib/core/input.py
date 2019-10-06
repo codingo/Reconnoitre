@@ -134,4 +134,14 @@ class CliArgumentParser(object):
                             action="store_true",
                             help="Disable UDP services scan over targets.",
                             default=False)
+
+        parser.add_argument("--scantype",
+                            nargs="?",
+                            dest="scantype",
+                            const="default",
+                            help='Use custom scantype defined in the '
+                            'config.json \"scans\" json object. If '
+                            'provide without arguments the default '
+                            'will be used.')
+
         return parser

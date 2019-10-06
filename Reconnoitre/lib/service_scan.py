@@ -1,5 +1,6 @@
 import multiprocessing
 import socket
+from subprocess import CalledProcessError
 
 from Reconnoitre.lib.file_helper import check_directory
 from Reconnoitre.lib.file_helper import create_dir_structure
@@ -161,3 +162,39 @@ def service_scan(
             quiet,
             quick,
             no_udp_service_scan)
+
+def user_scan(
+        ip_address,
+        output_directory,
+        scan_type):
+    ip_address = ip_address.strip()
+
+    print(f"[+] Starting scan with scan {scan_type} for {ip_address}")
+    try:
+        description = get_config_options('scans', scan_type, "description")
+        commands = get_config_options('scans', scan_type, "commands")
+
+
+    except KeyError as e:
+        print(e)
+        print(f"[!] Error extracting commands and description for {scan_type}")
+        
+    commandoutput = ""
+
+    for command in commands:
+        try:
+            command = command.replace(
+                                    "$ip",
+                                    "%(ip)s").replace(
+                                    "$outputdir",
+                                    "%(outputdir)s") % { "ip": ip_address,
+                                                         "outputdir": output_directory }
+            commandoutput += run_scan(command)
+        except CalledProcessError:
+            print(f"[!] Error running command: {command}")
+
+    if commandoutput:
+        write_recommendations(commandoutput, ip_address, output_directory)
+    print(f"[*] Scan {scan_type} completed for {ip_address}")
+
+

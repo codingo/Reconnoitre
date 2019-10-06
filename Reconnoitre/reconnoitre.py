@@ -8,7 +8,7 @@ from .lib.core.input import CliArgumentParser
 from .lib.find_dns import find_dns
 from .lib.hostname_scan import hostname_scan
 from .lib.ping_sweeper import ping_sweeper
-from .lib.service_scan import service_scan
+from .lib.service_scan import service_scan, user_scan
 from .lib.snmp_walk import snmp_walk
 from .lib.virtual_host_scanner import VirtualHostScanner
 
@@ -134,6 +134,12 @@ def main():
                 arguments.ignore_content_length,
                 arguments.wordlist)
             scanner.scan()
+
+    if arguments.scantype:
+        print(f"[#] Performing scan {arguments.scantype}")
+        user_scan(arguments.target_hosts,
+                arguments.output_directory,
+                arguments.scantype)
 
 
 # Declare signal handler to immediately exit on KeyboardInterrupt
