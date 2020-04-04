@@ -4,13 +4,13 @@ import os
 import signal
 import sys
 
-from lib.core.input import CliArgumentParser
-from lib.find_dns import find_dns
-from lib.hostname_scan import hostname_scan
-from lib.ping_sweeper import ping_sweeper
-from lib.service_scan import service_scan
-from lib.snmp_walk import snmp_walk
-from lib.virtual_host_scanner import VirtualHostScanner
+from .lib.core.input import CliArgumentParser
+from .lib.find_dns import find_dns
+from .lib.hostname_scan import hostname_scan
+from .lib.ping_sweeper import ping_sweeper
+from .lib.service_scan import service_scan
+from .lib.snmp_walk import snmp_walk
+from .lib.virtual_host_scanner import VirtualHostScanner
 
 
 def print_banner():
