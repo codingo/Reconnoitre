@@ -10,5 +10,5 @@ jobs:
       - name: Validate JSON
         uses: docker://orrosenblatt/validate-json-action:latest
         env:
-          INPUT_JSONS: /Reconnoitre/Reconnoitre/lib/config.json
+          INPUT_JSONS: /Reconnoitre/lib/config.json
         
