@@ -50,7 +50,7 @@ def nmap_scan(
         print("[+] Starting detailed TCP%s nmap scans for %s" % (
             ("" if no_udp_service_scan is True else "/UDP"), ip_address))
         flags = get_config_options("nmap", "tcpscan")
-        TCPSCAN = f"nmap {flags} --dns-servers {dns_server} -oN\
+        TCPSCAN = f"nmap {flags} -oN\
         '{output_directory}/{ip_address}.nmap' -oX\
         '{output_directory}/{ip_address}_nmap_scan_import.xml' {ip_address}"
 
