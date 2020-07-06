@@ -1,83 +1,73 @@
+#!/usr/bin/python
+from Reconnoitre.lib.subprocess_helper import run_scan
+from Reconnoitre.lib.file_helper import FileHelper
 import multiprocessing
 import socket
 import subprocess
 
-from Reconnoitre.lib.file_helper import check_directory, load_targets
-from Reconnoitre.lib.subprocess_helper import run_scan
 
+class SnmpWalk(object):
 
-def valid_ip(address):
-    try:
-        socket.inet_aton(address)
-        return True
-    except socket.error:
-        return False
+    def __init__(
+            self,
+            target_hosts,
+            output_directory,
+            quiet):
 
+        self.target_hosts = target_hosts
+        self.output_directory = output_directory
+        self.quiet = quiet
+        self.snmp_directory = f"{self.output_directory}/{self.target_hosts}/scans/snmp/"
 
-def target_file(target_hosts, output_directory, quiet):
-    targets = load_targets(target_hosts, output_directory, quiet)
-    target_file = open(targets, 'r')
-    try:
-        target_file = open(targets, 'r')
-        print("[*] Loaded targets from: %s" % targets)
-    except Exception:
-        print("[!] Unable to load: %s" % targets)
+    @staticmethod
+    def valid_ip(address):
+        try:
+            socket.inet_aton(address)
+            return True
+        except socket.error:
+            return False
 
-    for ip_address in target_file:
-        ip_address = ip_address.strip()
+    def target_file(self):
+        targets = FileHelper.load_targets(self.target_hosts, self.output_directory, self.quiet)
+        FileHelper.check_file(targets)
 
-        snmp_directory = output_directory + '/' + ip_address + '/scans/snmp/'
-        check_directory(snmp_directory)
+        try:
+            target_file = open(targets, 'r')
+            print(f"[*] Loaded targets from: {targets}")
+        except FileNotFoundError as err:
+            print(f"[!] Unable to load: {targets}")
+            raise err
 
+        for ip_address in target_file:
+            ip_address = ip_address.strip()
+            snmp_directory = f"{self.output_directory}/{ip_address}/scans/snmp/"
+            FileHelper.check_directory(output_directory=snmp_directory)
+
+            jobs = []
+            p = multiprocessing.Process(target=SnmpWalk.snmp_scans)
+            jobs.append(p)
+            p.start()
+        target_file.close()
+
+    def target_ip(self):
+        print(f"[*] Loaded single target: {self.target_hosts}")
+        FileHelper.check_directory(output_directory=self.snmp_directory)
         jobs = []
-        p = multiprocessing.Process(
-            target=snmp_scans, args=(
-                ip_address, snmp_directory))
+        p = multiprocessing.Process(target=SnmpWalk.snmp_scans)
         jobs.append(p)
         p.start()
-    target_file.close()
 
+    def snmp_walk(self):
+        FileHelper.check_directory(output_directory=self.output_directory)
 
-def target_ip(target_hosts, output_directory, quiet):
-    print("[*] Loaded single target: %s" % target_hosts)
-    target_hosts = target_hosts.strip()
+        if (self.valid_ip(self.target_hosts)):
+            self.target_ip()
+        else:
+            self.target_file()
 
-    snmp_directory = output_directory + '/' + target_hosts + '/scans/snmp/'
-    check_directory(snmp_directory)
-
-    jobs = []
-    p = multiprocessing.Process(
-        target=snmp_scans, args=(
-            target_hosts, snmp_directory))
-    jobs.append(p)
-    p.start()
-
-
-def snmp_walk(target_hosts, output_directory, quiet):
-    check_directory(output_directory)
-
-    if (valid_ip(target_hosts)):
-        target_ip(target_hosts, output_directory, quiet)
-    else:
-        target_file(target_hosts, output_directory, quiet)
-
-
-def snmp_scans(ip_address, output_directory):
-    print("[+] Performing SNMP scans for %s to %s" %
-          (ip_address, output_directory))
-    print(
-        "   [>] Performing snmpwalk on public tree for:"
-        " %s - Checking for System Processes" %
-        (ip_address))
-    SCAN = ("snmpwalk -c public -v1 %s "
-            "1.3.6.1.2.1.25.1.6.0 > '%s%s-systemprocesses.txt'" % (
-                ip_address, output_directory, ip_address))
-
-    try:
+    def snmp_scans(self):
+        print(f"[+] Performing SNMP scans for {self.target_hosts} to {self.output_directory}")
+        print(f"\t[>] Performing snmpwalk on public tree for: {self.target_hosts} - Checking for System Processes")
+        SCAN = (f"snmpwalk -c public -v1 {self.target_hosts} 1.3.6.1.2.1.25.1.6.0 > '{self.output_directory}/{self.target_hosts}/systemprocesses.txt'")
         run_scan(SCAN, stderr=subprocess.STDOUT)
-    except Exception:
-        print("[+] No Response from %s" % ip_address)
-    except subprocess.CalledProcessError:
-        print("[+] Subprocess failure during scan of %s" % ip_address)
-
-    print("[+] Completed SNMP scans for %s" % (ip_address))
+        print("[+] Completed SNMP scans for %s" % (self.target_hosts))
