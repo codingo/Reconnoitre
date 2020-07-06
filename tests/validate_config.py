@@ -3,7 +3,7 @@ import sys
 from argparse import ArgumentParser
 import json
 
-from reconnoitre import print_banner
+from Reconnoitre.reconnoitre import print_banner
 
 CONFIG = '../reconnoitre/config.json'
 SOURCEFILE = './sample.nmap'

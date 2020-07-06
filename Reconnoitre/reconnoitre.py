@@ -4,13 +4,13 @@ import os
 import signal
 import sys
 
-from .lib.core.input import CliArgumentParser
-from .lib.find_dns import find_dns
-from .lib.hostname_scan import hostname_scan
-from .lib.ping_sweeper import ping_sweeper
-from .lib.service_scan import service_scan
-from .lib.snmp_walk import snmp_walk
-from .lib.virtual_host_scanner import VirtualHostScanner
+from Reconnoitre.lib.core.input import CliArgumentParser
+from Reconnoitre.lib.find_dns import FindDns
+from Reconnoitre.lib.hostname_scan import HostnameScan
+from Reconnoitre.lib.ping_sweeper import PingSweeper
+from Reconnoitre.lib.service_scan import ServiceScan
+from Reconnoitre.lib.snmp_walk import SnmpWalk
+from Reconnoitre.lib.virtual_host_scanner import VirtualHostScanner
 
 
 def print_banner():
@@ -29,7 +29,7 @@ def util_checks(util=None):
     if (pyvers[0] >= 3) and (pyvers[1] >= 3):  # python3.3+
         import shutil
         if shutil.which(util) is None:
-            if util is "nmap":
+            if util == "nmap":
                 print(
                     "   [!] nmap was not found on your system."
                     " Exiting since we wont be able to scan anything. "
@@ -46,7 +46,7 @@ def util_checks(util=None):
     else:  # less-than python 3.3
         from distutils import spawn
         if spawn.find_executable(util) is None:
-            if util is "nmap":
+            if util == "nmap":
                 print(
                     "   [!] nmap was not found on your system."
                     " Exiting since we wont be able to scan anything. "
@@ -62,11 +62,8 @@ def util_checks(util=None):
             return "Found"
 
 
-def main():
-    parser = CliArgumentParser()
-    arguments = parser.parse(sys.argv[1:])
+def main(arguments):
     dns_servers = ''
-
 
     if arguments.output_directory.endswith('/' or '\\'):
         arguments.output_directory = arguments.output_directory[:-1]
@@ -84,41 +81,46 @@ def main():
 
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
-        ping_sweeper(
+        scanner = PingSweeper(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        scanner.ping_sweeper()
 
     if arguments.hostname_scan is True:
         print("[#] Identifying hostnames")
-        hostname_scan(
+        scanner = HostnameScan(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        scanner.hostname_scan()
 
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        dns_servers = find_dns(
+        scanner = FindDns(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        dns_servers = scanner.find_dns()
 
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
-        service_scan(
+        scanner = ServiceScan(
             arguments.target_hosts,
             arguments.output_directory,
             dns_servers,
             arguments.quiet,
             arguments.quick,
             arguments.no_udp_service_scan)
+        scanner.service_scan()
 
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
-        snmp_walk(
+        scanner = SnmpWalk(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        scanner.snmp_walk()
 
     if arguments.virtualhosts is True:
         print("[#] Performing Virtual host scans")
@@ -145,4 +147,6 @@ signal.signal(signal.SIGINT, signal_handler)
 
 
 if __name__ == "__main__":
-    main()
+    parser = CliArgumentParser()
+    args = parser.parse(sys.argv[1:])
+    main(args)

@@ -1,44 +1,51 @@
-from Reconnoitre.lib.file_helper import check_directory
+#!/usr/bin/python
+from Reconnoitre.lib.file_helper import FileHelper
 from Reconnoitre.lib.subprocess_helper import run_scan
 
 
-def ping_sweeper(target_hosts, output_directory, quiet):
-    check_directory(output_directory)
-    output_file = output_directory + "/targets.txt"
+class PingSweeper(object):
 
-    print("[+] Performing ping sweep over %s" % target_hosts)
+    def __init__(
+            self,
+            target_hosts,
+            output_directory,
+            quiet):
 
-    lines = call_nmap_sweep(target_hosts)
-    live_hosts = parse_nmap_output_for_live_hosts(lines)
-    write_live_hosts_list_to_file(output_file, live_hosts)
+        self.target_hosts = target_hosts
+        self.output_directory = output_directory
+        self.output_file = f"{self.output_directory}/targets.txt"
+        self.quiet = quiet
+        self.live_hosts = None
+        self.nmap_lines = None
 
-    for ip_address in live_hosts:
-        print("   [>] Discovered host: %s" % (ip_address))
+    def ping_sweeper(self):
+        FileHelper.check_directory(output_directory=self.output_directory)
+        print("[+] Performing ping sweep over %s" % self.target_hosts)
 
-    print("[*] Found %s live hosts" % (len(live_hosts)))
-    print("[*] Created target list %s" % (output_file))
+        self.call_nmap_sweep()
+        self.parse_nmap_output_for_live_hosts()
+        self.write_live_hosts_list_to_file()
 
+        for ip_address in self.live_hosts:
+            print("   [>] Discovered host: %s" % (ip_address))
 
-def call_nmap_sweep(target_hosts):
-    SWEEP = "nmap -n -sP %s" % (target_hosts)
+        print("[*] Found %s live hosts" % (len(self.live_hosts)))
+        print("[*] Created target list %s" % (self.output_file))
 
-    results = run_scan(SWEEP)
-    lines = str(results).split("\n")
-    return lines
+    def call_nmap_sweep(self):
+        SWEEP = "nmap -n -sP %s" % (self.target_hosts)
+        results = run_scan(SWEEP)
+        self.nmap_lines = str(results).split("\n")
 
+    def parse_nmap_output_for_live_hosts(self):
+        def get_ip_from_nmap_line(line):
+            return line.split()[4]
 
-def parse_nmap_output_for_live_hosts(lines):
-    def get_ip_from_nmap_line(line):
-        return line.split()[4]
+        self.live_hosts = [get_ip_from_nmap_line(line)
+                      for line in self.nmap_lines
+                      if "Nmap scan report for" in line]
 
-    live_hosts = [get_ip_from_nmap_line(line)
-                  for line in lines
-                  if "Nmap scan report for" in line]
-
-    return live_hosts
-
-
-def write_live_hosts_list_to_file(output_file, live_hosts):
-    print("[+] Writing discovered targets to: %s" % output_file)
-    with open(output_file, 'w') as f:
-        f.write("\n".join(live_hosts))
+    def write_live_hosts_list_to_file(self):
+        print(f"[+] Writing discovered targets to: {self.output_file}")
+        with open(self.output_file, "w") as f:
+            f.write("\n".join(self.live_hosts))
