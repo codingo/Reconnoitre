@@ -4,14 +4,13 @@ import os
 import signal
 import sys
 
-from .lib.core.input import CliArgumentParser
-from .lib.find_dns import find_dns
-from .lib.hostname_scan import hostname_scan
-from .lib.ping_sweeper import ping_sweeper
-from .lib.service_scan import service_scan
-from .lib.snmp_walk import snmp_walk
-from .lib.virtual_host_scanner import VirtualHostScanner
-
+from lib.core.input import CliArgumentParser
+from lib.find_dns import FindDNS
+from lib.hostname_scan import HostNameScan
+from lib.ping_sweeper import PingSweeper
+from lib.service_scan import ServiceScan
+from lib.snmp_walk import SnmpWalk
+from lib.virtual_host_scanner import VirtualHostScanner
 
 def print_banner():
     print("  __")
@@ -84,41 +83,47 @@ def main():
 
     if arguments.ping_sweep is True:
         print("[#] Performing ping sweep")
-        ping_sweeper(
+        driver = PingSweeper(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        driver.ping_sweeper()
 
     if arguments.hostname_scan is True:
         print("[#] Identifying hostnames")
-        hostname_scan(
+        driver = HostNameScan(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        driver.hostname_scan()
 
     if arguments.find_dns_servers is True:
         print("[#] Identifying DNS Servers")
-        dns_servers = find_dns(
+        driver = FindDNS(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        dns_servers = driver.find_dns()
+        
 
     if arguments.perform_service_scan is True:
         print("[#] Performing service scans")
-        service_scan(
+        driver = ServiceScan(
             arguments.target_hosts,
             arguments.output_directory,
             dns_servers,
             arguments.quiet,
             arguments.quick,
             arguments.no_udp_service_scan)
+        driver.service_scan()
 
     if arguments.perform_snmp_walk is True:
         print("[#] Performing SNMP walks")
-        snmp_walk(
+        driver = SnmpWalk(
             arguments.target_hosts,
             arguments.output_directory,
             arguments.quiet)
+        driver.snmp_walk()
 
     if arguments.virtualhosts is True:
         print("[#] Performing Virtual host scans")
